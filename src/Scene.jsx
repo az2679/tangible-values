@@ -1,35 +1,30 @@
-import { Suspense } from "react";
+import * as THREE from 'three';
 import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
 
 import { Environment, PerspectiveCamera } from "@react-three/drei";
-import { BackSide } from "three";
+import { Stats, OrbitControls } from "@react-three/drei";
 
 function Scene() {
   return (
     <div id="canvas_wrapper">
       <Canvas shadows={true}>
-        {/* Environment map */}
-        <Environment preset="night" />
+        <axesHelper args={[1]} />
+        <Stats />
 
-        {/* Camera 🎥 */}
-        <PerspectiveCamera position={[0, 2.5, 10]} makeDefault />
-
-        {/* Lights 💡 */}
-        <ambientLight intensity={0.15} />
-        <pointLight color="green" position={[1, 1, 1]} intensity={3} />
-        <pointLight color="yellow" position={[-2, 3, 1]} intensity={3} />
-        <pointLight color="blue" position={[2, 3, 1]} intensity={3} />
-        <pointLight color="white" position={[0, 1, 2.5]} intensity={3} />
-
-        {/* We can create a background color as a child element of the canvas we just have to attach it */}
         <color args={["grey"]} attach="background" />
 
-        {/* R3F way of assigning materials as children */}
-        <mesh position={[0, 2.5, 0]} rotation={[0, Math.PI / 4, 0]}>
-          <boxGeometry args={[5, 5, 5]} />
-          <meshPhysicalMaterial side={BackSide} />
-        </mesh>
+        {/* Camera 🎥 */}
+        <PerspectiveCamera position={[0, 7, 15]} makeDefault />
 
+        {/* Controls */}
+        <OrbitControls />
+
+        {/* Lights 💡 */}
+        <ambientLight intensity={0.5} />
+        <directionalLight color="#cddafd" position={[50, 50, 0]} intensity={0.8} />
+
+        {/* Objects 📦 */}
         <mesh position={[0, 2.5, 0]}>
           <sphereGeometry />
           <meshPhysicalMaterial roughness={0.3} metalness={0.6} />
@@ -38,6 +33,7 @@ function Scene() {
         {/* Objects 📦 */}
         <Suspense fallback={null}>
         </Suspense>
+
       </Canvas>
     </div>
   );
