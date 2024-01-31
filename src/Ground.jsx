@@ -1,20 +1,13 @@
-import { useRef } from "react";
-import { usePlane } from '@react-three/cannon'
+import { RigidBody, CuboidCollider } from '@react-three/rapier';
 
-export default function Ground(props) {
-  const [ref] = usePlane(() => ({ 
-    mass: 0,
-    rotation: [-Math.PI / 2, 0, 0], 
-    position: [0, -1, 0],
-    ...props 
-  }), useRef())
-
+export default function Ground() {
   return (
-    <>
-      <mesh ref={ref}>
-        <planeGeometry args={[10000, 10000]} />
-        <meshStandardMaterial color="#D9EAD3" roughness={0.8} metalness={0.2} />
-      </mesh>
-    </>
+      <RigidBody type="fixed" colliders={false}>
+        <mesh position={[0,-1,0]} rotation={[-Math.PI/2, , 0]} >
+          <planeGeometry args={[1000, 1000]} />
+          <meshBasicMaterial />
+        </mesh>
+        <CuboidCollider args={[1000, 2, 1000]} position={[0, -3, 0]} />
+      </RigidBody>
 );
 }
