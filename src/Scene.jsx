@@ -5,10 +5,11 @@ import { Stats, PerspectiveCamera, OrbitControls, MapControls } from "@react-thr
 
 import { Physics, Debug, useSphere } from "@react-three/cannon";
 
-import Person from './Person';
 import Ground from './Ground';
+import Person from './Person';
+import NPC from './NPC';
 
-function Scene() {  
+function Scene() { 
   return (
     <div id="canvas_wrapper">
       <Canvas shadows={true}>
@@ -19,16 +20,16 @@ function Scene() {
 
         
         {/* Camera 🎥 */}
-        <PerspectiveCamera position={[0, 100, -100]} args={[60, window.innerWidth / window.innerHeight, 0.1, 4000]} makeDefault />
+        {/* <PerspectiveCamera position={[0, 100, -100]} args={[60, window.innerWidth / window.innerHeight, 0.1, 4000]} makeDefault /> */}
 
         {/* Controls */}
         {/* <OrbitControls /> */}
-        {/* <OrbitControls enableZoom={false} maxPolarAngle={Math.PI/2} /> */}
-        <MapControls enableZoom={false} maxPolarAngle={Math.PI/2} listenToKeyEvents={Window} />
+        {/* <OrbitControls enableZoom={false} minPolarAngle={Math.PI/4} maxPolarAngle={Math.PI/4} /> */}
+        {/* <MapControls enableZoom={false} maxPolarAngle={Math.PI/2} listenToKeyEvents={Window} /> */}
 
         {/* Lights 💡 */}
-        <ambientLight intensity={0.75} />
-        <directionalLight color="#cddafd" position={[-50, 50, 0]} intensity={0.8} />
+        <ambientLight intensity={1} />
+        <directionalLight color="#ffffff" position={[50, 50, 0]} intensity={1} />
 
         {/* Objects 📦 */}
         <Suspense fallback={null}>
@@ -36,8 +37,9 @@ function Scene() {
 
         <Physics gravity={[0, -9.8, 0]} allowSleep={false}>
         {/* <Debug> */}
-          <Person position={[0, 10, 0]} />
-          <Ground position={[0, -1, 0]} />
+          <Ground />
+          <Person position={[0, 0, 0]} />
+          <NPC position={[30, 0, -60]}/>
         {/* </Debug> */}
         </Physics>
         <Stats />
