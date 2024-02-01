@@ -1,4 +1,5 @@
-import { RigidBody } from '@react-three/rapier';
+import { useRef } from "react";
+import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 
 import helvetiker from "three/examples/fonts/helvetiker_regular.typeface.json";
 import { extend } from '@react-three/fiber';
@@ -9,6 +10,7 @@ extend({ TextGeometry })
 
 export default function NPC(props) {
   const {position} = props
+  const ref = useRef()
   const font = new FontLoader().parse(helvetiker);
 
   return (
@@ -17,10 +19,17 @@ export default function NPC(props) {
         <mesh>
           <boxGeometry args={[10, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
-          <mesh position={[-7,15,0]}>
+          <mesh ref={ref} position={[-7,15,0]} visible={false}>
             <textGeometry args={['Hello !', {font, size:5, height: 1}]}/>
             <meshLambertMaterial attach='material' color={"gray"}/>
           </mesh>
+          <CapsuleCollider args={[5, 25, 5]} sensor 
+            onIntersectionEnter={() => {
+              ref.current.visible = true
+              
+            }} 
+            onIntersectionExit={() => ref.current.visible = false} 
+          />
         </mesh>
       </RigidBody>
     </>

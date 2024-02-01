@@ -1,9 +1,8 @@
-import * as THREE from 'three';
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { Stats, PerspectiveCamera, OrbitControls, MapControls, KeyboardControls } from "@react-three/drei";
 
-import { Physics, RigidBody } from '@react-three/rapier';
+import { Physics } from '@react-three/rapier';
 
 import Ground from './Ground';
 import Person from './Person';
@@ -26,9 +25,10 @@ function Scene() {
 
         {/* Camera 🎥 */}
         {/* <PerspectiveCamera position={[0, 100, 150]} args={[60, window.innerWidth / window.innerHeight, 0.1, 4000]} makeDefault /> */}
+ 
 
         {/* Controls */}
-        <OrbitControls />
+        <OrbitControls maxPolarAngle={Math.PI/2}/>
         {/* <OrbitControls enableZoom={false} minPolarAngle={Math.PI/4} maxPolarAngle={Math.PI/4} /> */}
         {/* <MapControls enableZoom={false} maxPolarAngle={Math.PI/2} listenToKeyEvents={Window} /> */}
 
@@ -39,9 +39,9 @@ function Scene() {
         {/* Objects 📦 */}
         <Suspense fallback={null}>
           <Physics debug>
-            <NPC position={[30, 0, -60]}/>
-            <Person />
             <Ground />
+            <Person />
+            <NPC position={[30, 5, -60]}/>
         
           </Physics>
         </Suspense>
