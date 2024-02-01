@@ -13,8 +13,6 @@ const direction = new Vector3();
 const cameraOffset = new Vector3();
 
 
-
-
 export default function Person() {
     const cameraRef = useRef();
     const ref = useRef();
@@ -25,8 +23,6 @@ export default function Person() {
 
     useFrame(() => {
         const { forward, backward, left, right } = get()
-
-
         const velocity = ref.current.linvel();
 
         frontVector.set(0, 0, Number(backward) - Number(forward))
@@ -39,20 +35,17 @@ export default function Person() {
       
         // console.log(get(), direction, ref.current.linvel())
 
-
       
         if(isInteract){
           cameraOffset.set(ref.current.translation().x, 50, ref.current.translation().z+75);
           cameraRef.current.position.lerp(cameraOffset, 0.2);
           cameraRef.current.lookAt(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
           cameraRef.current.updateProjectionMatrix();
-
-        }
-        else {
-        cameraOffset.set(ref.current.translation().x, 100, ref.current.translation().z+150);
-        cameraRef.current.position.copy(cameraOffset);
-        cameraRef.current.lookAt(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
-        cameraRef.current.updateProjectionMatrix();
+        } else {
+          cameraOffset.set(ref.current.translation().x, 100, ref.current.translation().z+150);
+          cameraRef.current.position.lerp(cameraOffset, 0.2);
+          cameraRef.current.lookAt(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
+          cameraRef.current.updateProjectionMatrix();
         }
     });
 
@@ -65,11 +58,9 @@ export default function Person() {
               </mesh>
               <BallCollider ref={ballref}args={[1.1, 1.1, 1.1]} sensor setCollisionGroups={0x0004}
                 onIntersectionEnter={(payload) => {
-                  if(payload.other.rigidBodyObject.name = "prox" && payload.other.rigidBodyObject.name != "Ground"){
+                  if(payload.other.rigidBodyObject.name != "Ground"){
                   setInteract(true)
                   console.log("intersecting", payload.other)
-                  payload.other.rigidBodyObject.lookAt([0,0,0])
-                  // payload.other.rigidBodyObject.lookAt(payload.target.rigidBodyObject.translation())
                   }
                 }} 
                 onIntersectionExit={() => {
@@ -78,24 +69,8 @@ export default function Person() {
                 }} 
               />
           </RigidBody>
-          {/* <BallCollider args={[1, 1, 1]} scale={0.001} sensor setCollisionGroups={0x0004}/> */}
-
           <PerspectiveCamera ref={cameraRef} position={[0, 100, 150]} args={[60, window.innerWidth / window.innerHeight, 0.1, 4000]} makeDefault />
         </>
       
     );
 }
-
-
-// const [activeIndex, setActiveIndex] = useState(0);
-// <BallCollider args={[1, 1, 1]} sensor 
-//         onIntersectionEnter={() => {
-//           // isActive={activeIndex === 0}
-//           setActiveIndex(1)
-//           cameraRef.current.position.lerp(ref.current.translation(), 1);
-//           cameraRef.current.lookAt()
-//         }} 
-//         onIntersectionExit={() => {
-//           setActiveIndex(0)
-//         }} 
-//       />
