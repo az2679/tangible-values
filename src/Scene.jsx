@@ -41,7 +41,8 @@ function Scene() {
           <Physics debug>
             <Ground />
             <Person />
-            <NPC position={[30, 5, -60]}/>
+            <NPC position={[30, 5, -90]}/>
+            <NPC position={[-100, 5, 10]}/>
         
           </Physics>
         </Suspense>
