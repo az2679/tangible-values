@@ -28,7 +28,7 @@ function Scene() {
  
 
         {/* Controls */}
-        <OrbitControls maxPolarAngle={Math.PI/2}/>
+        {/* <OrbitControls maxPolarAngle={Math.PI/2}/> */}
         {/* <OrbitControls enableZoom={false} minPolarAngle={Math.PI/4} maxPolarAngle={Math.PI/4} /> */}
         {/* <MapControls enableZoom={false} maxPolarAngle={Math.PI/2} listenToKeyEvents={Window} /> */}
 

@@ -11,6 +11,7 @@ const frontVector = new Vector3();
 const sideVector = new Vector3();
 const direction = new Vector3();
 const cameraOffset = new Vector3();
+const cameraOffset1 = new Vector3();
 
 
 export default function Person() {
@@ -35,15 +36,17 @@ export default function Person() {
       
         // console.log(get(), direction, ref.current.linvel())
 
-      
+        cameraOffset1.set(ref.current.translation().x, 50, ref.current.translation().z+75);
+        cameraOffset.set(ref.current.translation().x, 100, ref.current.translation().z+150);
+
         if(isInteract){
-          cameraOffset.set(ref.current.translation().x, 50, ref.current.translation().z+75);
-          cameraRef.current.position.lerp(cameraOffset, 0.2);
+          // cameraOffset1.set(ref.current.translation().x, 50, ref.current.translation().z+75);
+          cameraRef.current.position.copy(cameraOffset1);
           cameraRef.current.lookAt(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
           cameraRef.current.updateProjectionMatrix();
         } else {
-          cameraOffset.set(ref.current.translation().x, 100, ref.current.translation().z+150);
-          cameraRef.current.position.lerp(cameraOffset, 0.2);
+          // cameraOffset.set(ref.current.translation().x, 100, ref.current.translation().z+150);
+          cameraRef.current.position.copy(cameraOffset);
           cameraRef.current.lookAt(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
           cameraRef.current.updateProjectionMatrix();
         }
@@ -59,12 +62,15 @@ export default function Person() {
               <BallCollider ref={ballref}args={[1.1, 1.1, 1.1]} sensor setCollisionGroups={0x0004}
                 onIntersectionEnter={(payload) => {
                   if(payload.other.rigidBodyObject.name != "Ground"){
+                    cameraRef.current.position.lerp(cameraOffset1, 0.2)
                   setInteract(true)
-                  console.log("intersecting", payload.other)
+                  // console.log("intersecting", payload.other)
+
                   }
                 }} 
                 onIntersectionExit={() => {
                   setInteract(false)
+                  cameraRef.current.position.lerp(cameraOffset, 0.2)
                   // console.log("not")
                 }} 
               />
