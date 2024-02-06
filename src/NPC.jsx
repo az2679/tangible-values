@@ -1,30 +1,26 @@
 import { useRef, useState } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 
-import helvetiker from "three/examples/fonts/helvetiker_regular.typeface.json";
-import { extend } from '@react-three/fiber';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-
 import Instruction from './Instruction';
 import Dialogue from './Dialogue';
 
-extend({ TextGeometry })
 
-export default function NPC({position, dialogue, instruction, instructionCam}) {
-  // const {} = props
-  const font = new FontLoader().parse(helvetiker);
+export default function NPC({position, dialogue, instruction, onInstructionStateChange, onProximity}) {
 
   const [dialogueState, setDialogueState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
 
+  const handleClick = () => {
+    if(dialogueState == true){
+    setInstructionState(!instructionState)
+    onInstructionStateChange(!instructionState)
+    }
+  }
+
   return (
     <>
       <RigidBody mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
-        <mesh onClick={(e) => {
-          setInstructionState(!instructionState)
-          instructionCam()
-          }}>
+        <mesh onClick={handleClick}>
 
           <boxGeometry args={[10, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
@@ -35,8 +31,12 @@ export default function NPC({position, dialogue, instruction, instructionCam}) {
           <CapsuleCollider args={[5, 80, 5]} sensor
             onIntersectionEnter={() => {
               setDialogueState(true)
+              onProximity(true)
             }} 
-            onIntersectionExit={() => setDialogueState(false)} 
+            onIntersectionExit={() => {
+              setDialogueState(false)
+              onProximity(false)
+            }} 
           />
         </mesh>
       </RigidBody>

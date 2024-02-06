@@ -8,6 +8,7 @@ import Ground from './Ground';
 import Person from './Person';
 import NPC from './NPC';
 import Instruction from './Instruction';
+import CameraRig from './CameraRig';
 
 function Scene() { 
   const [instructionCam, setInstructionCam ] = useState(false);
@@ -44,13 +45,18 @@ function Scene() {
         <Suspense fallback={null}>
           <Physics debug>
             <Ground />
-            <Person instructionCam={instructionCam}/>
+
+            <CameraRig>
+              <Person />
+
+            <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} />
+            </CameraRig>
+
+            {/* <Person instructionCam={instructionCam}/> */}
             {/* <Person instructionCam={instructionCam} onPositionChange={(vector)=>{setPlayerPosition(vector); console.log(playerPosition)}}/> */}
 
-            <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} instructionCam={() => {setInstructionCam(!instructionCam); console.log(instructionCam)}}/>
-            <NPC position={[-100, 5, 10]}/>
-
-
+            {/* <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} instructionCam={() => {setInstructionCam(!instructionCam); console.log(instructionCam)}}/> */}
+            {/* <NPC position={[-100, 5, 10]}/> */}
 
           </Physics>
         </Suspense>

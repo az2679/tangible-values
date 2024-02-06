@@ -4,22 +4,15 @@ import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import { RigidBody, BallCollider } from '@react-three/rapier';
 
-import CameraRig from './CameraRig';
-
-
 const SPEED = 100;
 const frontVector = new Vector3();
 const sideVector = new Vector3();
 const direction = new Vector3();
 
-export default function Person({instructionCam, onPositionChange}) {
-  // const { instructionCam } = props
+export default function Person({ onPositionChange }) {
     const ref = useRef();
     const [, get] = useKeyboardControls();
     const ballref = useRef()
-
-    const [proximity, setProximity] = useState(false);
-    const [playerPos, setPlayerPos] = useState([0,0,0]);
 
     useFrame(() => {
       const { forward, backward, left, right } = get()
@@ -33,8 +26,12 @@ export default function Person({instructionCam, onPositionChange}) {
           .multiplyScalar(SPEED)
       ref.current.setLinvel({x:direction.x, y: velocity.y, z:direction.z})
 
-      setPlayerPos(ref.current.translation())
-      // onPositionChange(ref.current.translation())
+      const spherePosition = ref.current.translation();
+      onPositionChange({
+        x: spherePosition.x,
+        y: spherePosition.y,
+        z: spherePosition.z,
+      })
     });
 
     return (
@@ -47,13 +44,12 @@ export default function Person({instructionCam, onPositionChange}) {
               <BallCollider ref={ballref}args={[1.1, 1.1, 1.1]} sensor setCollisionGroups={0x0004}
                 onIntersectionEnter={(payload) => {
                   if(payload.other.rigidBodyObject.name != "Ground"){
-                  setProximity(true)
+                  // setProximity(true)
                   }
                 }} 
-                onIntersectionExit={() => {setProximity(false)}} 
+                // onIntersectionExit={() => {setProximity(false)}} 
               />
           </RigidBody>
-                      <CameraRig player = {playerPos} proximity = {proximity} instructionCam={instructionCam} />
         </>
     );
 }
