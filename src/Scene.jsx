@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useRef, useEffect } from "react";
 import { Stats, PerspectiveCamera, OrbitControls, MapControls, KeyboardControls } from "@react-three/drei";
 
 import { Physics } from '@react-three/rapier';
@@ -7,12 +7,9 @@ import { Physics } from '@react-three/rapier';
 import Ground from './Ground';
 import Person from './Person';
 import NPC from './NPC';
-import Instruction from './Instruction';
 import CameraRig from './CameraRig';
 
 function Scene() { 
-  const [instructionCam, setInstructionCam ] = useState(false);
-  const [playerPosition, setPlayerPosition ] = useState([0,0,0]);
 
   return (
     <div id="canvas_wrapper">
@@ -23,7 +20,7 @@ function Scene() {
         { name: "left", keys: ["ArrowLeft", "a", "A"] },
         { name: "right", keys: ["ArrowRight", "d", "D"] },
       ]}>
-      <Canvas shadows={true}>
+      <Canvas shadows={true} tabIndex={0} >
         <color args={["#eeeeee"]} attach="background" />
         <fogExp2 attach="fog" args={["#eeeeee", 0.0003]} />
         <axesHelper args={[10]} />
@@ -48,8 +45,7 @@ function Scene() {
 
             <CameraRig>
               <Person />
-
-            <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} />
+              <NPC position={[70, 5, -150]} dialogue={"Hello !"} instruction={"test1"} />
             </CameraRig>
 
             {/* <Person instructionCam={instructionCam}/> */}
