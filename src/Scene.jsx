@@ -11,6 +11,7 @@ import Instruction from './Instruction';
 
 function Scene() { 
   const [instructionCam, setInstructionCam ] = useState(false);
+  const [playerPosition, setPlayerPosition ] = useState([0,0,0]);
 
   return (
     <div id="canvas_wrapper">
@@ -44,8 +45,12 @@ function Scene() {
           <Physics debug>
             <Ground />
             <Person instructionCam={instructionCam}/>
+            {/* <Person instructionCam={instructionCam} onPositionChange={(vector)=>{setPlayerPosition(vector); console.log(playerPosition)}}/> */}
+
             <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} instructionCam={() => {setInstructionCam(!instructionCam); console.log(instructionCam)}}/>
             <NPC position={[-100, 5, 10]}/>
+
+
 
           </Physics>
         </Suspense>

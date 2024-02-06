@@ -12,8 +12,8 @@ const frontVector = new Vector3();
 const sideVector = new Vector3();
 const direction = new Vector3();
 
-export default function Person(props) {
-  const { instructionCam } = props
+export default function Person({instructionCam, onPositionChange}) {
+  // const { instructionCam } = props
     const ref = useRef();
     const [, get] = useKeyboardControls();
     const ballref = useRef()
@@ -34,6 +34,7 @@ export default function Person(props) {
       ref.current.setLinvel({x:direction.x, y: velocity.y, z:direction.z})
 
       setPlayerPos(ref.current.translation())
+      // onPositionChange(ref.current.translation())
     });
 
     return (
@@ -52,7 +53,7 @@ export default function Person(props) {
                 onIntersectionExit={() => {setProximity(false)}} 
               />
           </RigidBody>
-          <CameraRig player = {playerPos} proximity = {proximity} instructionCam={instructionCam} />
+                      <CameraRig player = {playerPos} proximity = {proximity} instructionCam={instructionCam} />
         </>
     );
 }
