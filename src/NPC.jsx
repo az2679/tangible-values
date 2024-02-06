@@ -31,7 +31,7 @@ export default function NPC(props) {
           <Dialogue dialogue={dialogue} state={dialogueState} position={[-7,15,0]}/>
           <Instruction instruction={instruction} state={instructionState} position={[-7,25,0]}/>
 
-          <CapsuleCollider args={[5, 60, 5]} sensor
+          <CapsuleCollider args={[5, 80, 5]} sensor
             onIntersectionEnter={() => {
               setDialogueState(true)
             }} 
