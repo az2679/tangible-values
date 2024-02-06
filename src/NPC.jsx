@@ -11,8 +11,8 @@ import Dialogue from './Dialogue';
 
 extend({ TextGeometry })
 
-export default function NPC(props) {
-  const {position, dialogue, instruction} = props
+export default function NPC({position, dialogue, instruction, instructionCam}) {
+  // const {} = props
   const font = new FontLoader().parse(helvetiker);
 
   const [dialogueState, setDialogueState] = useState(false);
@@ -21,9 +21,10 @@ export default function NPC(props) {
   return (
     <>
       <RigidBody mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
-        <mesh onClick={(e) => 
+        <mesh onClick={(e) => {
           setInstructionState(!instructionState)
-          }>
+          instructionCam()
+          }}>
 
           <boxGeometry args={[10, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />

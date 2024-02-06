@@ -6,7 +6,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 
 
 export default function CameraRig(props){
-  const { player, proximity } = props
+  const { player, proximity, instructionCam } = props
   const cameraRef = useRef();
 
   const cameraOffset = new Vector3(0,0,0);
@@ -21,7 +21,11 @@ export default function CameraRig(props){
     if(proximity){
     // cameraRef.current.position.lerp(cameraOffset1, 0.8)
       cameraRef.current.position.copy(cameraOffset1);
-      cameraRef.current.lookAt(player.x, player.y, player.z);
+      if(instructionCam){
+        cameraRef.current.lookAt(player.x, player.y+50, player.z);
+      } else {
+        cameraRef.current.lookAt(player.x, player.y, player.z);
+      }
       cameraRef.current.updateProjectionMatrix();
     } else {
     // cameraRef.current.position.lerp(cameraOffset, 0.2)

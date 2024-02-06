@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Stats, PerspectiveCamera, OrbitControls, MapControls, KeyboardControls } from "@react-three/drei";
 
 import { Physics } from '@react-three/rapier';
@@ -10,6 +10,8 @@ import NPC from './NPC';
 import Instruction from './Instruction';
 
 function Scene() { 
+  const [instructionCam, setInstructionCam ] = useState(false);
+
   return (
     <div id="canvas_wrapper">
       <KeyboardControls
@@ -41,11 +43,9 @@ function Scene() {
         <Suspense fallback={null}>
           <Physics debug>
             <Ground />
-            <Person />
-            <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"}/>
+            <Person instructionCam={instructionCam}/>
+            <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} instructionCam={() => {setInstructionCam(!instructionCam); console.log(instructionCam)}}/>
             <NPC position={[-100, 5, 10]}/>
-        
-            <Instruction position={[100, 5, 10]} text={"test"}/>
 
           </Physics>
         </Suspense>
