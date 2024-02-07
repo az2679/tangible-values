@@ -20,7 +20,7 @@ export default function Instruction(props) {
     <>
     <RigidBody>
       <mesh ref={instructionRef} position={position ? position : [-10, 60, 30]} rotation={[Math.PI * 0.25, 0,0]} visible={state} onClick={onClick} onPointerOver={(e) => console.log("over")}>
-        <textGeometry args={[instruction ? instruction : "missing instruction", {font, size:5, height: 1}]}/>
+        <textGeometry args={[instruction ? instruction : "missing instruction", {font, size:1, height: 1}]}/>
         <meshLambertMaterial attach='material' color={"gray"}/>
       </mesh>
       {/* <CuboidCollider args={[10, 2, 10]} sensor /> */}
