@@ -11,11 +11,18 @@ export default function CameraRig({children}){
   const [proximityState, setProximityState] = useState(false);
 
   const [cameraPosition, setCameraPosition] = useState({ x:0, y:0, z:0 });
-  const [lookAtPosition, setLookAtPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [lookAtPosition, setLookAtPosition] = useState({ x:0, y:0, z:0 });
 
-  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [targetPosition, setTargetPosition] = useState({ x:0, y:0, z:0 });
   const [lerpFactor, setLerpFactor] = useState(0.1);
   const [transitioning, setTransitioning] = useState(false);
+
+  const [cam2, setCam2] = useState({ x:0, y:20, z:60 });
+  const [cam1, setCam1] = useState({ x:0, y:60, z:80 });
+  const [cam0, setCam0] = useState({ x:0, y:100, z:150 });
+
+  const [index, setIndex] = useState(0);
+  const [indexCamPos, setIndexCamPos] = useState({ x:0, y:0, z:0 });
 
   const handleInstructionStateChange = (newInstructionState) => {
     setInstructionState(newInstructionState)
@@ -28,10 +35,25 @@ export default function CameraRig({children}){
   const handleSpherePositionChange = (newPosition) => {
     setSpherePosition(newPosition);
 
+    setCam2({ x: newPosition.x, y: 20, z: newPosition.z + 60 })
+    setCam1({ x: newPosition.x, y: 60, z: newPosition.z + 80 })
+    setCam0({ x: newPosition.x, y: 100, z: newPosition.z + 150 })
+
   };
 
+
+
+
   useFrame(() => {
-    //lerp position from previous (cameraPosition) to target
+    if (index == 0){
+      setIndexCamPos(cam0);
+    } else if (index == 1) {
+      setIndexCamPos(cam1);
+    } else {
+      setIndexCamPos(cam2);
+    }
+
+    // lerp position from previous (cameraPosition) to target
     if (transitioning) {
       setCameraPosition((prevPosition) => ({
         x: prevPosition.x + (targetPosition.x - prevPosition.x) * lerpFactor,
@@ -45,9 +67,10 @@ export default function CameraRig({children}){
         setTransitioning(false);
         setCameraPosition(targetPosition);
       } 
-    } else {
-      setCameraPosition(targetPosition);
-      setLookAtPosition({ x: spherePosition.x, y: spherePosition.y, z: spherePosition.z });
+    } 
+    else {
+      setCameraPosition(indexCamPos);
+      setLookAtPosition(spherePosition);
     }
     cameraRef.current.lookAt(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z);
   });
@@ -55,7 +78,9 @@ export default function CameraRig({children}){
   //checking that its just setting position when not transitioning
   useEffect(() => {
     if (!transitioning) {
-      setCameraPosition(targetPosition);
+      // setCameraPosition(targetPosition);
+      setCameraPosition(indexCamPos);
+      setLookAtPosition(spherePosition);
     }
   }, [transitioning]);
 
@@ -63,18 +88,21 @@ export default function CameraRig({children}){
   useEffect(() => {
     if (proximityState) {
       if (instructionState) {
-        setTargetPosition({ x: spherePosition.x, y: 20, z: spherePosition.z + 60 });
+        setTargetPosition(cam2);
         setLookAtPosition({ x: spherePosition.x, y: spherePosition.y + 35, z: spherePosition.z });
         setTransitioning(true);
+        setIndex(2)
       } else {
-        setTargetPosition({ x: spherePosition.x, y: 60, z: spherePosition.z + 80});
-        setLookAtPosition({ x: spherePosition.x, y: spherePosition.y, z: spherePosition.z });
+        setTargetPosition(cam1);
+        setLookAtPosition(spherePosition);
         setTransitioning(true);
+        setIndex(1)
       }
     } else {
-      setTargetPosition({ x: spherePosition.x, y: 100, z: spherePosition.z + 150 });
-      setLookAtPosition({ x: spherePosition.x, y: spherePosition.y, z: spherePosition.z });
+      setTargetPosition(cam0);
+      setLookAtPosition(spherePosition);
       setTransitioning(true);
+      setIndex(0)
     }
   }, [proximityState, instructionState]);
 
