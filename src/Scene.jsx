@@ -45,7 +45,7 @@ function Scene() {
 
             <CameraRig>
               <Person />
-              <NPC position={[70, 5, -150]} dialogue={"Hello !"} instruction={"test1"} />
+              <NPC position={[70, 5, -175]} dialogue={"Hello !"} instruction={"test1"} />
             </CameraRig>
 
             {/* <Person instructionCam={instructionCam}/> */}
