@@ -6,7 +6,6 @@ import Dialogue from './Dialogue';
 
 
 export default function NPC({position, dialogue, instruction, onInstructionStateChange, onProximity}) {
-
   const [dialogueState, setDialogueState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
 
@@ -17,6 +16,15 @@ export default function NPC({position, dialogue, instruction, onInstructionState
     }
   }
 
+  const handleInstructionClick = () => {
+    if(instructionState == true){
+      setInstructionState(false)
+      onInstructionStateChange(false)
+    }
+  }
+
+  // console.log(instructionState)
+
   return (
     <>
       <RigidBody mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
@@ -25,10 +33,10 @@ export default function NPC({position, dialogue, instruction, onInstructionState
           <boxGeometry args={[10, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
 
-          <Dialogue dialogue={dialogue} state={dialogueState} position={[-7,15,0]}/>
-          <Instruction instruction={instruction} state={instructionState} position={[-7,25,0]}/>
+          <Dialogue dialogue={dialogue} state={dialogueState} />
+          <Instruction instruction={instruction} state={instructionState} onClick={handleInstructionClick}/>
 
-          <CapsuleCollider args={[5, 80, 5]} sensor
+          <CapsuleCollider args={[5, 100, 5]} sensor
             onIntersectionEnter={() => {
               setDialogueState(true)
               onProximity(true)
@@ -36,6 +44,8 @@ export default function NPC({position, dialogue, instruction, onInstructionState
             onIntersectionExit={() => {
               setDialogueState(false)
               onProximity(false)
+              setInstructionState(false)
+              onInstructionStateChange(false)
             }} 
           />
         </mesh>

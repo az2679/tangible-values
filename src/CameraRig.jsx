@@ -1,7 +1,6 @@
 import React, { useRef, useState, cloneElement } from 'react';
-import { Vector3 } from "three";
 import { PerspectiveCamera } from "@react-three/drei";
-
+import { Vector3 } from "three";
 
 export default function CameraRig({children}){
   const cameraRef = useRef()
@@ -23,10 +22,16 @@ export default function CameraRig({children}){
     setSpherePosition(newPosition);
 
     if(proximityState == true){
-      setCameraPosition({x:spherePosition.x, y:60, z: spherePosition.z + 80})
       if(instructionState == true){
-        cameraRef.current.lookAt(spherePosition.x, spherePosition.y+50, spherePosition.z);
+        setCameraPosition({x:spherePosition.x, y:20, z: spherePosition.z + 60})
+        cameraRef.current.lookAt(spherePosition.x, spherePosition.y+35, spherePosition.z);
+    // -10,60,10 >> but its child of npc
+        // setCameraPosition({x:spherePosition.x, y:-5, z: spherePosition.z + 50})
+        // cameraRef.current.lookAt(spherePosition.x, spherePosition.y+35, spherePosition.z);
+
+        //kinda rough estimate right now, if needed pass in text box info
       } else {
+        setCameraPosition({x:spherePosition.x, y:60, z: spherePosition.z + 80})
         cameraRef.current.lookAt(spherePosition.x, spherePosition.y, spherePosition.z)
       }
     } else {
@@ -34,6 +39,8 @@ export default function CameraRig({children}){
       cameraRef.current.lookAt(spherePosition.x, spherePosition.y, spherePosition.z)
     }
     // cameraRef.current.updateProjectionMatrix();
+
+    // console.log(cameraRef.current.position)
   };
 
 
