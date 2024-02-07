@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
+import { useFrame } from "@react-three/fiber";
 
 import Instruction from './Instruction';
 import Dialogue from './Dialogue';
@@ -8,6 +9,8 @@ import Dialogue from './Dialogue';
 export default function NPC({position, dialogue, instruction, onInstructionStateChange, onProximity}) {
   const [dialogueState, setDialogueState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
+  const [lerpCamState, setLerpCamState] = useState(false)
+  const [lerpCounter, setLerpCounter] = useState(0)
 
   const handleClick = () => {
     if(dialogueState == true){
@@ -23,7 +26,34 @@ export default function NPC({position, dialogue, instruction, onInstructionState
     }
   }
 
-  // console.log(instructionState)
+  const lerpCam = () => {
+    setLerpCamState(true)
+  }
+
+
+
+  // if(lerpCamState == true) {
+
+  //   setLerpCounter(lerpCounter++)
+  // }
+
+  
+  // useEffect(() => {
+  //   useFrame(()=>{
+  //     if(frameCount%2 == 1){
+  //       console.log('test')
+  //     }
+  //   })
+  // },[lerpCamState])
+
+    /*
+
+    useState - counter. count++ >> transition variable / lerp alpha
+    useFrame - loop, by framecount (pass in delta?)/modulo 
+    sensor onIntersectionEnter (callback, set state true, if true, inc counter)
+    useEffect - [counter = 1] -> once this happens, execute things inside hook (stop counter, set state false) 
+
+    */
 
   return (
     <>
@@ -40,6 +70,7 @@ export default function NPC({position, dialogue, instruction, onInstructionState
             onIntersectionEnter={() => {
               setDialogueState(true)
               onProximity(true)
+              lerpCam()
             }} 
             onIntersectionExit={() => {
               setDialogueState(false)

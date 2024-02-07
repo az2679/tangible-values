@@ -29,12 +29,11 @@ export default function Person({ onPositionChange }) {
           .multiplyScalar(SPEED)
       ref.current.setLinvel({x:direction.x, y: velocity.y, z:direction.z})
 
-      const spherePosition = ref.current.translation();
-      onPositionChange({
-        x: spherePosition.x,
-        y: spherePosition.y,
-        z: spherePosition.z,
-      })
+      const spherePosition = new Vector3();
+      spherePosition.set(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z)
+
+      // console.log(spherePosition)
+      onPositionChange(spherePosition)
     });
 
     // console.log("Sphere Position:", ref.current.position);
