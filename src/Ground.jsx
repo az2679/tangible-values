@@ -7,7 +7,7 @@ export default function Ground() {
           <planeGeometry args={[1000, 1000]} />
           <meshBasicMaterial />
         </mesh>
-        <CuboidCollider args={[1000, 2, 1000]} position={[0, -3, 0]} setCollisionGroups={0x0004}/>
+        <CuboidCollider args={[1000, 2, 1000]} position={[0, -3, 0]} />
       </RigidBody>
 );
 }

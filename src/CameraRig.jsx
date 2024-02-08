@@ -12,6 +12,7 @@ export default function CameraRig({ children }) {
 
   const [cameraPosition, setCameraPosition] = useState({ x: 0, y: 0, z: 0 });
   const [lookAtPosition, setLookAtPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [thoughtPosition, setThoughtPosition] = useState({ x: 0, y: 0, z: 0 });
 
   const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0, z: 0 });
   const [lerpFactor, setLerpFactor] = useState(0.15);
@@ -24,7 +25,7 @@ export default function CameraRig({ children }) {
   const [index, setIndex] = useState(0);
   const cam0 = { x: spherePosition.x, y: 100, z: spherePosition.z + 150 };
   const cam1 = { x: spherePosition.x, y: 60, z: spherePosition.z + 80 };
-  const cam2 = { x: spherePosition.x, y: 20, z: spherePosition.z + 60 };
+  const cam2 = { x: spherePosition.x, y: 20, z: spherePosition.z + 40 };
 
 
   const handleInstructionStateChange = (newInstructionState) => {
@@ -39,6 +40,10 @@ export default function CameraRig({ children }) {
     setSpherePosition(newPosition);
   };
 
+  const handleThoughtPosition = (newThoughtPosition) => {
+    setThoughtPosition(newThoughtPosition)
+  }
+
   useFrame(() => {
     if (index === 0) {
       setTargetPosition(cam0);
@@ -49,7 +54,8 @@ export default function CameraRig({ children }) {
     }
 
     if (index === 2) {
-      setLookAtPosition({ x: spherePosition.x, y: spherePosition.y + 35, z: spherePosition.z });
+      //set -40 to get the looking far back feeling and so it doesnt distort when u get really close
+      setLookAtPosition({ x: thoughtPosition.x, y: thoughtPosition.y, z: thoughtPosition.z - 40 });
     } else {
       setLookAtPosition(spherePosition);
     }
@@ -111,6 +117,8 @@ export default function CameraRig({ children }) {
           onInstructionStateChange: handleInstructionStateChange,
           proximityState,
           onProximity: handleProximity,
+          thoughtPosition,
+          onThoughtPosition: handleThoughtPosition,
         })
       )}
     </>

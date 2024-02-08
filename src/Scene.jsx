@@ -45,15 +45,22 @@ function Scene() {
 
             <CameraRig>
               <Person />
-              <NPC position={[70, 5, -150]} dialogue={"Hello !"} instruction={"test1 test1 test1 test1 test1 test1 test1 test1 test1 test1 test1 test1"} />
+              <NPC position={[70, 5, -150]} dialogue={"Hello !"} instruction={`
+            You have been given 10$ and have to decide how much of it you want to pass to another person.
+            In the first stage, you keep the remaining amount not sent, while the receiver gains 3 times the amount sent.
+            In the second stage, the receiver may pass nothing or any portion of the money they received back to you. 
+            
+            How much are you sending?`} />
+
+              <NPC position={[-140, 5, 10]} instruction={`
+                Hello hello hello
+                `}/>
+
+
+
+
+
             </CameraRig>
-
-            {/* <Person instructionCam={instructionCam}/> */}
-            {/* <Person instructionCam={instructionCam} onPositionChange={(vector)=>{setPlayerPosition(vector); console.log(playerPosition)}}/> */}
-
-            {/* <NPC position={[30, 5, -90]} dialogue={"Hello !"} instruction={"test1"} instructionCam={() => {setInstructionCam(!instructionCam); console.log(instructionCam)}}/> */}
-            {/* <NPC position={[-100, 5, 10]}/> */}
-
           </Physics>
         </Suspense>
         <Stats />
