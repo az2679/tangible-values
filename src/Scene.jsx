@@ -40,19 +40,19 @@ function Scene() {
 
         {/* Objects 📦 */}
         <Suspense fallback={null}>
-          <Physics debug>
+          <Physics debug gravity={[0, -9.8,0]}>
             <Ground />
 
             <CameraRig>
               <Person />
-              <NPC position={[70, 5, -150]} dialogue={"Hello !"} instruction={`
+              <NPC position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]}dialogue={"Hello !"} instruction={`
             You have been given 10$ and have to decide how much of it you want to pass to another person.
             In the first stage, you keep the remaining amount not sent, while the receiver gains 3 times the amount sent.
             In the second stage, the receiver may pass nothing or any portion of the money they received back to you. 
             
             How much are you sending?`} />
 
-              <NPC position={[-140, 5, 10]} instruction={`
+              <NPC position={[-140, 5, 10]} label= {"Prisoner's Dilemma"} labelPosition={[-100, -8, 160]} instruction={`
                 Hello hello hello
                 `}/>
 

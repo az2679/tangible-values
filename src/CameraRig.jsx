@@ -20,7 +20,7 @@ export default function CameraRig({ children }) {
 
   const { x: camX, y: camY, z: camZ } = cameraPosition;
   const { x: targetX, y: targetY, z: targetZ } = targetPosition;
-  const { x: sphereX, y: sphereY, z: sphereZ } = spherePosition;
+  // const { x: sphereX, y: sphereY, z: sphereZ } = spherePosition;
 
   const [index, setIndex] = useState(0);
   const cam0 = { x: spherePosition.x, y: 100, z: spherePosition.z + 150 };
