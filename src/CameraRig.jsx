@@ -23,9 +23,9 @@ export default function CameraRig({ children }) {
   // const { x: sphereX, y: sphereY, z: sphereZ } = spherePosition;
 
   const [index, setIndex] = useState(0);
-  const cam0 = { x: spherePosition.x, y: 100, z: spherePosition.z + 150 };
-  const cam1 = { x: spherePosition.x, y: 60, z: spherePosition.z + 80 };
-  const cam2 = { x: spherePosition.x, y: 20, z: spherePosition.z + 40 };
+  const thirdPersonCam = { x: spherePosition.x, y: 100, z: spherePosition.z + 150 };
+  const interactionCam = { x: spherePosition.x, y: 60, z: spherePosition.z + 80 };
+  const instructionCam = { x: spherePosition.x, y: 20, z: spherePosition.z + 40 };
 
 
   const handleInstructionStateChange = (newInstructionState) => {
@@ -46,11 +46,11 @@ export default function CameraRig({ children }) {
 
   useFrame(() => {
     if (index === 0) {
-      setTargetPosition(cam0);
+      setTargetPosition(thirdPersonCam);
     } else if (index === 1) {
-      setTargetPosition(cam1);
+      setTargetPosition(interactionCam);
     } else {
-      setTargetPosition(cam2);
+      setTargetPosition(instructionCam);
     }
 
     if (index === 2) {
