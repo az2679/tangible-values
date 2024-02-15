@@ -44,7 +44,7 @@ export default function Person({ onPositionChange, onProximity, onThoughtPositio
 
     return (
         <>
-          <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={[0, 0, 0]} scale={5} colliders="ball" canSleep={false} name="Person">
+          <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={[0, 5, 0]} scale={5} colliders="ball" canSleep={false} name="Person">
               <mesh>
                 <sphereGeometry />
                 <meshNormalMaterial />

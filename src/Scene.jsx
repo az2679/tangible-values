@@ -52,20 +52,23 @@ function Scene() {
             {/* <planeHelper args={[floorPlane, 50, "red"]}  /> */}
             <CameraRig>
               <Person />
-              <Thought position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
+              <Thought key={"trust"} position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
             You have been given 10$ and have to decide how much of it you want to pass to another person.
             In the first stage, you keep the remaining amount not sent, while the receiver gains 3 times the amount sent.
             In the second stage, the receiver may pass nothing or any portion of the money they received back to you. 
             
             How much are you sending?`} > 
-            <Trust />
+            <Trust position={[70, 5, -200]} />
             </Thought>
 
+            {/* <Trust startPosition={[0,0,0]} /> */}
 
 
-              {/* <Thought position={[-200, 5, 10]} label= {"Prisoner's Dilemma"} labelPosition={[-100, -8, 160]} instruction={`
+              <Thought key={"prisoners"} position={[-200, 5, 10]} label= {"Prisoner's Dilemma"} labelPosition={[-100, -8, 160]} instruction={`
                 Hello hello hello
-                `}/> */}
+                `}>
+
+                </Thought>
 
 
 
