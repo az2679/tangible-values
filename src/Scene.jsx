@@ -16,9 +16,6 @@ import { Vector3, Plane } from "three";
 
 function Scene() { 
 
-  const floorPlane = new Plane(new Vector3(0, 1, 0),0);
-  const [dragState, setDragState] = useState(false);
-
   return (
     <div id="canvas_wrapper">
       <KeyboardControls
@@ -49,7 +46,6 @@ function Scene() {
         <Suspense fallback={null}>
           <Physics debug gravity={[0, -9.8,0]} colliders={false}>
             <Ground />
-            {/* <planeHelper args={[floorPlane, 50, "red"]}  /> */}
             <CameraRig>
               <Person />
               <Thought key={"trust"} position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
@@ -61,13 +57,13 @@ function Scene() {
             <Trust position={[70, 5, -200]} />
             </Thought>
 
-            {/* <Trust startPosition={[0,0,0]} /> */}
+            {/* <Trust position={[0,0,0]} /> */}
 
 
               <Thought key={"prisoners"} position={[-200, 5, 10]} label= {"Prisoner's Dilemma"} labelPosition={[-100, -8, 160]} instruction={`
                 Hello hello hello
                 `}>
-
+{/* <Trust position={[-200, 5, 10]} />  */}
                 </Thought>
 
 

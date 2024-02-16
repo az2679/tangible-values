@@ -58,7 +58,13 @@ export default function Thought({id, position, label, labelPosition, dialogue, i
             {children}
           </RigidBody>
         ))} */}
+
+        
       </RigidBody>
+      {/* <RigidBody type="fixed" colliders="cuboid">
+      {children}
+      </RigidBody> */}
+
       {React.Children.map(children, (child, index) =>
           React.cloneElement(child, { key: `child-${index}` })
         )}
@@ -66,5 +72,6 @@ export default function Thought({id, position, label, labelPosition, dialogue, i
 );
 }
 
-
+//have to move children outside rigid body so drag position is unaffected by parent position
+//but wanted to put inside parent rigid body to handle collision 
 
