@@ -14,8 +14,8 @@ import DragObj from './DragObj';
 
 import { Vector3, Plane } from "three";
 
-function Scene() { 
 
+function Scene() { 
   return (
     <div id="canvas_wrapper">
       <KeyboardControls
@@ -48,13 +48,13 @@ function Scene() {
             <Ground />
             <CameraRig>
               <Person />
-              <Thought key={"trust"} position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
+              <Thought position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
             You have been given 10$ and have to decide how much of it you want to pass to another person.
             In the first stage, you keep the remaining amount not sent, while the receiver gains 3 times the amount sent.
             In the second stage, the receiver may pass nothing or any portion of the money they received back to you. 
             
             How much are you sending?`} > 
-            <Trust position={[70, 5, -200]} />
+            <Trust position={[50, 5, -200]} />
             </Thought>
 
             {/* <Trust position={[0,0,0]} /> */}
