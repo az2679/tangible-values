@@ -10,10 +10,8 @@ import Person from './Person';
 import Thought from './Thought';
 
 import Trust from './Trust';
-import DragObj from './DragObj';
 
-import { Vector3, Plane } from "three";
-
+import Controls from './Controls';
 
 function Scene() { 
   return (
@@ -47,6 +45,9 @@ function Scene() {
           <Physics debug gravity={[0, -9.8,0]} colliders={false}>
             <Ground />
             <CameraRig>
+      <Controls position={[20, 0, 70]} />
+
+
               <Person />
               <Thought position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
             You have been given 10$ and have to decide how much of it you want to pass to another person.

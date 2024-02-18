@@ -9,12 +9,13 @@ import Label from './Label';
 export default function Thought({position, label, labelPosition, dialogue, instruction, onInstructionStateChange, proximityState, onProximity, children}) {
   const [labelState, setLabelState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
+  const [dialogueState, setDialogueState] = useState(false);
   const [hoverState, setHoverState] = useState(false);
 
   const handleClick = () => {
     if(proximityState == true){
-    setInstructionState(!instructionState)
-    onInstructionStateChange(!instructionState)
+    // setInstructionState(!instructionState)
+    // onInstructionStateChange(!instructionState)
     setLabelState(false)
     } else {
       setLabelState(!labelState)
@@ -41,16 +42,19 @@ export default function Thought({position, label, labelPosition, dialogue, instr
             <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
           </mesh>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
-          <Dialogue dialogue={dialogue} state={proximityState} />
-          <Instruction position={[7, 30, 20]} instruction={instruction} state={instructionState} onClick={handleInstructionClick}/>
+          <Dialogue dialogue={dialogue} state={dialogueState} />
+          <Instruction position={[2, 30, -10]} instruction={instruction} state={instructionState} onClick={handleInstructionClick}/>
           <CapsuleCollider args={[5, 100, 5]} sensor
             onIntersectionEnter={(payload) => {
+              if(payload.other.rigidBodyObject.children[0].name == "person"){
+              setDialogueState(true)
+              }
             }} 
             onIntersectionExit={(payload) => {
               //payload.other.rigidBodyObject.children[1].name = "coin"
               if(payload.other.rigidBodyObject.children[0].name == "person"){
               setInstructionState(false)
-              onInstructionStateChange(instructionState)
+              onInstructionStateChange(false)
               onProximity(false)
               }
             }} />
@@ -58,17 +62,17 @@ export default function Thought({position, label, labelPosition, dialogue, instr
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
                 setInstructionState(true)
-                onInstructionStateChange(instructionState)
+                onInstructionStateChange(true)
+                setDialogueState(false)
               }
             }} 
-            // onIntersectionExit={(payload) => {
-            //   //payload.other.rigidBodyObject.children[1].name = "coin"
-            //   if(payload.other.rigidBodyObject.children[0].name == "person"){
-            //   setInstructionState(false)
-            //   onInstructionStateChange(instructionState)
-            //   onProximity(false)
-            //   }
-            // }} 
+            onIntersectionExit={(payload) => {
+              if(payload.other.rigidBodyObject.children[0].name == "person"){
+                setInstructionState(false)
+                onInstructionStateChange(false)
+                setDialogueState(true)
+              }
+            }} 
           />
           {/* {children} */}
       {/* {React.Children.map((children, index) => (
