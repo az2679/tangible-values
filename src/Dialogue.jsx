@@ -1,20 +1,22 @@
+import { Text3D, Center } from "@react-three/drei";
 import helvetiker from "three/examples/fonts/helvetiker_regular.typeface.json";
-import { extend } from '@react-three/fiber';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import { RigidBody } from '@react-three/rapier';
 
-extend({ TextGeometry })
 
 export default function Dialogue(props) {
   const {position, dialogue, state} = props
-  const font = new FontLoader().parse(helvetiker);
+
 
   return (
     <>
-      <mesh position={position ? position : [-7, 15, 0]} visible={state}>
-        <textGeometry args={[dialogue ? dialogue : "missing dialogue", {font, size:5, height: 1}]}/>
-        <meshLambertMaterial attach='material' color={"gray"}/>
-      </mesh>
+     <RigidBody type="fixed">
+      <Center top position={position ? position : [0, 15, 0]} scale={5} letterSpacing={0.3}>
+        <Text3D font={helvetiker} visible={state}>
+          {dialogue}
+          <meshBasicMaterial color={"gray"} />
+        </Text3D>
+      </Center>
+    </RigidBody>
     </>
 );
 }

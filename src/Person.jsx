@@ -57,7 +57,6 @@ export default function Person({ onPositionChange, onProximity, onThoughtPositio
                   }
                 }} 
                 onIntersectionExit={() => {
-                  // onProximity(false)
                 }
                 } 
               />

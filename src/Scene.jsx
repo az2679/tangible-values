@@ -12,6 +12,7 @@ import Thought from './Thought';
 import Trust from './Trust';
 
 import Controls from './Controls';
+import Dictator from './Dictator';
 
 function Scene() { 
   return (
@@ -29,13 +30,7 @@ function Scene() {
         <axesHelper args={[10]} />
 
         {/* Camera 🎥 */}
-        {/* <PerspectiveCamera position={[0, 100, 150]} args={[60, window.innerWidth / window.innerHeight, 0.1, 4000]} makeDefault /> */}
- 
-
         {/* Controls */}
-        {/* <OrbitControls maxPolarAngle={Math.PI/2}/> */}
-        {/* <OrbitControls enableZoom={false} minPolarAngle={Math.PI/4} maxPolarAngle={Math.PI/4} /> */}
-        {/* <MapControls enableZoom={false} maxPolarAngle={Math.PI/2} listenToKeyEvents={Window} /> */}
 
         {/* Lights 💡 */}
         <ambientLight intensity={1} />
@@ -45,30 +40,47 @@ function Scene() {
           <Physics debug gravity={[0, -9.8,0]} colliders={false}>
             <Ground />
             <CameraRig>
-      <Controls position={[20, 0, 70]} />
-
-
+              <Controls position={[20, 0, 70]} />
               <Person />
-              <Thought position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -8, 160]} dialogue={"Hello !"} instruction={`
+              <Thought position={[70, 5, -200]} label={"Trust Game"} labelPosition={[100, -7, 160]} dialogue={"Hello !"} dialoguePosition ={[0, 15, 0]} instruction={`
             You have been given 10$ and have to decide how much of it you want to pass to another person.
             In the first stage, you keep the remaining amount not sent, while the receiver gains 3 times the amount sent.
             In the second stage, the receiver may pass nothing or any portion of the money they received back to you. 
             
             How much are you sending?`} > 
-            <Trust position={[50, 5, -200]} />
-            </Thought>
+                <Trust position={[50, 5, -200]} />
+              </Thought>
 
-            {/* <Trust position={[0,0,0]} /> */}
-
-
-              <Thought key={"prisoners"} position={[-200, 5, 10]} label= {"Prisoner's Dilemma"} labelPosition={[-100, -8, 160]} instruction={`
-                Hello hello hello
+              <Thought key={"exchange"} position={[-200, 5, 10]} label= {"Exchange Game"} labelPosition={[-100, -7, 160]} dialogue={"Thought Dilemma 2"} dialoguePosition={[0, 15, 0]} instruction={`
+                You are playing an exchange game with another person and have to choose between keeping the item you have or exchanging it. 
+                You have an apple but prefer an orange, while the other person has an orange and prefers an apple. 
+                Both of you prefer both fruit to just one and either fruit to none at all. 
+                
+                You both have to make a decision, do you keep your fruit or give it to the other person?
                 `}>
-{/* <Trust position={[-200, 5, 10]} />  */}
-                </Thought>
+              </Thought>
 
+              <Thought key={"volunteer"} position={[-400, 5, -400]} label= {"Volunteer's Dilemma"} labelPosition={[-200, -7, 150]} dialogue={"pineapple"} dialoguePosition={[0, 15, 0]} instruction={`
+                You are playing a parlor game with a few people. 
+                Each person can claim either 1$ or 5$ each. 
+                If at least one person chooses 1$, then everyone will get the amount they wrote down. 
+                If no one claims 1$, then everyone gets nothing. 
+                
+                How much are you claiming?
+                `}>
+              </Thought>
 
+              <Thought key={"dictator"} position={[250, 5, 250]} label= {"Dictator's Game"} labelPosition={[100, -7, 200]} dialogue={"reciever"} dialoguePosition={[0, 15, 0]} instruction={`
+                You have been given 10$ and have to decide to how much of it you want to split with another person. 
+                You can give all of it, none of it, or a portion of it, 
+                while the other person can only accept what has been given / the proposed division. 
+                
+                How much are you giving?
+                `}>
+                <Dictator position={[300, 5, 270]} />
+              </Thought>
 
+             
 
 
             </CameraRig>

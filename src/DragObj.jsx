@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
@@ -38,7 +38,7 @@ export default function DragObj({ name, startPosition, state, plane }) {
   return (
     <>
       <RigidBody
-        name="test"
+        name={name}
         mass={40}
         gravityScale={20}
         type="dynamic"
@@ -46,7 +46,7 @@ export default function DragObj({ name, startPosition, state, plane }) {
         canSleep={false}
       >
         <CylinderCollider args={[0.5, 2]} position={position} />
-        <animated.mesh {...spring} {...bind()} name="coin" >
+        <animated.mesh {...spring} {...bind()} >
           <cylinderGeometry args={[2, 2, 1, 15, 1]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
         </animated.mesh>
