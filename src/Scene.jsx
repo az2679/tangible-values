@@ -77,7 +77,7 @@ function Scene() {
                 
                 How much are you giving?
                 `}>
-                <Dictator position={[300, 5, 270]} />
+                <Dictator position={[300, 5, 250]} />
               </Thought>
 
              

@@ -1,21 +1,16 @@
 import { useRef, useState, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useFrame, useThree } from "@react-three/fiber";
-
-import { useDrag } from "@use-gesture/react";
-import { animated, useSpring } from "@react-spring/three";
 import { Vector3, Plane } from "three";
-
 
 import DragObj from './DragObj';
 import Dialogue from './Dialogue';
 
-function Sensor({ sensorPosition, onSensedChange }) {
-  const [sensed, setSensed] = useState(false);
-  
+function Sensor({ number, sensorPosition, onSensedChange }) {
+  const [count, setCounter] = useState(0);
+
   useEffect(() => {
-    onSensedChange(sensed);
-  }, [sensed]);
+    onSensedChange(number, count);
+  }, [count]);
  
     
   return(
@@ -27,12 +22,12 @@ function Sensor({ sensorPosition, onSensedChange }) {
     <CuboidCollider sensor args={[4, 4,4]} 
       onIntersectionEnter={(payload)=>{
         if(payload.other.rigidBodyObject.name == "coin"){
-          setSensed(true)
+          setCounter((value) => value + 1)
         }
       }}
       onIntersectionExit={(payload)=>{
         if(payload.other.rigidBodyObject.name == "coin"){
-          setSensed(false)
+          setCounter((value) => value - 1)
         }
       }}
     />
@@ -44,35 +39,42 @@ export default function Dictator(props) {
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
-  const [sensors, setSensors] = useState([]);
-  const [counter, setCounter] = useState(2);
+  const [sensors, setSensors] = useState({});
+  const [counter, setCounter] = useState(0);
 
-  const handleSensedChange = (newSensor) => {
-    console.log(newSensor)
-    setSensors((prevSensors) => {
-      const sensorHistory = [...prevSensors, newSensor];
-      console.log(sensorHistory)
-      const updatedSensors = sensorHistory.slice(-2);
-      const totalSensed = updatedSensors.filter((sensor) => sensor).length;
+    const handleSensedChange = (number, count) => {
+      setSensors((prevSensors) => ({
+        ...prevSensors,
+        [number]:count,
+      }));
+    };
+
+    useEffect(() => {
+    //acutal total sensed
+      // const totalSensed = Object.values(sensors).reduce((acc, currentValue) => acc + currentValue, 0);
+    //max 1 sensed allowed in each sensor 
+      const totalSensed = Object.values(sensors).map(value => Math.min(value, 1)).reduce((acc, currentValue) => acc + currentValue, 0);
       setCounter(totalSensed);
-      return sensorHistory;
-    });
+    }, [sensors]);
 
-
-    // if(newSensor == true){
-    //   setCounter((value) => value + 1)
-    // } else if (newSensor == false){
-    //   setCounter((value) => value - 1)
-    // }
-  };
   
 
 
   
   return (
     <>
-      <Sensor sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange}/>
-      <Sensor sensorPosition={[position[0]-10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
+      <Sensor number={0} sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange}/>
+      <Sensor number={1} sensorPosition={[position[0]-10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
+      <Sensor number={2} sensorPosition={[position[0]+0, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
+      <Sensor number={3} sensorPosition={[position[0]+10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
+      <Sensor number={4} sensorPosition={[position[0]+20, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
+      
+      <Sensor number={5} sensorPosition={[position[0]-20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
+      <Sensor number={6} sensorPosition={[position[0]-10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
+      <Sensor number={7} sensorPosition={[position[0]+0, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
+      <Sensor number={8} sensorPosition={[position[0]+10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
+      <Sensor number={9} sensorPosition={[position[0]+20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
+      
 
       <Dialogue dialogue={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
 
