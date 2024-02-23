@@ -3,7 +3,7 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 
 import DragObj from './DragObj';
-import Dialogue from './Dialogue';
+import Text from './Text';
 
 function Sensor({ number, sensorPosition, onSensedChange }) {
   const [count, setCounter] = useState(0);
@@ -76,7 +76,7 @@ export default function Dictator(props) {
       <Sensor number={9} sensorPosition={[position[0]+20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
       
 
-      <Dialogue dialogue={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
+      <Text text={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
 
       <DragObj name="coin" startPosition={[position[0]-20, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>
       <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>

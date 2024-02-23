@@ -3,7 +3,7 @@ import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 
 
 import Instruction from './Instruction';
-import Dialogue from './Dialogue';
+import Text from './Text';
 import Label from './Label';
 
 export default function Thought({position, label, labelPosition, dialogue, dialoguePosition, instruction, onInstructionStateChange, proximityState, onProximity, children}) {
@@ -41,7 +41,7 @@ export default function Thought({position, label, labelPosition, dialogue, dialo
             <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
           </mesh>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
-          <Dialogue dialogue={dialogue} position={dialoguePosition} state={dialogueState} />
+          <Text text={dialogue} position={dialoguePosition} state={dialogueState} />
           <Instruction position={[2, 30, -10]} instruction={instruction} state={instructionState} onClick={handleInstructionClick}/>
           <CapsuleCollider args={[5, 100, 5]} sensor
             onIntersectionEnter={(payload) => {

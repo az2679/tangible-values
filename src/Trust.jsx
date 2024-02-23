@@ -8,7 +8,7 @@ import { Vector3, Plane } from "three";
 
 
 import DragObj from './DragObj';
-import Dialogue from './Dialogue';
+import Text from './Text';
 
 export default function Trust(props) {
   const { position } = props;
@@ -41,7 +41,7 @@ export default function Trust(props) {
 
      
 
-      <Dialogue dialogue={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
+      <Text text={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
 
       <DragObj name="coin" startPosition={[position[0]-20, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>
       <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>

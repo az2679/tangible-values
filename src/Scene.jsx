@@ -9,10 +9,10 @@ import CameraRig from './CameraRig';
 import Person from './Person';
 import Thought from './Thought';
 
-import Trust from './Trust';
-
 import Controls from './Controls';
+import Trust from './Trust';
 import Dictator from './Dictator';
+import Exchange from './Exchange';
 
 function Scene() { 
   return (
@@ -58,6 +58,7 @@ function Scene() {
                 
                 You both have to make a decision, do you keep your fruit or give it to the other person?
                 `}>
+                  <Exchange position={[-150, 5, 40]} />
               </Thought>
 
               <Thought key={"volunteer"} position={[-400, 5, -400]} label= {"Volunteer's Dilemma"} labelPosition={[-200, -7, 150]} dialogue={"pineapple"} dialoguePosition={[0, 15, 0]} instruction={`
