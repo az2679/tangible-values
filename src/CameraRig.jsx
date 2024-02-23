@@ -54,7 +54,6 @@ export default function CameraRig({ children }) {
     }
 
     if (index === 2) {
-      //set -40 to get the looking far back feeling and so it doesnt distort when u get really close
       setLookAtPosition({ x: thoughtPosition.x, y: thoughtPosition.y, z: thoughtPosition.z - 40 });
     } else {
       setLookAtPosition(spherePosition);

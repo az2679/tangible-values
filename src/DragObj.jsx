@@ -17,7 +17,6 @@ export default function DragObj({ name, startPosition, state, plane }) {
     });
     setPosition(spring.position.animation.to);
   };
-  
 
   const bind = useDrag(({ active, event }) => {
     let planeIntersectPoint = new Vector3([0, 0, 0]);
@@ -26,10 +25,8 @@ export default function DragObj({ name, startPosition, state, plane }) {
       api.start({
         position: [planeIntersectPoint.x, 10, planeIntersectPoint.z],
       });
-
     } else {
       resetObj();
-      
     }
     event.stopPropagation();
     state(active);

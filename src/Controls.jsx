@@ -2,9 +2,7 @@ import { Text3D } from "@react-three/drei";
 import helvetiker from "three/examples/fonts/helvetiker_regular.typeface.json";
 import { RigidBody } from '@react-three/rapier';
 
-
 export default function Controls({position}) {
-
   return (
     <>
     <RigidBody mass={1} type="fixed" colliders='hull'>

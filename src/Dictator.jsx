@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 
@@ -11,8 +11,7 @@ function Sensor({ number, sensorPosition, onSensedChange }) {
   useEffect(() => {
     onSensedChange(number, count);
   }, [count]);
- 
-    
+
   return(
     <RigidBody name="dictator" mass={1} type="fixed" colliders={false} position={sensorPosition} >
     <mesh position={[0, 0.5, 0]} rotation={[-Math.PI/2, 0,0]}>
@@ -57,10 +56,6 @@ export default function Dictator(props) {
       setCounter(totalSensed);
     }, [sensors]);
 
-  
-
-
-  
   return (
     <>
       <Sensor number={0} sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange}/>
@@ -88,9 +83,6 @@ export default function Dictator(props) {
       <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+38]} state={setDragState} plane={floorPlane}/>
       <DragObj name="coin" startPosition={[position[0]-40, 1, position[2]+54]} state={setDragState} plane={floorPlane}/>
       <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+55]} state={setDragState} plane={floorPlane}/>
-
-
-
     </>
   );
 }

@@ -6,7 +6,6 @@ import { RigidBody } from '@react-three/rapier';
 export default function Text(props) {
   const {position, text, state} = props
 
-
   return (
     <>
      <RigidBody type="fixed">

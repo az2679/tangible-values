@@ -1,13 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Text from './Text';
-
 
 export default function Exchange(props) {
   const { position } = props;
   const[count, setCount] = useState(0)
 
-  
   return (
     <>
       <RigidBody name="exchange" mass={1} type="fixed" colliders={false} position={[position[0]-20, 1, position[2]]} >
@@ -28,6 +26,7 @@ export default function Exchange(props) {
           }}
         />
       </RigidBody>
+
       <Text text={`${count}`} state={true} position={[position[0]-20, 15, position[2]]} />
 
       <RigidBody mass={50} gravityScale={50} type="dynamic" colliders="cuboid" canSleep={false} position={[position[0]-50, 5, position[2]+10]} >
