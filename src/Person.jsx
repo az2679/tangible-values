@@ -42,25 +42,25 @@ export default function Person({ onPositionChange, onProximity, onThoughtPositio
       })
     }
 
-    return (
-        <>
-          <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={[0, 10, 0]} scale={5} colliders="ball" canSleep={false} name="person">
-              <mesh name="person">
-                <sphereGeometry />
-                <meshNormalMaterial />
-              </mesh>
-              <BallCollider args={[1.1, 1.1, 1.1]} sensor 
-                onIntersectionEnter={(payload) => {
-                  if(payload.other.rigidBodyObject.name != "ground"){
-                  onProximity(true)
-                  handleThoughtPosition(payload.other.rigidBodyObject.position)
-                  }
-                }} 
-                onIntersectionExit={() => {
-                }
-                } 
-              />
-          </RigidBody>
-        </>
-    );
+  return (
+    <>
+      <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={[0, 10, 0]} scale={5} colliders="ball" canSleep={false} name="person">
+        <mesh name="person">
+          <sphereGeometry />
+          <meshNormalMaterial />
+        </mesh>
+        <BallCollider args={[1.1, 1.1, 1.1]} sensor 
+            onIntersectionEnter={(payload) => {
+            if(payload.other.rigidBodyObject.name != "ground"){
+            onProximity(true)
+            handleThoughtPosition(payload.other.rigidBodyObject.position)
+            }
+          }} 
+          onIntersectionExit={() => {
+          }
+          } 
+        />
+      </RigidBody>
+    </>
+  );
 }

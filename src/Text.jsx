@@ -4,12 +4,12 @@ import { RigidBody } from '@react-three/rapier';
 
 
 export default function Text(props) {
-  const {position, text, state} = props
+  const {text, state, position, rotation} = props
 
   return (
     <>
      <RigidBody type="fixed">
-      <Center top position={position ? position : [0, 15, 0]} scale={5} letterSpacing={0.3}>
+      <Center top position={position ? position : [0, 15, 0]} rotation={rotation ? rotation : [0, 0, 0]} scale={5} letterSpacing={0.3}>
         <Text3D font={helvetiker} visible={state}>
           {text}
           <meshBasicMaterial color={"gray"} />

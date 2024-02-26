@@ -5,7 +5,7 @@ import { Vector3, Plane } from "three";
 import DragObj from './DragObj';
 import Text from './Text';
 
-function Sensor({ number, sensorPosition, onSensedChange }) {
+function NumSensor({ number, sensorPosition, onSensedChange }) {
   const [count, setCounter] = useState(0);
 
   useEffect(() => {
@@ -58,17 +58,17 @@ export default function Dictator(props) {
 
   return (
     <>
-      <Sensor number={0} sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange}/>
-      <Sensor number={1} sensorPosition={[position[0]-10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
-      <Sensor number={2} sensorPosition={[position[0]+0, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
-      <Sensor number={3} sensorPosition={[position[0]+10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
-      <Sensor number={4} sensorPosition={[position[0]+20, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={0} sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={1} sensorPosition={[position[0]-10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={2} sensorPosition={[position[0]+0, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={3} sensorPosition={[position[0]+10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={4} sensorPosition={[position[0]+20, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
       
-      <Sensor number={5} sensorPosition={[position[0]-20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
-      <Sensor number={6} sensorPosition={[position[0]-10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
-      <Sensor number={7} sensorPosition={[position[0]+0, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
-      <Sensor number={8} sensorPosition={[position[0]+10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
-      <Sensor number={9} sensorPosition={[position[0]+20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={5} sensorPosition={[position[0]-20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={6} sensorPosition={[position[0]-10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={7} sensorPosition={[position[0]+0, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={8} sensorPosition={[position[0]+10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
+      <NumSensor number={9} sensorPosition={[position[0]+20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
       
 
       <Text text={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />

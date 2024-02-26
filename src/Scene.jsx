@@ -13,6 +13,7 @@ import Controls from './Controls';
 import Trust from './Trust';
 import Dictator from './Dictator';
 import Exchange from './Exchange';
+import Volunteer from './Volunteer';
 
 function Scene() { 
   return (
@@ -69,6 +70,7 @@ function Scene() {
                 
                 How much are you claiming?
                 `}>
+                <Volunteer position={[-400, 5, -360]}/>
               </Thought>
 
               <Thought key={"dictator"} position={[250, 5, 250]} label= {"Dictator's Game"} labelPosition={[100, -7, 200]} dialogue={"reciever"} dialoguePosition={[0, 15, 0]} instruction={`
