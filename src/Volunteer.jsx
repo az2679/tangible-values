@@ -7,11 +7,11 @@ function Eraser({position, onHoldChange}){
     <>
     <RigidBody mass={500} gravityScale={500} type="dynamic" position={position} colliders={false} lockRotations={true} canSleep={false} name="eraser">
       <mesh>
-        <boxGeometry args={[5,5,5]} />
+        <boxGeometry args={[7,5,5]} />
         <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
       </mesh>
-      <CuboidCollider args={[2.5, 2.5, 2.5]}/>
-      <CuboidCollider args={[3, 3, 3]} sensor
+      <CuboidCollider args={[3.5, 2.5, 2.5]}/>
+      <CuboidCollider args={[5, 4, 4]} sensor
       onIntersectionEnter={(payload)=>{
         if(payload.other.rigidBodyObject.name == "person"){
           onHoldChange(true)

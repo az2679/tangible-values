@@ -4,12 +4,15 @@ import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import { Vector3 } from "three";
 
+import { useFrame } from "@react-three/fiber";
+
 export default function DragObj({ name, startPosition, state, plane }) {
   const [position, setPosition] = useState(startPosition);
+  // const [shadow, setShadow] = useState(startPosition);
 
   const [spring, api] = useSpring(() => ({
     position: startPosition,
-  }));
+  })); 
 
   const resetObj = () => {
     api.start({
@@ -32,6 +35,11 @@ export default function DragObj({ name, startPosition, state, plane }) {
     state(active);
   }, { dragEnd: true, delay: true });
 
+//  useFrame(()=>{
+//   setShadow([position[0], 0, position[2]])
+//  })
+
+
   return (
     <>
       <RigidBody
@@ -48,6 +56,11 @@ export default function DragObj({ name, startPosition, state, plane }) {
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
         </animated.mesh>
       </RigidBody>
+
+      {/* <mesh position={shadow}>
+        <cylinderGeometry args={[2, 2, 1, 15, 1]} />
+        <meshBasicMaterial color="gray" />
+      </mesh> */}
     </>
   );
 }

@@ -1,75 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 
 import DragObj from './DragObj';
 import Text from './Text';
 
-function NumSensor({ number, sensorPosition, onSensedChange }) {
-  const [count, setCounter] = useState(0);
-
-  useEffect(() => {
-    onSensedChange(number, count);
-  }, [count]);
-
-  return(
-    <RigidBody name="dictator" mass={1} type="fixed" colliders={false} position={sensorPosition} >
-    <mesh position={[0, 0.5, 0]} rotation={[-Math.PI/2, 0,0]}>
-      <planeGeometry args={[7, 7]} />
-      <meshBasicMaterial color={"gray"}/>
-     </mesh>
-    <CuboidCollider sensor args={[4, 4,4]} 
-      onIntersectionEnter={(payload)=>{
-        if(payload.other.rigidBodyObject.name == "coin"){
-          setCounter((value) => value + 1)
-        }
-      }}
-      onIntersectionExit={(payload)=>{
-        if(payload.other.rigidBodyObject.name == "coin"){
-          setCounter((value) => value - 1)
-        }
-      }}
-    />
-  </RigidBody>
-  )
-}
-
-export default function Dictator(props) {
+export default function Trust(props) {
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
-  const [sensors, setSensors] = useState({});
   const [counter, setCounter] = useState(0);
-
-    const handleSensedChange = (number, count) => {
-      setSensors((prevSensors) => ({
-        ...prevSensors,
-        [number]:count,
-      }));
-    };
-
-    useEffect(() => {
-    //acutal total sensed
-      // const totalSensed = Object.values(sensors).reduce((acc, currentValue) => acc + currentValue, 0);
-    //max 1 sensed allowed in each sensor 
-      const totalSensed = Object.values(sensors).map(value => Math.min(value, 1)).reduce((acc, currentValue) => acc + currentValue, 0);
-      setCounter(totalSensed);
-    }, [sensors]);
 
   return (
     <>
-      <NumSensor number={0} sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={1} sensorPosition={[position[0]-10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={2} sensorPosition={[position[0]+0, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={3} sensorPosition={[position[0]+10, 0, position[2]+5]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={4} sensorPosition={[position[0]+20, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
-      
-      <NumSensor number={5} sensorPosition={[position[0]-20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={6} sensorPosition={[position[0]-10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={7} sensorPosition={[position[0]+0, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={8} sensorPosition={[position[0]+10, 0, position[2]-5]} onSensedChange={handleSensedChange}/>
-      <NumSensor number={9} sensorPosition={[position[0]+20, 0, position[2]-10]} onSensedChange={handleSensedChange}/>
-      
+      <RigidBody name="trust" mass={1} type="fixed" colliders={false} position={[position[0]-20, 1, position[2]]} >
+        {/* <mesh /> */}
+        <mesh position={[0, 0, 0]} rotation={[-Math.PI/2, 0,0]}>
+          <planeGeometry args={[25, 15]} />
+          <meshBasicMaterial color={"gray"}/>
+         </mesh>
+        <CuboidCollider sensor args={[13, 5,9]} 
+          onIntersectionEnter={(payload)=>{
+            if(payload.other.rigidBodyObject.name == "coin"){
+              setCounter((value) => value + 1)
+            }
+          }}
+          onIntersectionExit={(payload)=>{
+            if(payload.other.rigidBodyObject.name == "coin"){
+              setCounter(counter-1)
+            }
+          }}
+        />
+      </RigidBody>
 
       <Text text={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
 
