@@ -5,6 +5,7 @@ import { Vector3, Plane } from "three";
 import DragObj from './DragObj';
 import Text from './Text';
 import NumSensor from './NumSensor';
+import Submit from './Submit';
 
 function NumSensorMult({option, position, handleSensedChange}){
   return(
@@ -23,7 +24,6 @@ function NumSensorMult({option, position, handleSensedChange}){
     </>
   )
 }
-
 function CoinMult({position, setDragState, floorPlane}){
   return(
     <>
@@ -49,6 +49,9 @@ export default function Trust(props) {
   const [userSensors, setUserSensors] = useState({});
   const [confedCounter, setConfedCounter] = useState(0);
   const [userCounter, setUserCounter] = useState(0);
+
+  const [confed, setConfed] = useState(0)
+  const [confedState, setConfedState] = useState(false)
 
     const handleSensedChange = (option, number, count) => {
       if(option == "confed"){
@@ -78,10 +81,23 @@ export default function Trust(props) {
       // setUserCounter(totalUserSensed);
     }, [confedSensors, userSensors]);
 
+
+    const randomAssignment = () => {
+      return Math.floor(Math.random()*((confedCounter*3) + 1));
+    }
+    const handleSubmit = () => {
+      setConfed(randomAssignment())
+      setConfedState(true)
+
+      console.log(`Stage 2: Returned ${confed}`)
+    }
+
   return (
     <>
       <Text text={`${confedCounter}`} state={true} position={[position[0], 0, position[2]+75]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`remaining: ${userCounter}`} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
+
+      <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
       <NumSensorMult option="confed" position={[position[0], position[1], position[2]+105]} handleSensedChange={handleSensedChange}/>
       {/* <NumSensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange}/> */}
@@ -104,6 +120,8 @@ export default function Trust(props) {
           }}
         />
       </RigidBody>
+
+      <Submit position={[590, 5, -800]} onSubmit={handleSubmit}/>
 
 
       <CoinMult position={[position[0], position[1], position[2]+175]} setDragState = {setDragState} floorPlane = {floorPlane}/>

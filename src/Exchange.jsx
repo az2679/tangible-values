@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Text from './Text';
 import BoolSensor from './BoolSensor';
+import Submit from './Submit';
 
 export default function Exchange(props) {
   const { position } = props;
@@ -9,6 +10,9 @@ export default function Exchange(props) {
   const[exchange, setExchange] = useState(false)
 
   const[confed, setConfed] = useState(false)
+  const[confedState, setConfedState] = useState(false)
+  const[confedText, setConfedText] = useState("null")
+  const[confedText1, setConfedText1] = useState("n")
 
 
   const handleSensedChange = (option, number, bool) => {
@@ -16,17 +20,51 @@ export default function Exchange(props) {
       setKeep(bool)
     } else if(option == "exchange"){
       setExchange(bool);
-    } else if(option == "confed"){
-      setConfed(bool);
-    }
+    } 
+    // else if(option == "confed"){
+    //   setConfed(bool);
+    // }
   };
+
+  const randomAssignment = () => {
+    if(Math.floor(Math.random()*2) == 0){
+      return true
+    } else {
+      return false
+    }
+  }
+  const handleSubmit = () => {
+    setConfed(randomAssignment())
+    setConfedState(true)
+
+    if(confed == true){
+      setConfedText("trade")
+      setConfedText1("O")
+    } else {
+      setConfedText("keep")
+      setConfedText1("X")
+    }
+    
+
+    // console.log(confedState)
+    if(confed == true && exchange == true){
+      console.log(`equal trade: confed ${confed}, user ${exchange}`)
+    } else if (confed == true && keep == true || confed == false && exchange == true){
+      console.log(`unequal trade: confed ${confed}, user ${exchange}`)
+    } else if (confed == false && keep == true){
+      console.log(`no trade: confed ${confed}, user ${exchange}`)
+    }
+  }
 
   return (
     <>
       <Text text={`<-->`} state={true} position={[position[0]-2, 0, position[2]+100]} rotation={[-Math.PI/2, 0, 0]} />
       <Text text={`trade`} state={exchange} position={[position[0]-30, 15, position[2]+100]} />
       <Text text={`keep`} state={keep} position={[position[0]-60, 15, position[2]+190]} />
-      
+      <Text text={`${confedText}`} state={confedState} position={[position[0]+30, 15, position[2]+100]} />
+      <Text text={`${confedText1}`} state={confedState} position={[position[0]+30, 5, position[2]+100]} />
+
+      <Submit position={[40, 5, -1100]} onSubmit={handleSubmit}/>
 
 
       <BoolSensor option="keep" number={0} sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 

@@ -1,6 +1,6 @@
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 
-export default function Submit({position}) {
+export default function Submit({position, onSubmit}) {
   return (
     <RigidBody name="submit" mass={1} type="fixed" colliders="cuboid" position={position}>
     <mesh>
@@ -10,7 +10,7 @@ export default function Submit({position}) {
      <CuboidCollider args={[5, 2.5, 3]} sensor
       onIntersectionEnter={(payload)=>{
         if(payload.other.rigidBodyObject.name == "person"){
-          console.log("submitted")
+          onSubmit()
         }}}
         />
     </RigidBody>

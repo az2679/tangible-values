@@ -9,7 +9,7 @@ const frontVector = new Vector3();
 const sideVector = new Vector3();
 const direction = new Vector3();
 
-export default function Person({ onPositionChange, onProximity, onThoughtPosition }) {
+export default function Person({ position, onPositionChange, onProximity, onThoughtPosition }) {
     const ref = useRef();
     const [, get] = useKeyboardControls();
 
@@ -44,7 +44,7 @@ export default function Person({ onPositionChange, onProximity, onThoughtPositio
 
   return (
     <>
-      <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={[0, 20, 0]} scale={5} colliders="ball" canSleep={false} name="person">
+      <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={position ? position : [0, 20, 0]} scale={5} colliders="ball" canSleep={false} name="person">
         <mesh name="person">
           <sphereGeometry />
           <meshNormalMaterial />

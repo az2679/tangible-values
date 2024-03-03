@@ -2,18 +2,19 @@ import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import Text from './Text';
-import DragObj from './DragObj';
+import ColorSensor from './ColorSensor';
+import Submit from './Submit';
 
 function Eraser({position, onHoldChange}){
   return (
     <>
     <RigidBody mass={500} gravityScale={500} type="dynamic" position={position} colliders={false} lockRotations={true} canSleep={false} name="eraser">
       <mesh>
-        <boxGeometry args={[7,5,5]} />
+        <boxGeometry args={[12,6,10]} />
         <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
       </mesh>
-      <CuboidCollider args={[3.5, 2.5, 2.5]}/>
-      <CuboidCollider args={[5, 4, 4]} sensor
+      <CuboidCollider args={[6, 3, 5]}/>
+      <CuboidCollider args={[7, 3, 6]} sensor
       onIntersectionEnter={(payload)=>{
         if(payload.other.rigidBodyObject.name == "person"){
           onHoldChange(true)
@@ -28,41 +29,6 @@ function Eraser({position, onHoldChange}){
   )
 }
 
-
-function ColorSensor({ option, number, sensorPosition, onSensedChange, eraserState }) {
-  const [color, setColor] = useState("gray");
-  const [colorState, setColorState] = useState(false);
-
-  useEffect(() => {
-    onSensedChange(option, number, colorState);
-    if(colorState==true){
-      setColor("lightgray")
-    } else {
-      setColor("gray")
-    }
-  }, [colorState]);
-
-  return(
-    <RigidBody name="volunteer" mass={1} type="fixed" colliders={false} position={sensorPosition} >
-    <mesh position={[0, 0.5, 0]} rotation={[-Math.PI/2, 0,0]}>
-      <planeGeometry args={[7, 7]} />
-      <meshBasicMaterial color={color}/>
-     </mesh>
-    <CuboidCollider sensor args={[3.5,4,3.5]} 
-      onIntersectionEnter={(payload)=>{
-        if(eraserState==false && payload.other.rigidBodyObject.name == "person"){
-          setColorState(true)
-        } else if(eraserState==true && payload.other.rigidBodyObject.name == "eraser"){
-          setColorState(false)
-        } else if(payload.other.rigidBodyObject.name == "eraser"){
-          setColorState(false)
-        } 
-      }}
-    />
-  </RigidBody>
-  )
-}
-
 export default function Volunteer(props) {
   const ref = useRef()
   const { position } = props;
@@ -74,6 +40,11 @@ export default function Volunteer(props) {
   const [fiveSensors, setFiveSensors] = useState({});
   const[majority, setMajority] = useState("tie")
   const [eraserState, setEraserState] = useState(false);
+
+  const [confedState, setConfedState] = useState(false)
+  const [confed1, setConfed1] = useState(0)
+  const [confed2, setConfed2] = useState(0)
+  const [confed3, setConfed3] = useState(0)
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -108,6 +79,26 @@ export default function Volunteer(props) {
     } 
   }, [oneSensors, fiveSensors]);
 
+  const randomAssignment = () => {
+    if(Math.floor(Math.random()*5) < 4){
+      return 5
+    } else {
+      return 1
+    }
+  }
+  const handleSubmit = () => {
+    setConfed1(randomAssignment())
+    setConfed2(randomAssignment())
+    setConfed3(randomAssignment())
+    setConfedState(true)
+
+    if (majority == 5 && confed1 == 5 && confed2 == 5 && confed3 == 5){
+      console.log(`Lost: User ${majority}, Confed1 ${confed1}, Confed2 ${confed2}, Confed3 ${confed3}`)
+    } else {
+      console.log(`Pay Out: User ${majority}, Confed1 ${confed1}, Confed2 ${confed2}, Confed3 ${confed3}`)
+    }
+  }
+
 
   return (
     <>
@@ -118,6 +109,15 @@ export default function Volunteer(props) {
         </mesh>
       </RigidBody>
 
+      <mesh position={[position[0]+30, 5, position[2]+30]} rotation={[0, -5, 0]}>
+        <boxGeometry args={[10, 10, 10]} />
+        <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
+      </mesh>
+      <mesh position={[position[0]-30, 5, position[2]+30]} rotation={[0, 5, 0]}>
+        <boxGeometry args={[10, 10, 10]} />
+        <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
+      </mesh>
+
       <Eraser position={[position[0], 15, position[2]+180]} onHoldChange={handleHoldChange} />
       {/* <DragObj name="eraser" startPosition={[position[0]-45, 1, position[2]-20]} state={setDragState} plane={floorPlane} lift={1}/> */}
 
@@ -126,12 +126,26 @@ export default function Volunteer(props) {
       <Text text={"$"} state={true} position={[position[0]-28, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
+
+
+      <Submit position={[-490, 5, -800]} onSubmit={handleSubmit}/>
+      <Text text={`${confed1}`} state={confedState} position={[position[0]-30, 15, position[2]+30]} rotation={[0, 0.5, 0]}/>
+      <Text text={`${confed2}`} state={confedState} position={[position[0], 15, position[2]]} />
+      <Text text={`${confed3}`} state={confedState} position={[position[0]+30, 15, position[2]+30]} rotation={[0, -0.5, 0]} />
+
+
+
+
+
+
+
+
+
       <ColorSensor option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+100]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
       <ColorSensor option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+107]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
       <ColorSensor option="one" number={2} sensorPosition={[position[0]-20, 0, position[2]+114]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
       <ColorSensor option="one" number={3} sensorPosition={[position[0]-20, 0, position[2]+121]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
       <ColorSensor option="one" number={4} sensorPosition={[position[0]-20, 0, position[2]+128]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-
 
       <ColorSensor option="five" number={0} sensorPosition={[position[0]+20, 0, position[2]+100]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
       <ColorSensor option="five" number={1} sensorPosition={[position[0]+20, 0, position[2]+107]} onSensedChange={handleSensedChange} eraserState={eraserState}/>

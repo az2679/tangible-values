@@ -44,7 +44,7 @@ function Scene() {
             <Ground />
             <CameraRig>
               <Controls position={[20, 0, 70]} />
-              <Person />
+              <Person position={[550, 20, -700]} />
 
               <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 
@@ -54,7 +54,7 @@ function Scene() {
                 How much are you giving?
                 `}>
                 <Dictator position={[0, 5, -350]} />
-                <Submit position={[40, 5, -350]} />
+                {/* <Submit position={[40, 5, -350]} /> */}
               </Thought>
 
               <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"feeling risky?"} instructionDialogue={"color the option by walking over it. if you change your mind, push the eraser over it"} dialoguePosition={[-100, 15, 0]} instruction={`
