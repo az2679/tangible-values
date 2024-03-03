@@ -46,18 +46,18 @@ function Scene() {
               <Controls position={[20, 0, 70]} />
               <Person />
 
-              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"thought"} instructionDialogue={"drag and drop a coin into the sensors"} dialoguePosition={[0, 15, 0]} instruction={`
+              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 
                 You can give all of it, none of it, or a portion of it, 
                 while the other person can only accept what has been given / the proposed division. 
                 
                 How much are you giving?
                 `}>
-                <Dictator position={[-40, 5, -275]} />
+                <Dictator position={[0, 5, -350]} />
                 <Submit position={[40, 5, -350]} />
               </Thought>
 
-              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"pineapple"} instructionDialogue={"color the option by walking over it. if you change your mind, push the eraser over it"} dialoguePosition={[0, 15, 0]} instruction={`
+              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"feeling risky?"} instructionDialogue={"color the option by walking over it. if you change your mind, push the eraser over it"} dialoguePosition={[-100, 15, 0]} instruction={`
                 You are playing a parlor game with a few people. 
                 Each person can claim either 1$ or 5$ each. 
                 If at least one person chooses 1$, then everyone will get the amount they wrote down. 
@@ -65,7 +65,7 @@ function Scene() {
                 
                 How much are you claiming?
                 `}>
-                <Volunteer position={[-550, 5, -700]}/>
+                <Volunteer position={[-550, 5, -800]}/>
               </Thought>
 
               <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"wanna do a trade?"} instructionDialogue={"push the box onto the marked area or hide it behind the wall"} dialoguePosition={[-60, 15, 0]} instruction={`
@@ -79,14 +79,14 @@ function Scene() {
                   <Exchange position={[0, 5, -1100]} />
               </Thought>
 
-              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"Hello ! come closer "} instructionDialogue={"drag coins onto the marked areas"} dialoguePosition ={[-15, 15, 0]} instruction={`
+              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"do you trust me?"} instructionDialogue={"drag coins onto the marked areas"} dialoguePosition ={[-15, 15, 0]} instruction={`
             You have been given 10$ and have to decide how much of it you want to pass to another person.
             In the first stage, you keep the remaining amount not sent, while the receiver gains 3 times the amount sent.
             In the second stage, the receiver may pass nothing or any portion of the money they received back to you. 
             
             How much are you sending?`} > 
                 
-                <Trust position={[550, 5, -775]} />
+                <Trust position={[550, 5, -800]} />
               </Thought>
              
 

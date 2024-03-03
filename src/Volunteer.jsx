@@ -29,7 +29,7 @@ function Eraser({position, onHoldChange}){
 }
 
 
-function BoolSensor({ option, number, sensorPosition, onSensedChange, eraserState }) {
+function ColorSensor({ option, number, sensorPosition, onSensedChange, eraserState }) {
   const [color, setColor] = useState("gray");
   const [colorState, setColorState] = useState(false);
 
@@ -111,36 +111,36 @@ export default function Volunteer(props) {
 
   return (
     <>
-      <RigidBody name="volunteer" mass={1} type="fixed" colliders="cuboid" position={[position[0]-20, 1, position[2]]} >
+      <RigidBody name="volunteer" mass={1} type="fixed" colliders="cuboid" position={[position[0]-20, 1, position[2]-100]} >
         <mesh ref={ref} position={[0, 0, 0]} rotation={[-Math.PI/2, 0,0]} >
           {/* <planeGeometry args={[8, 12]} />
           <meshBasicMaterial color={"gray"}/> */}
         </mesh>
       </RigidBody>
 
-      <Eraser position={[position[0]-45, 15, position[2]-20]} onHoldChange={handleHoldChange} />
+      <Eraser position={[position[0], 15, position[2]+180]} onHoldChange={handleHoldChange} />
       {/* <DragObj name="eraser" startPosition={[position[0]-45, 1, position[2]-20]} state={setDragState} plane={floorPlane} lift={1}/> */}
 
-      <Text text={`${majority}`} state={true} position={[position[0], 15, position[2]+20]} />
-      <Text text={"or"} state={true} position={[position[0], 0, position[2]+20]} rotation={[-Math.PI * 0.5, 0,0]}/>
-      <Text text={"$"} state={true} position={[position[0]-28, 0, position[2]+5]} rotation={[-Math.PI * 0.5, 0,0]}/>
-      <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+5]} rotation={[-Math.PI * 0.5, 0,0]}/>
+      <Text text={`${majority}`} state={true} position={[position[0], 15, position[2]+120]} />
+      <Text text={"or"} state={true} position={[position[0], 0, position[2]+120]} rotation={[-Math.PI * 0.5, 0,0]}/>
+      <Text text={"$"} state={true} position={[position[0]-28, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
+      <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
-      <BoolSensor option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+7]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="one" number={2} sensorPosition={[position[0]-20, 0, position[2]+14]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="one" number={3} sensorPosition={[position[0]-20, 0, position[2]+21]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="one" number={4} sensorPosition={[position[0]-20, 0, position[2]+28]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+100]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+107]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="one" number={2} sensorPosition={[position[0]-20, 0, position[2]+114]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="one" number={3} sensorPosition={[position[0]-20, 0, position[2]+121]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="one" number={4} sensorPosition={[position[0]-20, 0, position[2]+128]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
 
 
-      <BoolSensor option="five" number={0} sensorPosition={[position[0]+20, 0, position[2]]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={1} sensorPosition={[position[0]+20, 0, position[2]+7]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={2} sensorPosition={[position[0]+20, 0, position[2]+14]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={3} sensorPosition={[position[0]+27, 0, position[2]]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={4} sensorPosition={[position[0]+27, 0, position[2]+14]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={5} sensorPosition={[position[0]+27, 0, position[2]+21]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={6} sensorPosition={[position[0]+27, 0, position[2]+28]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <BoolSensor option="five" number={7} sensorPosition={[position[0]+20, 0, position[2]+28]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={0} sensorPosition={[position[0]+20, 0, position[2]+100]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={1} sensorPosition={[position[0]+20, 0, position[2]+107]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={2} sensorPosition={[position[0]+20, 0, position[2]+114]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={3} sensorPosition={[position[0]+27, 0, position[2]+100]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={4} sensorPosition={[position[0]+27, 0, position[2]+114]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={5} sensorPosition={[position[0]+27, 0, position[2]+121]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={6} sensorPosition={[position[0]+27, 0, position[2]+128]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <ColorSensor option="five" number={7} sensorPosition={[position[0]+20, 0, position[2]+128]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
     </>
   );
 }
