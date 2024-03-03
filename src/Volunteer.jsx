@@ -46,6 +46,8 @@ export default function Volunteer(props) {
   const [confed2, setConfed2] = useState(0)
   const [confed3, setConfed3] = useState(0)
 
+  const [invalidAnswer, setInvalidAnswer] = useState(false);
+
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
   };
@@ -87,6 +89,10 @@ export default function Volunteer(props) {
     }
   }
   const handleSubmit = () => {
+    if (majority == "tie"){
+      setInvalidAnswer(true)
+    } else {
+
     setConfed1(randomAssignment())
     setConfed2(randomAssignment())
     setConfed3(randomAssignment())
@@ -97,6 +103,9 @@ export default function Volunteer(props) {
     } else {
       console.log(`Pay Out: User ${majority}, Confed1 ${confed1}, Confed2 ${confed2}, Confed3 ${confed3}`)
     }
+
+    setInvalidAnswer(false)
+  }
   }
 
 
@@ -127,11 +136,13 @@ export default function Volunteer(props) {
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
 
+      <Submit position={[position[0]+60, 5, position[2]]} onSubmit={handleSubmit}/>
+      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+60, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
 
-      <Submit position={[-490, 5, -800]} onSubmit={handleSubmit}/>
       <Text text={`${confed1}`} state={confedState} position={[position[0]-30, 15, position[2]+30]} rotation={[0, 0.5, 0]}/>
       <Text text={`${confed2}`} state={confedState} position={[position[0], 15, position[2]]} />
       <Text text={`${confed3}`} state={confedState} position={[position[0]+30, 15, position[2]+30]} rotation={[0, -0.5, 0]} />
+
 
 
 

@@ -14,6 +14,8 @@ export default function Exchange(props) {
   const[confedText, setConfedText] = useState("null")
   const[confedText1, setConfedText1] = useState("n")
 
+  const [invalidAnswer, setInvalidAnswer] = useState(false);
+
 
   const handleSensedChange = (option, number, bool) => {
     if(option == "keep"){
@@ -34,6 +36,9 @@ export default function Exchange(props) {
     }
   }
   const handleSubmit = () => {
+    if(keep == false && exchange == false){
+      setInvalidAnswer(true)
+    } else {
     setConfed(randomAssignment())
     setConfedState(true)
 
@@ -45,14 +50,15 @@ export default function Exchange(props) {
       setConfedText1("X")
     }
     
-
-    // console.log(confedState)
     if(confed == true && exchange == true){
       console.log(`equal trade: confed ${confed}, user ${exchange}`)
     } else if (confed == true && keep == true || confed == false && exchange == true){
       console.log(`unequal trade: confed ${confed}, user ${exchange}`)
     } else if (confed == false && keep == true){
       console.log(`no trade: confed ${confed}, user ${exchange}`)
+    }
+
+    setInvalidAnswer(false)
     }
   }
 
@@ -64,7 +70,9 @@ export default function Exchange(props) {
       <Text text={`${confedText}`} state={confedState} position={[position[0]+30, 15, position[2]+100]} />
       <Text text={`${confedText1}`} state={confedState} position={[position[0]+30, 5, position[2]+100]} />
 
-      <Submit position={[40, 5, -1100]} onSubmit={handleSubmit}/>
+      <Submit position={[position[0]+40, 5, position[2]]} onSubmit={handleSubmit}/>
+      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+40, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
+      
 
 
       <BoolSensor option="keep" number={0} sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 

@@ -4,6 +4,7 @@ import { Vector3, Plane } from "three";
 
 import DragObj from './DragObj';
 import Text from './Text';
+import Submit from './Submit';
 
 function CoinMult({position, setDragState, floorPlane}){
   return(
@@ -29,6 +30,16 @@ export default function Dictator(props) {
   const [dictator, setDictator] = useState(0);
   const [reciever, setReciever] = useState(0);
 
+  const [invalidAnswer, setInvalidAnswer] = useState(false);
+
+  const handleSubmit = () => {
+    if (dictator + reciever !== 10){
+      setInvalidAnswer(true)
+    } else {
+      setInvalidAnswer(false)
+    }
+  }
+
   return (
     <>
       <Text text={`${dictator}`} state={true} position={[position[0]-30, 10, position[2]+90]} />
@@ -36,6 +47,8 @@ export default function Dictator(props) {
       <Text text={`dictator`} state={true} position={[position[0]-30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
       <Text text={`reciever`} state={true} position={[position[0]+30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
       
+      <Submit position={[40, 5, -350]} onSubmit={handleSubmit} />
+      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0] +40, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]}/>
 
       <RigidBody name="dictator" mass={1} type="fixed" colliders={false} position={[position[0]-30, 1, position[2]+100]} >
         {/* <mesh /> */}

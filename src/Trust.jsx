@@ -53,6 +53,8 @@ export default function Trust(props) {
   const [confed, setConfed] = useState(0)
   const [confedState, setConfedState] = useState(false)
 
+  const [invalidAnswer, setInvalidAnswer] = useState(false);
+
     const handleSensedChange = (option, number, count) => {
       if(option == "confed"){
         setConfedSensors((prevSensors) => ({
@@ -121,8 +123,8 @@ export default function Trust(props) {
         />
       </RigidBody>
 
-      <Submit position={[590, 5, -800]} onSubmit={handleSubmit}/>
-
+      <Submit position={[position[0]+40, 5, position[2]]} onSubmit={handleSubmit}/>
+      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+40, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
 
       <CoinMult position={[position[0], position[1], position[2]+175]} setDragState = {setDragState} floorPlane = {floorPlane}/>
     
