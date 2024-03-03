@@ -13,7 +13,7 @@ function NumSensor({ number, sensorPosition, onSensedChange }) {
   }, [count]);
 
   return(
-    <RigidBody name="dictator" mass={1} type="fixed" colliders={false} position={sensorPosition} >
+    <RigidBody name="trust" mass={1} type="fixed" colliders={false} position={sensorPosition} >
     <mesh position={[0, 0.5, 0]} rotation={[-Math.PI/2, 0,0]}>
       <planeGeometry args={[7, 7]} />
       <meshBasicMaterial color={"gray"}/>
@@ -34,7 +34,7 @@ function NumSensor({ number, sensorPosition, onSensedChange }) {
   )
 }
 
-export default function Dictator(props) {
+export default function Trust(props) {
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);

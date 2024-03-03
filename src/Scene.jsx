@@ -51,7 +51,7 @@ function Scene() {
                 
                 How much are you giving?
                 `}>
-                <Trust position={[-40, 5, -275]} />
+                <Dictator position={[-40, 5, -275]} />
               </Thought>
 
               <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"pineapple"} instructionDialogue={"color the option by walking over it. if you change your mind, push the eraser over it"} dialoguePosition={[0, 15, 0]} instruction={`
@@ -65,14 +65,15 @@ function Scene() {
                 <Volunteer position={[-550, 5, -700]}/>
               </Thought>
 
-              <Thought key={"exchange"} position={[0, 5, -1200]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"Thought Dilemma 2"} instructionDialogue={"push the box onto the plate"} dialoguePosition={[0, 15, 0]} instruction={`
-                You are playing an exchange game with another person and have to choose between keeping the item you have or exchanging it. 
+              <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"Thought Dilemma 2"} instructionDialogue={"push the box onto the plate"} dialoguePosition={[0, 15, 0]} instruction={`
+                “You are playing an exchange game with another person and have to choose between keeping the item you have or exchanging it. 
+                When exchanging, you both have to make a decision beforehand without knowing what the other person will do. 
                 You have an apple but prefer an orange, while the other person has an orange and prefers an apple. 
-                Both of you prefer both fruit to just one and either fruit to none at all. 
-                
-                You both have to make a decision, do you keep your fruit or give it to the other person?
+                Both of you prefer obtaining both fruit to just one and either fruit to none at all. 
+
+                Knowing there’s a chance of obtaining both, one, or no fruit, do you keep your fruit or exchange it?”
                 `}>
-                  <Exchange position={[0, 5, -1100]} />
+                  <Exchange position={[0, 5, -1000]} />
               </Thought>
 
               <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"Hello ! come closer "} instructionDialogue={"drag and drop the coins into the basket"} dialoguePosition ={[0, 15, 0]} instruction={`
@@ -82,7 +83,7 @@ function Scene() {
             
             How much are you sending?`} > 
                 
-                <Dictator position={[620, 5, -775]} />
+                <Trust position={[620, 5, -775]} />
               </Thought>
              
 
