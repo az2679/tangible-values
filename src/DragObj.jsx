@@ -6,7 +6,7 @@ import { Vector3 } from "three";
 
 import { useFrame } from "@react-three/fiber";
 
-export default function DragObj({ name, startPosition, state, plane }) {
+export default function DragObj({ name, startPosition, state, plane, lift }) {
   const [position, setPosition] = useState(startPosition);
   // const [shadow, setShadow] = useState(startPosition);
 
@@ -26,7 +26,7 @@ export default function DragObj({ name, startPosition, state, plane }) {
     if (active) {
       event.ray.intersectPlane(plane, planeIntersectPoint);
       api.start({
-        position: [planeIntersectPoint.x, 10, planeIntersectPoint.z],
+        position: [planeIntersectPoint.x, lift, planeIntersectPoint.z],
       });
     } else {
       resetObj();

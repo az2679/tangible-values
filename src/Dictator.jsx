@@ -35,16 +35,16 @@ export default function Dictator(props) {
 
       <Text text={`${counter}`} state={true} position={[position[0]-15, 10, position[2]]} />
 
-      <DragObj name="coin" startPosition={[position[0]-20, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+34]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-35, 1, position[2]+37]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+45]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-35, 1, position[2]+50]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-20, 1, position[2]+40]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+38]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-40, 1, position[2]+54]} state={setDragState} plane={floorPlane}/>
-      <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+55]} state={setDragState} plane={floorPlane}/>
+      <DragObj name="coin" startPosition={[position[0]-20, 1, position[2]+50]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+50]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+34]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-35, 1, position[2]+37]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+45]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-35, 1, position[2]+50]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-20, 1, position[2]+40]} state={setDragState} plane={floorPlane} lift={10} />
+      <DragObj name="coin" startPosition={[position[0]-25, 1, position[2]+38]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-40, 1, position[2]+54]} state={setDragState} plane={floorPlane} lift={10}/>
+      <DragObj name="coin" startPosition={[position[0]-30, 1, position[2]+55]} state={setDragState} plane={floorPlane} lift={10}/>
     </>
   );
 }

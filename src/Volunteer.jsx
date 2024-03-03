@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { Vector3, Plane } from "three";
 import Text from './Text';
+import DragObj from './DragObj';
 
 function Eraser({position, onHoldChange}){
   return (
@@ -52,6 +54,8 @@ function BoolSensor({ option, number, sensorPosition, onSensedChange, eraserStat
           setColorState(true)
         } else if(eraserState==true && payload.other.rigidBodyObject.name == "eraser"){
           setColorState(false)
+        } else if(payload.other.rigidBodyObject.name == "eraser"){
+          setColorState(false)
         } 
       }}
     />
@@ -62,6 +66,10 @@ function BoolSensor({ option, number, sensorPosition, onSensedChange, eraserStat
 export default function Volunteer(props) {
   const ref = useRef()
   const { position } = props;
+
+  const floorPlane = new Plane(new Vector3(0, 1, 0),0);
+  const [dragState, setDragState] = useState(false);
+
   const [oneSensors, setOneSensors] = useState({});
   const [fiveSensors, setFiveSensors] = useState({});
   const[majority, setMajority] = useState("tie")
@@ -111,6 +119,7 @@ export default function Volunteer(props) {
       </RigidBody>
 
       <Eraser position={[position[0]-45, 15, position[2]-20]} onHoldChange={handleHoldChange} />
+      {/* <DragObj name="eraser" startPosition={[position[0]-45, 1, position[2]-20]} state={setDragState} plane={floorPlane} lift={1}/> */}
 
       <Text text={`${majority}`} state={true} position={[position[0], 15, position[2]+20]} />
       <Text text={"or"} state={true} position={[position[0], 0, position[2]+20]} rotation={[-Math.PI * 0.5, 0,0]}/>
