@@ -6,8 +6,6 @@ import DragObj from './DragObj';
 import Text from './Text';
 import NumSensor from './NumSensor';
 import Submit from './Submit';
-import SaveDecision from './SaveDecision';
-import AnalyzeDecision from './AnalyzeDecision';
 
 function NumSensorMult({option, position, handleSensedChange}){
   return(
@@ -55,8 +53,6 @@ export default function Trust(props) {
   const [confed, setConfed] = useState(0)
   const [confedState, setConfedState] = useState(false)
 
-  const [invalidAnswer, setInvalidAnswer] = useState(false);
-
     const handleSensedChange = (option, number, count) => {
       if(option == "confed"){
         setConfedSensors((prevSensors) => ({
@@ -86,16 +82,8 @@ export default function Trust(props) {
     }, [confedSensors, userSensors]);
 
 
-    const randomAssignment = () => {
-      return Math.floor(Math.random()*((confedCounter*3) + 1));
-    }
-    const handleSubmit = () => {
-      SaveDecision({ decisionType: 'trust', decisionValue: confedCounter });
-      AnalyzeDecision('trust');
-
-      setConfed(randomAssignment())
+    const reconcile = () => {
       setConfedState(true)
-
       console.log(`Stage 2: Returned ${confed}`)
     }
 
@@ -128,8 +116,7 @@ export default function Trust(props) {
         />
       </RigidBody>
 
-      <Submit position={[position[0]+40, 5, position[2]]} onSubmit={handleSubmit}/>
-      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+40, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
+      <Submit position={[position[0]+40, 5, position[2]]} valid={true} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment); reconcile()}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
 
       <CoinMult position={[position[0], position[1], position[2]+175]} setDragState = {setDragState} floorPlane = {floorPlane}/>
     

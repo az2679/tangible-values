@@ -3,8 +3,6 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Text from './Text';
 import BoolSensor from './BoolSensor';
 import Submit from './Submit';
-import SaveDecision from './SaveDecision';
-import AnalyzeDecision from './AnalyzeDecision';
 
 export default function Exchange(props) {
   const { position } = props;
@@ -15,9 +13,6 @@ export default function Exchange(props) {
   const[confedState, setConfedState] = useState(false)
   const[confedText, setConfedText] = useState("null")
   const[confedText1, setConfedText1] = useState("n")
-
-  const [invalidAnswer, setInvalidAnswer] = useState(false);
-
 
   const handleSensedChange = (option, number, bool) => {
     if(option == "keep"){
@@ -30,21 +25,7 @@ export default function Exchange(props) {
     // }
   };
 
-  const randomAssignment = () => {
-    if(Math.floor(Math.random()*2) == 0){
-      return true
-    } else {
-      return false
-    }
-  }
-  const handleSubmit = () => {
-    if(keep == false && exchange == false){
-      setInvalidAnswer(true)
-    } else {
-    SaveDecision({ decisionType: 'exchange', decisionValue: exchange });
-    AnalyzeDecision('exchange');
-    
-    setConfed(randomAssignment())
+  const reconcile = () => {
     setConfedState(true)
 
     if(confed == true){
@@ -62,9 +43,6 @@ export default function Exchange(props) {
     } else if (confed == false && keep == true){
       console.log(`no trade: confed ${confed}, user ${exchange}`)
     }
-
-    setInvalidAnswer(false)
-    }
   }
 
   return (
@@ -75,8 +53,8 @@ export default function Exchange(props) {
       <Text text={`${confedText}`} state={confedState} position={[position[0]+30, 15, position[2]+100]} />
       <Text text={`${confedText1}`} state={confedState} position={[position[0]+30, 5, position[2]+100]} />
 
-      <Submit position={[position[0]+40, 5, position[2]]} onSubmit={handleSubmit}/>
-      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+40, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
+      <Submit position={[position[0]+40, 5, position[2]]} valid={keep || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment); reconcile()}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+
 
       
 

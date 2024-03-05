@@ -15,7 +15,6 @@ import Volunteer from './Volunteer';
 import Exchange from './Exchange';
 import Trust from './Trust';
 
-import SaveDecision from './SaveDecision';
 
 function Scene() { 
   return (

@@ -4,8 +4,6 @@ import { Vector3, Plane } from "three";
 import Text from './Text';
 import ColorSensor from './ColorSensor';
 import Submit from './Submit';
-import SaveDecision from './SaveDecision';
-import AnalyzeDecision from './AnalyzeDecision';
 
 function Eraser({position, onHoldChange}){
   return (
@@ -44,11 +42,7 @@ export default function Volunteer(props) {
   const [eraserState, setEraserState] = useState(false);
 
   const [confedState, setConfedState] = useState(false)
-  const [confed1, setConfed1] = useState(0)
-  const [confed2, setConfed2] = useState(0)
-  const [confed3, setConfed3] = useState(0)
-
-  const [invalidAnswer, setInvalidAnswer] = useState(false);
+  const [confed, setConfed] = useState([])
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -83,35 +77,15 @@ export default function Volunteer(props) {
     } 
   }, [oneSensors, fiveSensors]);
 
-  const randomAssignment = () => {
-    if(Math.floor(Math.random()*5) < 4){
-      return 5
-    } else {
-      return 1
-    }
-  }
-  const handleSubmit = () => {
-    if (majority == "tie"){
-      setInvalidAnswer(true)
-    } else {
-    SaveDecision({ decisionType: 'volunteer', decisionValue: majority });
-    AnalyzeDecision('volunteer');
-
-    setConfed1(randomAssignment())
-    setConfed2(randomAssignment())
-    setConfed3(randomAssignment())
+  const reconcile = () => {
     setConfedState(true)
 
-    if (majority == 5 && confed1 == 5 && confed2 == 5 && confed3 == 5){
-      console.log(`Lost: User ${majority}, Confed1 ${confed1}, Confed2 ${confed2}, Confed3 ${confed3}`)
+    if (majority == 5 && confed[0] == 5 && confed[1] == 5 && confed[2] == 5){
+      console.log(`Lost: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
     } else {
-      console.log(`Pay Out: User ${majority}, Confed1 ${confed1}, Confed2 ${confed2}, Confed3 ${confed3}`)
+      console.log(`Pay Out: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
     }
-
-    setInvalidAnswer(false)
   }
-  }
-
 
   return (
     <>
@@ -140,20 +114,11 @@ export default function Volunteer(props) {
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
 
-      <Submit position={[position[0]+60, 5, position[2]]} onSubmit={handleSubmit}/>
-      <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+60, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
+      <Submit position={[position[0]+60, 5, position[2]]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]]); reconcile()}} errorPosition={[position[0]+60, 1, position[2]+15]}/>
 
-      <Text text={`${confed1}`} state={confedState} position={[position[0]-30, 15, position[2]+30]} rotation={[0, 0.5, 0]}/>
-      <Text text={`${confed2}`} state={confedState} position={[position[0], 15, position[2]]} />
-      <Text text={`${confed3}`} state={confedState} position={[position[0]+30, 15, position[2]+30]} rotation={[0, -0.5, 0]} />
-
-
-
-
-
-
-
-
+      <Text text={`${confed[0]}`} state={confedState} position={[position[0]-30, 15, position[2]+30]} rotation={[0, 0.5, 0]}/>
+      <Text text={`${confed[1]}`} state={confedState} position={[position[0], 15, position[2]]} />
+      <Text text={`${confed[2]}`} state={confedState} position={[position[0]+30, 15, position[2]+30]} rotation={[0, -0.5, 0]} />
 
 
       <ColorSensor option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+100]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
