@@ -2,7 +2,7 @@ import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { useState } from "react";
 import SaveDecision from './SaveDecision';
 import AnalyzeDecision from './AnalyzeDecision';
-import Text from './Text';
+import Text from '../Text/Text';
 
 export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition}) {
   let intersectionTimeout;

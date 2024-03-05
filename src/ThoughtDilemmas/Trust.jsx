@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 
-import DragObj from './DragObj';
-import Text from './Text';
-import NumSensor from './NumSensor';
-import Submit from './Submit';
+import DragObj from '../Interaction/DragObj';
+import Text from '../Text/Text';
+import NumSensor from '../Interaction/NumSensor';
+import Submit from '../Decision/Submit';
 
 function NumSensorMult({option, position, handleSensedChange}){
   return(

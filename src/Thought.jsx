@@ -2,9 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 
 
-import Instruction from './Instruction';
-import Text from './Text';
-import Label from './Label';
+import Instruction from './Text/Instruction';
+import Text from './Text/Text';
+import Label from './Text/Label';
 
 export default function Thought({position, label, labelPosition, startDialogue, instructionDialogue, dialoguePosition, instruction, onInstructionStateChange, proximityState, onProximity, children}) {
   const [labelState, setLabelState] = useState(false);

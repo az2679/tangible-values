@@ -2,11 +2,11 @@ import { useState } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 
-import DragObj from './DragObj';
-import Text from './Text';
-import Submit from './Submit';
-import SaveDecision from './SaveDecision';
-import AnalyzeDecision from './AnalyzeDecision';
+import DragObj from '../Interaction/DragObj';
+import Text from '../Text/Text';
+import Submit from '../Decision/Submit';
+import SaveDecision from '../Decision/SaveDecision';
+import AnalyzeDecision from '../Decision/AnalyzeDecision';
 
 function CoinMult({position, setDragState, floorPlane}){
   return(

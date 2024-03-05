@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import Text from './Text';
-import BoolSensor from './BoolSensor';
-import Submit from './Submit';
+import Text from '../Text/Text';
+import BoolSensor from '../Interaction/BoolSensor';
+import Submit from '../Decision/Submit';
 
 export default function Exchange(props) {
   const { position } = props;

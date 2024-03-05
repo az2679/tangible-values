@@ -9,11 +9,11 @@ import CameraRig from './CameraRig';
 import Person from './Person';
 import Thought from './Thought';
 
-import Controls from './Controls';
-import Dictator from './Dictator';
-import Volunteer from './Volunteer';
-import Exchange from './Exchange';
-import Trust from './Trust';
+import Controls from './Text/Controls';
+import Dictator from './ThoughtDilemmas/Dictator';
+import Volunteer from './ThoughtDilemmas/Volunteer';
+import Exchange from './ThoughtDilemmas/Exchange';
+import Trust from './ThoughtDilemmas/Trust';
 
 
 function Scene() { 

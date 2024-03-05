@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
-import Text from './Text';
-import ColorSensor from './ColorSensor';
-import Submit from './Submit';
+import Text from '../Text/Text';
+import ColorSensor from '../Interaction/ColorSensor';
+import Submit from '../Decision/Submit';
 
 function Eraser({position, onHoldChange}){
   return (
