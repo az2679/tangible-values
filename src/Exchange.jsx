@@ -3,6 +3,8 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Text from './Text';
 import BoolSensor from './BoolSensor';
 import Submit from './Submit';
+import SaveDecision from './SaveDecision';
+import AnalyzeDecision from './AnalyzeDecision';
 
 export default function Exchange(props) {
   const { position } = props;
@@ -39,6 +41,9 @@ export default function Exchange(props) {
     if(keep == false && exchange == false){
       setInvalidAnswer(true)
     } else {
+    SaveDecision({ decisionType: 'exchange', decisionValue: exchange });
+    AnalyzeDecision('exchange');
+    
     setConfed(randomAssignment())
     setConfedState(true)
 
@@ -72,6 +77,7 @@ export default function Exchange(props) {
 
       <Submit position={[position[0]+40, 5, position[2]]} onSubmit={handleSubmit}/>
       <Text text={`invalid answer`} state={invalidAnswer} position={[position[0]+40, 1, position[2]+15]} rotation={[-Math.PI/2, 0,0]} />
+
       
 
 

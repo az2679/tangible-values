@@ -1,6 +1,17 @@
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 
 export default function Submit({position, onSubmit}) {
+
+  let intersectionTimeout;
+
+  const handleIntersection = (payload) => {
+      clearTimeout(intersectionTimeout);
+      intersectionTimeout = setTimeout(() => {
+        onSubmit();
+        // console.log(payload);
+      }, 500);
+  };
+
   return (
     <RigidBody name="submit" mass={1} type="fixed" colliders="cuboid" position={position}>
     <mesh>
@@ -9,8 +20,8 @@ export default function Submit({position, onSubmit}) {
      </mesh>
      <CuboidCollider args={[5, 2.5, 3]} sensor
       onIntersectionEnter={(payload)=>{
-        if(payload.other.rigidBodyObject.name == "person"){
-          onSubmit()
+        if(payload.other.rigidBodyObject.name === "person"){
+          handleIntersection(payload)
         }}}
         />
     </RigidBody>

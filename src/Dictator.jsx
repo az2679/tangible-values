@@ -5,6 +5,8 @@ import { Vector3, Plane } from "three";
 import DragObj from './DragObj';
 import Text from './Text';
 import Submit from './Submit';
+import SaveDecision from './SaveDecision';
+import AnalyzeDecision from './AnalyzeDecision';
 
 function CoinMult({position, setDragState, floorPlane}){
   return(
@@ -37,6 +39,8 @@ export default function Dictator(props) {
       setInvalidAnswer(true)
     } else {
       setInvalidAnswer(false)
+      SaveDecision({ decisionType: 'dictator', decisionValue: reciever });
+      AnalyzeDecision('dictator');
     }
   }
 

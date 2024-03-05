@@ -4,6 +4,8 @@ import { Vector3, Plane } from "three";
 import Text from './Text';
 import ColorSensor from './ColorSensor';
 import Submit from './Submit';
+import SaveDecision from './SaveDecision';
+import AnalyzeDecision from './AnalyzeDecision';
 
 function Eraser({position, onHoldChange}){
   return (
@@ -92,6 +94,8 @@ export default function Volunteer(props) {
     if (majority == "tie"){
       setInvalidAnswer(true)
     } else {
+    SaveDecision({ decisionType: 'volunteer', decisionValue: majority });
+    AnalyzeDecision('volunteer');
 
     setConfed1(randomAssignment())
     setConfed2(randomAssignment())

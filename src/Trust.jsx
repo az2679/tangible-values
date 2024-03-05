@@ -6,6 +6,8 @@ import DragObj from './DragObj';
 import Text from './Text';
 import NumSensor from './NumSensor';
 import Submit from './Submit';
+import SaveDecision from './SaveDecision';
+import AnalyzeDecision from './AnalyzeDecision';
 
 function NumSensorMult({option, position, handleSensedChange}){
   return(
@@ -88,6 +90,9 @@ export default function Trust(props) {
       return Math.floor(Math.random()*((confedCounter*3) + 1));
     }
     const handleSubmit = () => {
+      SaveDecision({ decisionType: 'trust', decisionValue: confedCounter });
+      AnalyzeDecision('trust');
+
       setConfed(randomAssignment())
       setConfedState(true)
 
