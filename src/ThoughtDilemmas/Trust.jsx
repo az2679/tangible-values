@@ -96,7 +96,7 @@ export default function Trust(props) {
       <Text text={`remaining: ${userCounter}`} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
-      <Submit position={[position[0]+40, 5, position[2]]} valid={true} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment); reconcile()}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Submit position={[position[0]+40, 5, position[2]]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment); reconcile()}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
 
       <NumSensorMult option="confed" position={[position[0], position[1], position[2]+105]} handleSensedChange={handleSensedChange}/>
       {/* <NumSensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange}/> */}
