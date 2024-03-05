@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 
 import DragObj from '../Interaction/DragObj';
+import Sensor from '../Interaction/Sensor';
 import Text from '../Text/Text';
 import Submit from '../Decision/Submit';
-import SaveDecision from '../Decision/SaveDecision';
-import AnalyzeDecision from '../Decision/AnalyzeDecision';
+
 
 function CoinMult({position, setDragState, floorPlane}){
   return(
@@ -32,57 +31,27 @@ export default function Dictator(props) {
   const [dictator, setDictator] = useState(0);
   const [reciever, setReciever] = useState(0);
 
+  const handleSensedChange = (option, number, count) => {
+    if(option == "dictator"){
+      setDictator(count)
+    } else if(option == "reciever"){
+      setReciever(count)
+    }
+  };
+
   return (
     <>
       <Text text={`${dictator}`} state={true} position={[position[0]-30, 10, position[2]+90]} />
       <Text text={`${reciever}`} state={true} position={[position[0]+30, 10, position[2]+90]} />
       <Text text={`dictator`} state={true} position={[position[0]-30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
       <Text text={`reciever`} state={true} position={[position[0]+30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
-      
+
       <Submit position={[40, 5, -350]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0] +40, 1, position[2]+15]}/>
 
-      <RigidBody name="dictator" mass={1} type="fixed" colliders={false} position={[position[0]-30, 1, position[2]+100]} >
-        {/* <mesh /> */}
-        <mesh position={[0, 0, 0]} rotation={[-Math.PI/2, 0,0]}>
-          <planeGeometry args={[25, 15]} />
-          <meshBasicMaterial color={"gray"}/>
-         </mesh>
-        <CuboidCollider sensor args={[13, 5,9]} 
-          onIntersectionEnter={(payload)=>{
-            if(payload.other.rigidBodyObject.name == "coin"){
-              setDictator((value) => value + 1)
-            }
-          }}
-          onIntersectionExit={(payload)=>{
-            if(payload.other.rigidBodyObject.name == "coin"){
-              setDictator((value) => value + 1)
-            }
-          }}
-        />
-      </RigidBody>
-
-      <RigidBody name="reciever" mass={1} type="fixed" colliders={false} position={[position[0]+30, 1, position[2]+100]} >
-        {/* <mesh /> */}
-        <mesh position={[0, 0, 0]} rotation={[-Math.PI/2, 0,0]}>
-          <planeGeometry args={[25, 15]} />
-          <meshBasicMaterial color={"gray"}/>
-         </mesh>
-        <CuboidCollider sensor args={[13, 5,9]} 
-          onIntersectionEnter={(payload)=>{
-            if(payload.other.rigidBodyObject.name == "coin"){
-              setReciever((value) => value + 1)
-            }
-          }}
-          onIntersectionExit={(payload)=>{
-            if(payload.other.rigidBodyObject.name == "coin"){
-              setReciever((value) => value + 1)
-            }
-          }}
-        />
-      </RigidBody>
+      <Sensor type="number" args={[25, 15]} sensorArgs={[13, 5,9]} option="dictator" number={0} sensorPosition={[position[0]-30, 1, position[2]+100]} onSensedChange={handleSensedChange} />
+      <Sensor type="number" args={[25, 15]} sensorArgs={[13, 5,9]} option="reciever" number={0} sensorPosition={[position[0]+30, 1, position[2]+100]} onSensedChange={handleSensedChange} />
 
       <CoinMult position={[position[0], position[1], position[2]+140]} setDragState = {setDragState} floorPlane = {floorPlane}/>
-
       
     </>
   );

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Text from '../Text/Text';
-import BoolSensor from '../Interaction/BoolSensor';
+import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
 
 export default function Exchange(props) {
@@ -14,7 +14,7 @@ export default function Exchange(props) {
   const[confedText, setConfedText] = useState("null")
   const[confedText1, setConfedText1] = useState("n")
 
-  const handleSensedChange = (option, number, bool) => {
+  const handleSensedChange = (option, bool) => {
     if(option == "keep"){
       setKeep(bool)
     } else if(option == "exchange"){
@@ -55,13 +55,9 @@ export default function Exchange(props) {
 
       <Submit position={[position[0]+40, 5, position[2]]} valid={keep || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment); reconcile()}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
 
-
-      
-
-
-      <BoolSensor option="keep" number={0} sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
-      <BoolSensor option="exchange" number={0} sensorPosition={[position[0]-30, 1, position[2]+100]} onSensedChange={handleSensedChange} /> 
-      <BoolSensor option="confed" number={0} sensorPosition={[position[0]+30, 1, position[2]+100]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="keep" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-30, 1, position[2]+100]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0]+30, 1, position[2]+100]} onSensedChange={handleSensedChange} /> 
 
 
       <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={[position[0], 5, position[2]+150]} canSleep={false} lockRotations={true}>
