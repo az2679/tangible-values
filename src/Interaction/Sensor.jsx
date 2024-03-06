@@ -9,11 +9,11 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
 
   useEffect(() => {
     if (type === "number") {
-      onSensedChange(option, number, count);
+      onSensedChange(option, number, count, sensorPosition);
     } else if (type === "boolean") {
       onSensedChange(option, bool);
     } else if (type === "color") {
-      onSensedChange(option, number, colorState);
+      onSensedChange(option, number, colorState, eraserState);
       if(colorState==true){
         setColor("lightgray")
       } else {

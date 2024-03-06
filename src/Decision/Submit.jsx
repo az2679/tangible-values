@@ -87,11 +87,11 @@ export default function Submit({position, valid, decisionType, decisionValue, on
   return (
     <>
     <RigidBody name="submit" mass={1} type="fixed" colliders="cuboid" position={position}>
-    <mesh>
-      <boxGeometry args={[10, 5, 2]} />
+    <mesh rotation={[-Math.PI/2, 0,0]}>
+      <boxGeometry args={[15, 5, 2]} />
       <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
      </mesh>
-     <CuboidCollider args={[5, 2.5, 3]} sensor
+     <CuboidCollider args={[7.5, 2.5, 3]} sensor
       onIntersectionEnter={(payload)=>{
         if(payload.other.rigidBodyObject.name === "person"){
           handleIntersection(payload)

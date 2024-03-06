@@ -43,8 +43,7 @@ function Scene() {
             <Ground />
             <CameraRig>
               <Controls position={[20, 0, 70]} />
-              <Person />
-
+              <Person position={[0, 25, -1000]}/>
               <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 
                 You can give all of it, none of it, or a portion of it, 

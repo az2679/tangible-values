@@ -45,7 +45,7 @@ export default function Thought({position, label, labelPosition, startDialogue, 
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
           <Text text={updatedDialogue} position={dialoguePosition} state={dialogueState} />
           <Instruction position={[2, 30, -10]} instruction={instruction} state={instructionState} onClick={handleInstructionClick}/>
-          <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 70]}
+          <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 50]}
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
               setDialogueState(true)
