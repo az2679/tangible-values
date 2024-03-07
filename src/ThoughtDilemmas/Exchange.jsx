@@ -7,22 +7,25 @@ import gsap from 'gsap';
 
 export default function Exchange(props) {
   const { position } = props;
-  const[keep, setKeep] = useState(false)
+  const[decieve, setDecieve] = useState(false)
   const[exchange, setExchange] = useState(false)
 
-  const[confed, setConfed] = useState(false)
+  const[confed, setConfed] = useState(null)
   const[confedState, setConfedState] = useState(false)
   const[confedText, setConfedText] = useState("null")
   const[confedText1, setConfedText1] = useState("n")
 
   const userFruit = useRef()
+  const [userFruitPos, setUserFruitPos] = useState([position[0]-30, 5, position[2]+125])
   const confedFruit = useRef()
   const [confedFruitPos, setConfedFruitPos] = useState([position[0]+50, 1, position[2]+25])
   const [confedFruitRo, setConfedFruitRo] = useState([0, -Math.PI*0.1,0])
 
+  const [payoutState, setPayoutState] = useState(false)
+
   const handleSensedChange = (option, bool) => {
-    if(option == "keep"){
-      setKeep(bool)
+    if(option == "decieve"){
+      setDecieve(bool)
     } else if(option == "exchange"){
       setExchange(bool);
     } 
@@ -31,10 +34,42 @@ export default function Exchange(props) {
     // }
   };
 
-  useEffect(() => {
-    console.log(confed)
-    console.log(confedFruit.current.parent.position)
 
+
+  useEffect(() => {
+    if(confed == true){
+      const tl = gsap.timeline();
+      tl.to(confedFruit.current.parent.position, {
+        x: position[0]-50, 
+        z: position[2]+140, 
+        duration: 5, 
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setConfedFruitPos([...confedFruit.current.parent.position]);
+          // setConfedFruitPos(confedFruit.current.parent.position);
+        }
+      })
+    }
+    
+    if (exchange==true) {
+      const tl = gsap.timeline();
+      tl.to(userFruit.current.parent.position, {
+        x: position[0]+50, 
+        z: position[2]+25, 
+        duration: 5, 
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setUserFruitPos([...userFruit.current.parent.position]);
+          // setUserFruitPos(userFruit.current.parent.position);
+        }
+      })
+    }
+  },[payoutState])
+
+
+
+  useEffect(() => {
+    if(confed == true){
     const tl = gsap.timeline();
     tl.to(confedFruit.current.parent.position, {
       x: position[0], 
@@ -43,6 +78,7 @@ export default function Exchange(props) {
       ease: "power2.inOut",
       onUpdate: () => {
         setConfedFruitPos([...confedFruit.current.parent.position]);
+        // setConfedFruitPos(confedFruit.current.parent.position);
       }
     })
     tl.to(confedFruit.current.parent.rotation, {
@@ -51,54 +87,89 @@ export default function Exchange(props) {
       ease: "power2.inOut",
       onUpdate: () => {
         setConfedFruitRo([...confedFruit.current.parent.rotation]);
+        // setConfedFruitRo(confedFruit.current.parent.rotation);
       }
     }, ">-2")
-  },[confed])
+    } else if (confed==false) {
+      const tl = gsap.timeline();
+    tl.to(confedFruit.current.parent.position, {
+      x: position[0]+65, 
+      z: position[2]+95, 
+      duration: 5, 
+      ease: "power2.inOut",
+      onUpdate: () => {
+        setConfedFruitPos([...confedFruit.current.parent.position]);
+        // setConfedFruitPos(confedFruit.current.parent.position);
+      }
+    })
+    tl.to(confedFruit.current.parent.rotation, {
+      y: -Math.PI*0.3, 
+      duration: 1, 
+      ease: "power2.inOut",
+      onUpdate: () => {
+        setConfedFruitRo([...confedFruit.current.parent.rotation]);
+        // setConfedFruitRo(confedFruit.current.parent.rotation);
+      }
+    }, ">-2")
+    }
+  },[confed, position])
+
 
   const reconcile = () => {
     setConfedState(true)
     
+    if(confed == true && exchange == true){
+      console.log(`equal trade: confed ${confed}, user ${exchange}`)
+    } else if (confed == true && decieve == true || confed == false && exchange == true){
+      console.log(`unequal trade: confed ${confed}, user ${exchange}`)
+    } else if (confed == false && decieve == true){
+      console.log(`no trade: confed ${confed}, user ${exchange}`)
+    }
+
     if(confed == true){
       setConfedText("trade")
       setConfedText1("O")
-
     } else {
-      setConfedText("keep")
+      setConfedText("decieve")
       setConfedText1("X")
     }
-    
-    if(confed == true && exchange == true){
-      console.log(`equal trade: confed ${confed}, user ${exchange}`)
-    } else if (confed == true && keep == true || confed == false && exchange == true){
-      console.log(`unequal trade: confed ${confed}, user ${exchange}`)
-    } else if (confed == false && keep == true){
-      console.log(`no trade: confed ${confed}, user ${exchange}`)
-    }
+
+    setTimeout(() => {
+      setPayoutState(true)
+    }, 3500);
+
   }
+
+  useEffect(() => {
+    console.log(confed)
+    if (confed !== null) {
+      reconcile();
+    }
+  }, [confed]);
 
   return (
     <>
       <Text text={`<-->`} state={true} position={[position[0]-30, 0, position[2]+50]} rotation={[-Math.PI/2, 0, 0]} />
       <Text text={`trade`} state={exchange} position={[position[0]-60, 15, position[2]+50]} />
-      <Text text={`keep`} state={keep} position={[position[0]-60, 15, position[2]+190]} />
+      <Text text={`decieve`} state={decieve} position={[position[0]-60, 15, position[2]+190]} />
       <Text text={`${confedText}`} state={confedState} position={[position[0], 15, position[2]+50]} />
       <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} />
 
-      <Submit position={[position[0]-30, 0, position[2]+80]} valid={keep || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment); reconcile()}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Submit position={[position[0]-30, 0, position[2]+80]} valid={decieve || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
 
-      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="keep" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="decieve" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
 
 
-      <RigidBody ref={userFruit} name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={[position[0]-30, 5, position[2]+125]} canSleep={false} lockRotations={true}>
-        <mesh position={[0, 0, 0]} rotation={[0, 0,0]}>
+      <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={userFruitPos} canSleep={false} lockRotations={true}>
+        <mesh ref={userFruit}>
           <boxGeometry args={[15, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
         </mesh>
       </RigidBody>
 
-      <RigidBody  name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={confedFruitPos} rotation={confedFruitRo} canSleep={false} >
+      <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={confedFruitPos} rotation={confedFruitRo} canSleep={false} >
         <mesh ref = {confedFruit} >
           <boxGeometry args={[15, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />

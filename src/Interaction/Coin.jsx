@@ -1,10 +1,9 @@
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 
-
 export default function Coin({ position }) {
   return (
     <>
-      <RigidBody mass={1} type="dynamic" colliders={false} position ={position} >
+      <RigidBody mass={1} type="dynamic" colliders={false} position ={position} canSleep={false}>
         <CylinderCollider args={[0.5, 2]}  />
         <mesh >
           <cylinderGeometry args={[2, 2, 1, 15, 1]}  />
