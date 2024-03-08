@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import { gsap } from 'gsap';
-
 
 import DragObj from '../Interaction/DragObj';
 import Text from '../Text/Text';
@@ -10,9 +9,7 @@ import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
 import Coin from '../Interaction/Coin';
 
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
-gsap.registerPlugin(MotionPathPlugin);
 
 function SensorMult({option, position, handleSensedChange, i}){
   return(
@@ -31,19 +28,29 @@ function SensorMult({option, position, handleSensedChange, i}){
     </>
   )
 }
-function CoinMult({position, setDragState, floorPlane}){
+function CoinMult({position, setDragState, floorPlane, sensedCoinState}){
   return(
     <>
-      <DragObj name="coin" startPosition={[position[0]-54, 0, position[2]+45]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]-44, 1, position[2]+27]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]-34, 1, position[2]+12]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]-21, 1, position[2]+4]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]-7, 1, position[2]+0]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]+7, 1, position[2]+0]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]+21, 1, position[2]+4]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]+34, 1, position[2]+12]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]+44, 1, position[2]+27]} state={setDragState} plane={floorPlane} lift={10}/>
-      <DragObj name="coin" startPosition={[position[0]+54, 1, position[2]+45]} state={setDragState} plane={floorPlane} lift={10}/>
+
+      {sensedCoinState[1] && ( <DragObj name="coin" num={1} startPosition={[position[0]-54, 0, position[2]+45]} state={setDragState} plane={floorPlane} lift={10}/> )}
+
+      {sensedCoinState[2] && ( <DragObj name="coin" num={2} startPosition={[position[0]-44, 1, position[2]+27]} state={setDragState} plane={floorPlane} lift={10}/> )}
+
+      {sensedCoinState[3] && ( <DragObj name="coin" num={3} startPosition={[position[0]-34, 1, position[2]+12]} state={setDragState} plane={floorPlane} lift={10}/> )}
+
+      {sensedCoinState[4] && ( <DragObj name="coin" num={4} startPosition={[position[0]-21, 1, position[2]+4]} state={setDragState} plane={floorPlane} lift={10}/> )}
+      
+      {sensedCoinState[5] && ( <DragObj name="coin" num={5} startPosition={[position[0]-7, 1, position[2]+0]} state={setDragState} plane={floorPlane} lift={10}/> )}
+      
+      {sensedCoinState[6] && ( <DragObj name="coin" num={6} startPosition={[position[0]+7, 1, position[2]+0]} state={setDragState} plane={floorPlane} lift={10}/> )}
+      
+      {sensedCoinState[7] && ( <DragObj name="coin" num={7} startPosition={[position[0]+21, 1, position[2]+4]} state={setDragState} plane={floorPlane} lift={10}/> )}
+      
+      {sensedCoinState[8] && ( <DragObj name="coin" num={8} startPosition={[position[0]+34, 1, position[2]+12]} state={setDragState} plane={floorPlane} lift={10}/> )}
+      
+      {sensedCoinState[9] && ( <DragObj name="coin" num={9} startPosition={[position[0]+44, 1, position[2]+27]} state={setDragState} plane={floorPlane} lift={10}/> )}
+      
+      {sensedCoinState[10] && ( <DragObj name="coin" num={10} startPosition={[position[0]+54, 1, position[2]+45]} state={setDragState} plane={floorPlane} lift={10}/> )}
     </>
   )
 }
@@ -61,24 +68,37 @@ export default function Trust(props) {
   const [multiply, setMultiply] = useState(false)
   const [confedState, setConfedState] = useState(false)
 
-  // const [renderCoins, setRenderCoins] = useState(null);
   const [initialCoins, setInitialCoins] = useState([]);
   const [renderCoins, setRenderCoins] = useState([]);
   const [totalCoins, setTotalCoins] = useState([]);
   const [payoutState , setPayoutState] = useState(false)
 
-  // var coinPos = []
-  const [coinPos, setCoinPos] = useState([])
+  const [userText, setUserText] = useState(`null`)
 
-    const handleSensedChange = (option, number, count, sensorPosition) => {
+
+  const [sendPos, setSendPos] = useState([550, 10, -600])
+  const [sendCoinsCalled, setSendCoinsCalled] = useState(false);
+
+  const [sensedCoinState, setSensedCoinState] = useState({
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+    10: true,
+  });
+
+    const handleSensedChange = (option, number, count, sensorPosition, num) => {
       if(option == "confed"){
         setConfedSensors((prevSensors) => ({
           ...prevSensors,
-          [number]:{count, sensorPosition},
+          [number]:{count, sensorPosition, num},
         }));
-      // }else if(option == "user"){
-      //   setUserCounter(count)
-      // }
+        // console.log(confedSensors)
       } else if(option == "user"){
         setUserSensors((prevSensors) => ({
           ...prevSensors,
@@ -86,7 +106,6 @@ export default function Trust(props) {
         }));
       }
     };
-
     useEffect(() => {
     //acutal total sensed
       // const totalSensed = Object.values(sensors).reduce((acc, currentValue) => acc + currentValue, 0);
@@ -100,121 +119,87 @@ export default function Trust(props) {
     }, [confedSensors, userSensors]);
 
 
-
     useEffect(() => {
-      setTotalCoins([
-        ...initialCoins,
-        ...renderCoins,
-      ]);
-    },[payoutState])
-
-    useEffect(() => {
-      if (totalCoins.length > 0){
-        sendCoins(totalCoins, [550, 20, -700])
-        
-        setCoinPos(position)
+      if (renderCoins.length > 0) {
+        setTotalCoins([...initialCoins, ...renderCoins]);
+        setSendCoinsCalled(false); 
       }
-    },[totalCoins])
+    }, [renderCoins, initialCoins]);
+  
+    useEffect(() => {  
+      if (totalCoins.length > 0 && !sendCoinsCalled) {
+        sendCoins(confed)
+      }
+    }, [totalCoins, sendCoinsCalled]);
 
-    const sendCoins = (coins, position) => {
-      console.log(coins)
-      const tl = gsap.timeline();
-      coins.forEach((coin) => {
-        tl.to(
-          coin.props.position, {
-            0: position[0],
-            1: position[1],
-            2: position[2],
-            onUpdate: () => {
-              // coinPos = [position[0], position[1], position[2]]
-              // setCoinPos([...coin.props.position])
-              setCoinPos(position)
-            },
-          }
-        );
+    const sendCoins = (confed) => {
+      const updatedCoins = totalCoins.map((coin, index) => {
+        const coinsToSend = index >= totalCoins.length - confed;
+        const updatedCoin = {
+          ...coin,
+          props: {
+            ...coin.props,
+            payoutState: coinsToSend ? true : false,
+          },
+        };
+        return updatedCoin;
       });
+      setTotalCoins(updatedCoins);
+      setSendCoinsCalled(true);
+      
+
+      setMultiply(true)
+
+      setTimeout(() => {
+        setUserText(`total: ${userCounter + confed}`)
+      }, 5000);
     };
 
-    
-    // const sendCoins = (coins, position) => {
-    //   console.log(totalCoins)
-
-    //   const tl = gsap.timeline();
-    //   coins.forEach((coin, index) => {
-    //     // const [x, y, z] = position;
-    //     const delay = index * 0.2;
-    //     console.log(coin)
-    //     tl.to(coin.props.position, {
-    //       x: position[0],
-    //       y: position[1],
-    //       z: position[2],
-    //       duration: 2,
-    //       delay,
-    //       ease: "power2.inOut",
-    //     });
-    //   });
-    // };
-
+    useEffect(() => {
+      console.log(totalCoins);
+    }, [totalCoins]);
 
     const reconcile = () => {
-      setMultiply(true)
       const sensed = [];
       for (const [number, data] of Object.entries(confedSensors)) {
         if (data.count === 1) {
-          sensed.push({ number, position: data.sensorPosition });
+          sensed.push({ number, position: data.sensorPosition, sensedCoin:data.num });
         }
       }
+      
+      const updateSensedCoinState = { ...sensedCoinState };
+      sensed.forEach(({ sensedCoin }) => {
+        updateSensedCoinState[sensedCoin] = false;
+      });
+      setSensedCoinState(updateSensedCoinState);
 
-    // const newRenderCoins = sensed.reduce((acc, { number, position }, index) => {
-    //   const coinIndex = index * 3;
-    //   // coinPos = [position[0], position[1], position[2]]
-    //   setCoinPos([position[0], position[1], position[2]])
-
-    //   setInitialCoins((prevCoins) => [...prevCoins, <Coin key={`coin-${coinIndex}`} position={coinPos} coinNumber={number} />,
-    //   ]);
-
-    //   // coinPos = [position[0], 20, position[2]]
-    //   setCoinPos([position[0], 20, position[2]])
-    //   acc.push(<Coin key={`coin-${coinIndex+1}`} position={coinPos} />);
-    //   acc.push(<Coin key={`coin-${coinIndex+2}`} position={coinPos} />);
-    //   return acc;
-    // }, []);
-    // setRenderCoins(newRenderCoins)
 
     const newRenderCoins = sensed.reduce((acc, { number, position }, index) => {
       const coinIndex = index * 3;
-    
-      // Use a functional update to get the current state value
-      setCoinPos((prevCoinPos) => {
-        const coinPos = [position[0], position[1], position[2]];
-        // Update the initial coins
-        setInitialCoins((prevCoins) => [
-          ...prevCoins,
-          <Coin key={`coin-${coinIndex}`} position={coinPos} coinNumber={number} />,
-          // <Coin key={`coin-${coinIndex + 1}`} position={[coinPos[0], 20, coinPos[2]]} />,
-          // <Coin key={`coin-${coinIndex + 2}`} position={[coinPos[0], 20, coinPos[2]]} />,
-        ]);
-        acc.push(<Coin key={`coin-${coinIndex + 1}`} position={[coinPos[0], 20, coinPos[2]]} />);
-        acc.push(<Coin key={`coin-${coinIndex + 2}`} position={[coinPos[0], 20, coinPos[2]]} />);
-        // Update the state value
-        return coinPos;
-      });
-    
-      // acc.push(<Coin key={`coin-${coinIndex + 1}`} position={[coinPos[0], 20, coinPos[2]]} />);
-      // acc.push(<Coin key={`coin-${coinIndex + 2}`} position={[coinPos[0], 20, coinPos[2]]} />);
+      setInitialCoins((prevCoins) => [...prevCoins, <Coin key={`coin-${coinIndex}`} position={[position[0], 10, position[2]]} sendPos={sendPos} payoutState={payoutState} delay={coinIndex*0.2} />,
+      ]);
+      acc.push(<Coin key={`coin-${coinIndex+1}`} position={[position[0], 20, position[2]]} sendPos={sendPos} payoutState={payoutState} delay={(coinIndex+1)*0.2}/>);
+      acc.push(<Coin key={`coin-${coinIndex+2}`} position={[position[0], 30, position[2]]} sendPos={sendPos} payoutState={payoutState} delay={(coinIndex+2)*0.2}  />);
       return acc;
     }, []);
-    setRenderCoins(newRenderCoins);
+    setRenderCoins(newRenderCoins)
+
 
     setTimeout(() => {
       setConfedState(true)
       console.log(`Stage 2: Returned ${confed}`)
     }, 3000);
 
-    setTimeout(() => {
-      setPayoutState(true)
-    }, 1000);
+    // setTimeout(() => {
+    //   setPayoutState(true)
+    //   console.log("setting payout true")
+    // }, 1000);
   };
+
+  useEffect(() => {
+    setUserText(`remaining: ${userCounter}`)
+  }, [userCounter]);
+
 
   useEffect(() => {
     if (confed !== null) {
@@ -228,7 +213,7 @@ export default function Trust(props) {
   return (
     <>
       <Text text={`${confedCounter}`} state={!confedState} position={[position[0], 0, position[2]+75]} rotation={[-Math.PI*0.1, 0, 0]}/>
-      <Text text={`remaining: ${userCounter}`} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
+      <Text text={userText} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
       <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
@@ -237,9 +222,12 @@ export default function Trust(props) {
       <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1}/>
       {/* <Sensor type="number" args={[40, 30]} sensorArgs={[20, 4,15]} option="user" number={0} sensorPosition={[position[0], 0, position[2]+170]} onSensedChange={handleSensedChange} /> */}
 
-      <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane}/>
+      <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane} sensedCoinState={sensedCoinState}/>
 
-      {multiply && renderCoins}
+
+      {/* {multiply && renderCoins} */}
+
+      {multiply && totalCoins}
     </>
   );
 }

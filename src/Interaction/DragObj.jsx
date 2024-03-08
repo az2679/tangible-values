@@ -6,7 +6,7 @@ import { Vector3 } from "three";
 
 import { useFrame } from "@react-three/fiber";
 
-export default function DragObj({ name, startPosition, state, plane, lift }) {
+export default function DragObj({ name, startPosition, state, plane, lift, num }) {
   const [position, setPosition] = useState(startPosition);
   // const [shadow, setShadow] = useState(startPosition);
 
@@ -49,6 +49,7 @@ export default function DragObj({ name, startPosition, state, plane, lift }) {
         type="dynamic"
         colliders={false}
         canSleep={false}
+        num={num || 0}
       >
         <CylinderCollider args={[0.5, 2]} position={position} />
         <animated.mesh {...spring} {...bind()} >

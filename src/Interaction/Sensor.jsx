@@ -6,10 +6,11 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
   const [bool, setBool] = useState(false);
   const [color, setColor] = useState("gray");
   const [colorState, setColorState] = useState(false);
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     if (type === "number") {
-      onSensedChange(option, number, count, sensorPosition);
+      onSensedChange(option, number, count, sensorPosition, num);
     } else if (type === "boolean") {
       onSensedChange(option, bool);
     } else if (type === "color") {
@@ -20,7 +21,7 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
         setColor("gray")
       }
     }
-  }, [count, bool, colorState]);
+  }, [count, bool, colorState, num]);
 
   return (
     <>
@@ -42,6 +43,7 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
             } else {
             if (payload.other.rigidBodyObject.name === "coin") {
               setCount((value) => value + 1);
+              setNum(payload.other.rigidBodyObject.num)
             } else if (payload.other.rigidBodyObject.name === "fruit") {
               setBool(true);
             }
@@ -50,6 +52,7 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
           onIntersectionExit={(payload) => {
             if (payload.other.rigidBodyObject.name === "coin") {
               setCount((value) => value - 1);
+              console.log(payload.other.rigidBodyObject.num)
             } else if (payload.other.rigidBodyObject.name === "fruit") {
               setBool(false);
             }
