@@ -6,17 +6,12 @@ export default function Coin({ position, onSendCoin, sendPos, delay, payoutState
   const [coinPos, setCoinPos] = useState([position[0], position[1], position[2]])
   const coinRef = useRef()
 
-  // const handleSendCoin = (sendPos) => {
-  //   console.log("coin: handle send coins." + `position: ${sendPos}`);
-  // };
-
-  // onSendCoin && onSendCoin(handleSendCoin);
-
-
   useEffect(()=> {
-    console.log(payoutState)
+    // console.log(payoutState)
     if (payoutState == true){
       const tl = gsap.timeline();
+      gsap.killTweensOf(coinRef.current.parent.position);
+      
       tl.to(coinRef.current.parent.position, {
         x: sendPos[0],
         y: sendPos[1], 
@@ -41,7 +36,6 @@ export default function Coin({ position, onSendCoin, sendPos, delay, payoutState
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
         </mesh>
       </RigidBody>
-
     </>
   );
 }

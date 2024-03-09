@@ -7,9 +7,8 @@ import DragObj from '../Interaction/DragObj';
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
+import Reset from '../Decision/Reset';
 import Coin from '../Interaction/Coin';
-
-
 
 function SensorMult({option, position, handleSensedChange, i}){
   return(
@@ -55,6 +54,7 @@ function CoinMult({position, setDragState, floorPlane, sensedCoinState}){
   )
 }
 
+
 export default function Trust(props) {
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
@@ -98,7 +98,6 @@ export default function Trust(props) {
           ...prevSensors,
           [number]:{count, sensorPosition, num},
         }));
-        // console.log(confedSensors)
       } else if(option == "user"){
         setUserSensors((prevSensors) => ({
           ...prevSensors,
@@ -147,19 +146,11 @@ export default function Trust(props) {
       setTotalCoins(updatedCoins);
       setSendCoinsCalled(true);
       
-
       setMultiply(true)
-
-      setTimeout(() => {
-        setUserText(`total: ${userCounter + confed}`)
-      }, 5000);
     };
 
-    useEffect(() => {
-      console.log(totalCoins);
-    }, [totalCoins]);
-
     const reconcile = () => {
+      console.log(confedSensors)
       const sensed = [];
       for (const [number, data] of Object.entries(confedSensors)) {
         if (data.count === 1) {
@@ -184,21 +175,22 @@ export default function Trust(props) {
     }, []);
     setRenderCoins(newRenderCoins)
 
-
     setTimeout(() => {
       setConfedState(true)
       console.log(`Stage 2: Returned ${confed}`)
     }, 3000);
-
-    // setTimeout(() => {
-    //   setPayoutState(true)
-    //   console.log("setting payout true")
-    // }, 1000);
   };
 
+  
   useEffect(() => {
-    setUserText(`remaining: ${userCounter}`)
-  }, [userCounter]);
+    if(multiply){
+    setTimeout(() => {
+      setUserText(`total: ${userCounter + confed}`)
+    }, 5000)
+    } else {
+      setUserText(`remaining: ${userCounter}`)
+    }
+  }, [userCounter, multiply]);
 
 
   useEffect(() => {
@@ -207,7 +199,44 @@ export default function Trust(props) {
     }
   }, [confed]);
 
-  
+  useEffect(() => {
+    console.log(multiply, totalCoins)
+  }, [multiply, totalCoins]);
+
+  const handleReset = () => {
+    console.log("reset")
+
+    // setConfedSensors({});
+    // setConfedCounter(0)
+    setConfedSensors((prevSensors) => {
+      // console.log("resetting sensors")
+      const resetSensors = {};
+      Object.keys(prevSensors).forEach((index) => {
+        resetSensors[index] = { count: 0, sensorPosition: prevSensors[index].sensorPosition, num: 0 };
+      });
+      return resetSensors;
+    });
+
+    setConfed(null)
+    setConfedState(false)
+    setMultiply(false)
+
+    setInitialCoins([])
+    setRenderCoins([])
+    setTotalCoins([])
+    // setSendCoinsCalled(false)
+
+    setSensedCoinState((prevSensedCoinState) => {
+      const newSensedCoinState = {};
+      for (const key in prevSensedCoinState) {
+        newSensedCoinState[key] = true;
+      }
+      return newSensedCoinState;
+    });
+
+    
+
+  }
     
 
   return (
@@ -217,15 +246,13 @@ export default function Trust(props) {
       <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
       <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} />
 
       <SensorMult option="confed" position={[position[0], position[1], position[2]+80]} handleSensedChange={handleSensedChange} i={1}/>
       <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1}/>
       {/* <Sensor type="number" args={[40, 30]} sensorArgs={[20, 4,15]} option="user" number={0} sensorPosition={[position[0], 0, position[2]+170]} onSensedChange={handleSensedChange} /> */}
 
       <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane} sensedCoinState={sensedCoinState}/>
-
-
-      {/* {multiply && renderCoins} */}
 
       {multiply && totalCoins}
     </>

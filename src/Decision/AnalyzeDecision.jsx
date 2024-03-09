@@ -36,8 +36,8 @@ export default function AnalyzeDecision(decisionType) {
         }
       });
       const totalResponses = count1 + count5;
-      const percentage1 = (count1 / totalResponses) * 100;
-      const percentage5 = (count5 / totalResponses) * 100;
+      const percentage1 = Math.round((count1 / totalResponses) * 100)
+      const percentage5 = Math.round((count5 / totalResponses) * 100)
       console.log(`${decisionType} - so far, ${percentage1}% of people claimed $1, while ${percentage5}% of people claimed $5.`);
     } else {
       console.log(`No entries for ${decisionType} in the database.`);
@@ -58,8 +58,8 @@ export default function AnalyzeDecision(decisionType) {
         }
       });
       const totalResponses = exchange + keep;
-      const percentageExchange = (exchange / totalResponses) * 100;
-      const percentageKeep = (keep / totalResponses) * 100;
+      const percentageExchange = Math.round((exchange / totalResponses) * 100)
+      const percentageKeep = Math.round((keep / totalResponses) * 100)
       console.log(`${decisionType} - so far, ${percentageExchange}% of people chose to trade, while ${percentageKeep}% of people chose to keep.`);
     } else {
       console.log(`No entries for ${decisionType} in the database.`);

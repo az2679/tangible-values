@@ -36,6 +36,7 @@ function Paper({paperPosition, paperRotation, textPosition, textRotation, text, 
   const paper = useRef()
 
   useEffect(() => {
+    if (flipState == true){
     gsap.from(paper.current.rotation, {
         z: 0, 
         duration: 0.1, 
@@ -52,6 +53,7 @@ function Paper({paperPosition, paperRotation, textPosition, textRotation, text, 
       y: 0,
       duration: 0.5, 
     }, ">");
+  }
   },[flipState])
 
   return(
@@ -75,7 +77,7 @@ export default function Volunteer({position}) {
   const [confedState, setConfedState] = useState(false)
   const [confed, setConfed] = useState([])
   const [flipState, setFlipState] = useState(false)
-  const [payout, setPayout] = useState("null")
+  const [payoutText, setPayoutText] = useState("null")
   const [payoutState, setPayoutState] = useState(false)
 
   const handleHoldChange = (holdState) => {
@@ -123,10 +125,10 @@ export default function Volunteer({position}) {
     if (majority === 5 && confed[0] === 5 && confed[1] === 5 && confed[2] === 5){
       console.log(`Lost: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
       setPayoutState(false)
-      setPayout(`try again next time`)
+      setPayoutText(`try again next time`)
     } else {
       console.log(`Pay Out: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
-      setPayout(`win`)
+      setPayoutText(`win`)
 
       setTimeout(() => {
         setPayoutState(true)
@@ -181,7 +183,7 @@ export default function Volunteer({position}) {
       {payoutState && renderCoins(confed[1], [position[0], 0, position[2]+22])}
       {payoutState && renderCoins(confed[2], [position[0]+30, 0, position[2]+45])}
 
-      <Text text={payout} state={true} position={[position[0], 0, position[2]+45]} rotation={[-Math.PI * 0.5, 0,0]}/>
+      <Text text={payoutText} state={flipState} position={[position[0], 0, position[2]+45]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
       <Eraser position={[position[0], 15, position[2]+180]} onHoldChange={handleHoldChange} />
       {/* <DragObj name="eraser" startPosition={[position[0]-45, 1, position[2]-20]} state={setDragState} plane={floorPlane} lift={1}/> */}

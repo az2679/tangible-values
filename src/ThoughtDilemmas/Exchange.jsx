@@ -7,7 +7,7 @@ import gsap from 'gsap';
 
 export default function Exchange(props) {
   const { position } = props;
-  const[decieve, setDecieve] = useState(false)
+  const[deceive, setDeceive] = useState(false)
   const[exchange, setExchange] = useState(false)
 
   const[confed, setConfed] = useState(null)
@@ -24,8 +24,8 @@ export default function Exchange(props) {
   const [payoutState, setPayoutState] = useState(false)
 
   const handleSensedChange = (option, bool) => {
-    if(option == "decieve"){
-      setDecieve(bool)
+    if(option == "deceive"){
+      setDeceive(bool)
     } else if(option == "exchange"){
       setExchange(bool);
     } 
@@ -37,6 +37,7 @@ export default function Exchange(props) {
 
 
   useEffect(() => {
+    if(payoutState == true){
     if(confed == true){
       const tl = gsap.timeline();
       tl.to(confedFruit.current.parent.position, {
@@ -64,6 +65,7 @@ export default function Exchange(props) {
         }
       })
     }
+  }
   },[payoutState])
 
 
@@ -120,9 +122,9 @@ export default function Exchange(props) {
     
     if(confed == true && exchange == true){
       console.log(`equal trade: confed ${confed}, user ${exchange}`)
-    } else if (confed == true && decieve == true || confed == false && exchange == true){
+    } else if (confed == true && deceive == true || confed == false && exchange == true){
       console.log(`unequal trade: confed ${confed}, user ${exchange}`)
-    } else if (confed == false && decieve == true){
+    } else if (confed == false && deceive == true){
       console.log(`no trade: confed ${confed}, user ${exchange}`)
     }
 
@@ -130,7 +132,7 @@ export default function Exchange(props) {
       setConfedText("trade")
       setConfedText1("O")
     } else {
-      setConfedText("decieve")
+      setConfedText("deceive")
       setConfedText1("X")
     }
 
@@ -141,7 +143,7 @@ export default function Exchange(props) {
   }
 
   useEffect(() => {
-    console.log(confed)
+    // console.log(confed)
     if (confed !== null) {
       reconcile();
     }
@@ -151,13 +153,13 @@ export default function Exchange(props) {
     <>
       <Text text={`<-->`} state={true} position={[position[0]-30, 0, position[2]+50]} rotation={[-Math.PI/2, 0, 0]} />
       <Text text={`trade`} state={exchange} position={[position[0]-60, 15, position[2]+50]} />
-      <Text text={`decieve`} state={decieve} position={[position[0]-60, 15, position[2]+190]} />
+      <Text text={`deceive`} state={deceive} position={[position[0]-60, 15, position[2]+190]} />
       <Text text={`${confedText}`} state={confedState} position={[position[0], 15, position[2]+50]} />
       <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} />
 
-      <Submit position={[position[0]-30, 0, position[2]+80]} valid={decieve || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
 
-      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="decieve" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="deceive" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
 
@@ -169,7 +171,7 @@ export default function Exchange(props) {
         </mesh>
       </RigidBody>
 
-      <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={confedFruitPos} rotation={confedFruitRo} canSleep={false} >
+      <RigidBody name="confedFruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={confedFruitPos} rotation={confedFruitRo} canSleep={false} >
         <mesh ref = {confedFruit} >
           <boxGeometry args={[15, 10, 10]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
