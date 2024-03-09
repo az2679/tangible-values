@@ -10,20 +10,20 @@ import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
 import Coin from '../Interaction/Coin';
 
-function SensorMult({option, position, handleSensedChange, i}){
+function SensorMult({option, position, handleSensedChange, i, resetSensor}){
   return(
     <>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={0} sensorPosition={[position[0]-54, 0, position[2]-(45*i)]} onSensedChange={handleSensedChange} />
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={1} sensorPosition={[position[0]-44, 0, position[2]-(27*i)]} onSensedChange={handleSensedChange} />
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={2} sensorPosition={[position[0]-34, 0, position[2]-(12*i)]} onSensedChange={handleSensedChange}/>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={3} sensorPosition={[position[0]-21, 0, position[2]-(4*i)]} onSensedChange={handleSensedChange}/>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={4} sensorPosition={[position[0]-7, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={0} sensorPosition={[position[0]-54, 0, position[2]-(45*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={1} sensorPosition={[position[0]-44, 0, position[2]-(27*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor} />
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={2} sensorPosition={[position[0]-34, 0, position[2]-(12*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={3} sensorPosition={[position[0]-21, 0, position[2]-(4*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={4} sensorPosition={[position[0]-7, 0, position[2]+0]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
       
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={5} sensorPosition={[position[0]+7, 0, position[2]+0]} onSensedChange={handleSensedChange}/>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={6} sensorPosition={[position[0]+21, 0, position[2]-(4*i)]} onSensedChange={handleSensedChange}/>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={7} sensorPosition={[position[0]+34, 0, position[2]-(12*i)]} onSensedChange={handleSensedChange}/>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={8} sensorPosition={[position[0]+44, 0, position[2]-(27*i)]} onSensedChange={handleSensedChange}/>
-      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={9} sensorPosition={[position[0]+54, 0, position[2]-(45*i)]} onSensedChange={handleSensedChange}/> 
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={5} sensorPosition={[position[0]+7, 0, position[2]+0]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={6} sensorPosition={[position[0]+21, 0, position[2]-(4*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={7} sensorPosition={[position[0]+34, 0, position[2]-(12*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={8} sensorPosition={[position[0]+44, 0, position[2]-(27*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/>
+      <Sensor type="number" args={[7,7]} sensorArgs={[4, 4, 4]} option={option} number={9} sensorPosition={[position[0]+54, 0, position[2]-(45*i)]} onSensedChange={handleSensedChange} resetSensor={resetSensor}/> 
     </>
   )
 }
@@ -75,9 +75,12 @@ export default function Trust(props) {
 
   const [userText, setUserText] = useState(`null`)
 
-
   const [sendPos, setSendPos] = useState([550, 10, -600])
   const [sendCoinsCalled, setSendCoinsCalled] = useState(false);
+  const [resetSensor , setResetSensor] = useState(false)
+  const [resetState , setResetState] = useState(false)
+
+
 
   const [sensedCoinState, setSensedCoinState] = useState({
     1: true,
@@ -179,6 +182,10 @@ export default function Trust(props) {
       setConfedState(true)
       console.log(`Stage 2: Returned ${confed}`)
     }, 3000);
+
+    setTimeout(() => {
+      setResetState(true)
+    }, (confed*2000)+10000);
   };
 
   
@@ -196,6 +203,7 @@ export default function Trust(props) {
   useEffect(() => {
     if (confed !== null) {
       reconcile();
+      setResetSensor(false)
     }
   }, [confed]);
 
@@ -205,17 +213,6 @@ export default function Trust(props) {
 
   const handleReset = () => {
     console.log("reset")
-
-    // setConfedSensors({});
-    // setConfedCounter(0)
-    setConfedSensors((prevSensors) => {
-      // console.log("resetting sensors")
-      const resetSensors = {};
-      Object.keys(prevSensors).forEach((index) => {
-        resetSensors[index] = { count: 0, sensorPosition: prevSensors[index].sensorPosition, num: 0 };
-      });
-      return resetSensors;
-    });
 
     setConfed(null)
     setConfedState(false)
@@ -234,8 +231,16 @@ export default function Trust(props) {
       return newSensedCoinState;
     });
 
-    
+    setConfedSensors((prevSensors) => {
+      const resetSensors = {};
+      Object.keys(prevSensors).forEach((index) => {
+        resetSensors[index] = { count: 0, sensorPosition: prevSensors[index].sensorPosition, num: 0 };
+      });
+      return resetSensors;
+    });
+    setResetSensor(true)
 
+    setResetState(false)
   }
     
 
@@ -246,10 +251,10 @@ export default function Trust(props) {
       <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
       <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} />
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} resetState={resetState}/>
 
-      <SensorMult option="confed" position={[position[0], position[1], position[2]+80]} handleSensedChange={handleSensedChange} i={1}/>
-      <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1}/>
+      <SensorMult option="confed" position={[position[0], position[1], position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
+      <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1} resetSensor={false}/>
       {/* <Sensor type="number" args={[40, 30]} sensorArgs={[20, 4,15]} option="user" number={0} sensorPosition={[position[0], 0, position[2]+170]} onSensedChange={handleSensedChange} /> */}
 
       <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane} sensedCoinState={sensedCoinState}/>

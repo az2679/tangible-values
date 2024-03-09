@@ -3,6 +3,7 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
+import Reset from '../Decision/Reset';
 import gsap from 'gsap';
 
 export default function Exchange(props) {
@@ -22,6 +23,8 @@ export default function Exchange(props) {
   const [confedFruitRo, setConfedFruitRo] = useState([0, -Math.PI*0.1,0])
 
   const [payoutState, setPayoutState] = useState(false)
+  const [resetPos, setResetPos] = useState(false)
+  const [resetState, setResetState] = useState(false)
 
   const handleSensedChange = (option, bool) => {
     if(option == "deceive"){
@@ -34,14 +37,36 @@ export default function Exchange(props) {
     // }
   };
 
-
+  useEffect(() => {
+    if(resetPos == true){
+      const tl = gsap.timeline();
+      tl.to(confedFruit.current.parent.position, {
+        x: position[0]+50, 
+        z: position[2]+15, 
+        duration: 7, 
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setConfedFruitPos([...confedFruit.current.parent.position]);
+        }
+      })
+      tl.to(userFruit.current.parent.position, {
+        x: position[0]-30, 
+        z: position[2]+125, 
+        duration: 6, 
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setUserFruitPos([...userFruit.current.parent.position]);
+        }
+      }, "<")
+    }
+  },[resetState])
 
   useEffect(() => {
     if(payoutState == true){
     if(confed == true){
       const tl = gsap.timeline();
       tl.to(confedFruit.current.parent.position, {
-        x: position[0]-50, 
+        x: position[0]-70, 
         z: position[2]+140, 
         duration: 5, 
         ease: "power2.inOut",
@@ -51,12 +76,11 @@ export default function Exchange(props) {
         }
       })
     }
-    
     if (exchange==true) {
       const tl = gsap.timeline();
       tl.to(userFruit.current.parent.position, {
         x: position[0]+50, 
-        z: position[2]+25, 
+        z: position[2]+45, 
         duration: 5, 
         ease: "power2.inOut",
         onUpdate: () => {
@@ -138,16 +162,29 @@ export default function Exchange(props) {
 
     setTimeout(() => {
       setPayoutState(true)
-    }, 3500);
+    }, 4000);
 
+    setTimeout(() => {
+      setResetState(true)
+    }, 10000);
   }
 
   useEffect(() => {
     // console.log(confed)
     if (confed !== null) {
       reconcile();
+      setResetState(false)
     }
   }, [confed]);
+
+  const handleReset = () => {
+    setConfed(null)
+    setConfedState(false)
+    setPayoutState(false)
+    setResetPos(true)
+
+    setResetState(false)
+  }
 
   return (
     <>
@@ -158,6 +195,7 @@ export default function Exchange(props) {
       <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} />
 
       <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} resetState={resetState} />
 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="deceive" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 

@@ -4,6 +4,7 @@ import { Vector3, Plane } from "three";
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
+import Reset from '../Decision/Reset';
 
 import gsap from 'gsap';
 import Coin from '../Interaction/Coin';
@@ -53,7 +54,7 @@ function Paper({paperPosition, paperRotation, textPosition, textRotation, text, 
       y: 0,
       duration: 0.5, 
     }, ">");
-  }
+  } 
   },[flipState])
 
   return(
@@ -79,6 +80,8 @@ export default function Volunteer({position}) {
   const [flipState, setFlipState] = useState(false)
   const [payoutText, setPayoutText] = useState("null")
   const [payoutState, setPayoutState] = useState(false)
+  const [resetSensor, setResetSensor] = useState(false)
+  const [resetState, setResetState] = useState(false)
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -120,8 +123,6 @@ export default function Volunteer({position}) {
       setConfedState(true)
     }, 1000);
 
-    //reconcile results third
-    // setTimeout(() => {
     if (majority === 5 && confed[0] === 5 && confed[1] === 5 && confed[2] === 5){
       console.log(`Lost: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
       setPayoutState(false)
@@ -134,7 +135,10 @@ export default function Volunteer({position}) {
         setPayoutState(true)
       }, 3500);
     }
-  // }, 1000);
+
+    setTimeout(() => {
+      setResetState(true)
+    }, 6000);
   }
 
   const renderCoins = (amount, position) => {
@@ -147,12 +151,23 @@ export default function Volunteer({position}) {
   };
 
   useEffect(() => {
-    // console.log("Updated confed:", confed);
-
+    console.log(confed)
     if (confed.length > 0) {
       reconcile();
+      setResetSensor(false)
     }
   }, [confed]);
+
+  const handleReset = () => {
+    setConfed([])
+    setConfedState(false)
+    setFlipState(false) 
+    setPayoutState(false)
+    setResetSensor(true)
+
+    setResetState(false)
+
+  }
 
   
   return (
@@ -195,21 +210,22 @@ export default function Volunteer({position}) {
 
 
       <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+60, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} resetState = {resetState} />
 
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={2} sensorPosition={[position[0]-20, 0, position[2]+124]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={3} sensorPosition={[position[0]-20, 0, position[2]+131]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={4} sensorPosition={[position[0]-20, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={2} sensorPosition={[position[0]-20, 0, position[2]+124]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={3} sensorPosition={[position[0]-20, 0, position[2]+131]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={4} sensorPosition={[position[0]-20, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
 
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={0} sensorPosition={[position[0]+20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={1} sensorPosition={[position[0]+20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={2} sensorPosition={[position[0]+20, 0, position[2]+124]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={3} sensorPosition={[position[0]+27, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={4} sensorPosition={[position[0]+27, 0, position[2]+124]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={5} sensorPosition={[position[0]+27, 0, position[2]+131]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={6} sensorPosition={[position[0]+27, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
-      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={7} sensorPosition={[position[0]+20, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={0} sensorPosition={[position[0]+20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={1} sensorPosition={[position[0]+20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={2} sensorPosition={[position[0]+20, 0, position[2]+124]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={3} sensorPosition={[position[0]+27, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={4} sensorPosition={[position[0]+27, 0, position[2]+124]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={5} sensorPosition={[position[0]+27, 0, position[2]+131]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={6} sensorPosition={[position[0]+27, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+      <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={7} sensorPosition={[position[0]+20, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
     </>
   );
 }

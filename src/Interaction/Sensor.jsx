@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
-export default function Sensor({ type, args, sensorArgs, option, number, sensorPosition, onSensedChange, eraserState }) {
+export default function Sensor({ type, args, sensorArgs, option, number, sensorPosition, onSensedChange, eraserState, resetSensor }) {
   const [count, setCount] = useState(0);
   const [bool, setBool] = useState(false);
   const [color, setColor] = useState("gray");
@@ -22,6 +22,13 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
       }
     }
   }, [count, bool, colorState, num]);
+
+  useEffect(() => {
+    if (resetSensor == true) {
+      setColorState(false)
+      setCount(0)
+    }
+  }, [resetSensor])
 
   return (
     <>
