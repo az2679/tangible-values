@@ -79,7 +79,8 @@ export default function Trust(props) {
   const [sendCoinsCalled, setSendCoinsCalled] = useState(false);
   const [resetSensor , setResetSensor] = useState(false)
 
-  const [refractory , setRefractory] = useState(false)
+  const [resetRefractory , setResetRefractory] = useState(false)
+  const [submitRefractory , setSubmitRefractory] = useState(false)
 
 
 
@@ -185,7 +186,7 @@ export default function Trust(props) {
     }, 3000);
 
     setTimeout(() => {
-      setRefractory(false)
+      setResetRefractory(false)
     }, (confed*2000)+10000);
   };
 
@@ -205,7 +206,9 @@ export default function Trust(props) {
     if (confed !== null) {
       reconcile();
       setResetSensor(false)
-      setRefractory(true)
+
+      setResetRefractory(true)
+      setSubmitRefractory(true)
     }
   }, [confed]);
 
@@ -214,8 +217,6 @@ export default function Trust(props) {
   }, [multiply, totalCoins]);
 
   const handleReset = () => {
-    console.log("reset")
-
     setConfed(null)
     setConfedState(false)
     setMultiply(false)
@@ -241,6 +242,8 @@ export default function Trust(props) {
       return resetSensors;
     });
     setResetSensor(true)
+
+    setSubmitRefractory(false)
   }
     
 
@@ -250,8 +253,8 @@ export default function Trust(props) {
       <Text text={userText} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
-      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={refractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={refractory}/>
+      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory}/>
 
       <SensorMult option="confed" position={[position[0], position[1], position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
       <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1} resetSensor={false}/>

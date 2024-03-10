@@ -24,7 +24,8 @@ export default function Exchange(props) {
 
   const [payoutState, setPayoutState] = useState(false)
   const [resetPos, setResetPos] = useState(false)
-  const [refractory, setRefractory] = useState(false)
+  const [resetRefractory, setResetRefractory] = useState(false)
+  const [submitRefractory, setSubmitRefractory] = useState(false)
 
   const handleSensedChange = (option, bool) => {
     if(option == "deceive"){
@@ -166,7 +167,7 @@ export default function Exchange(props) {
     }, 4000);
 
     setTimeout(() => {
-      setRefractory(false)
+      setResetRefractory(false)
     }, 10000);
   }
 
@@ -174,7 +175,8 @@ export default function Exchange(props) {
     // console.log(confed)
     if (confed !== null) {
       reconcile();
-      setRefractory(true)
+      setResetRefractory(true)
+      setSubmitRefractory(true)
     }
   }, [confed]);
 
@@ -183,6 +185,8 @@ export default function Exchange(props) {
     setConfedState(false)
     setPayoutState(false)
     setResetPos(true)
+
+    setSubmitRefractory(false)
   }
 
   return (
@@ -193,8 +197,8 @@ export default function Exchange(props) {
       <Text text={`${confedText}`} state={confedState} position={[position[0], 15, position[2]+50]} />
       <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} />
 
-      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {refractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={refractory} />
+      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} />
 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="deceive" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 

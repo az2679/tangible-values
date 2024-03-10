@@ -1,8 +1,6 @@
 import { RigidBody } from '@react-three/rapier';
-import { useEffect } from 'react';
 
 export default function Reset({position, onReset, refractory}) {
-  
   const handleClick = () => {
     if(refractory == false){
       onReset()

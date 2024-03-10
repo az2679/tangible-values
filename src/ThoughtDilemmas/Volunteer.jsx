@@ -81,7 +81,8 @@ export default function Volunteer({position}) {
   const [payoutText, setPayoutText] = useState("null")
   const [payoutState, setPayoutState] = useState(false)
   const [resetSensor, setResetSensor] = useState(false)
-  const [refractory, setRefractory] = useState(false)
+  const [resetRefractory, setResetRefractory] = useState(false)
+  const [submitRefractory, setSubmitRefractory] = useState(false)
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -138,7 +139,7 @@ export default function Volunteer({position}) {
 
     setTimeout(() => {
       //after animation plays out, refractory period is over and can submit/reset again
-      setRefractory(false)
+      setResetRefractory(false)
     }, 6000);
   }
 
@@ -158,7 +159,8 @@ export default function Volunteer({position}) {
       setResetSensor(false)
 
       //after submitting, can't reset / submit again
-      setRefractory(true)
+      setResetRefractory(true)
+      setSubmitRefractory(true)
     }
   }, [confed]);
 
@@ -168,6 +170,8 @@ export default function Volunteer({position}) {
     setFlipState(false) 
     setPayoutState(false)
     setResetSensor(true)
+
+    setSubmitRefractory(false)
   }
 
   
@@ -210,8 +214,8 @@ export default function Volunteer({position}) {
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
 
-      <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {refractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+60, 1, position[2]+15]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory = {refractory} />
+      <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+60, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory = {resetRefractory} />
 
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
