@@ -78,7 +78,8 @@ export default function Trust(props) {
   const [sendPos, setSendPos] = useState([550, 10, -600])
   const [sendCoinsCalled, setSendCoinsCalled] = useState(false);
   const [resetSensor , setResetSensor] = useState(false)
-  const [resetState , setResetState] = useState(false)
+
+  const [refractory , setRefractory] = useState(false)
 
 
 
@@ -184,7 +185,7 @@ export default function Trust(props) {
     }, 3000);
 
     setTimeout(() => {
-      setResetState(true)
+      setRefractory(false)
     }, (confed*2000)+10000);
   };
 
@@ -204,6 +205,7 @@ export default function Trust(props) {
     if (confed !== null) {
       reconcile();
       setResetSensor(false)
+      setRefractory(true)
     }
   }, [confed]);
 
@@ -239,8 +241,6 @@ export default function Trust(props) {
       return resetSensors;
     });
     setResetSensor(true)
-
-    setResetState(false)
   }
     
 
@@ -250,8 +250,8 @@ export default function Trust(props) {
       <Text text={userText} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
 
-      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} resetState={resetState}/>
+      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={refractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={refractory}/>
 
       <SensorMult option="confed" position={[position[0], position[1], position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
       <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1} resetSensor={false}/>

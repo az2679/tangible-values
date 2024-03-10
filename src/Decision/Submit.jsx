@@ -1,12 +1,13 @@
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SaveDecision from './SaveDecision';
 import AnalyzeDecision from './AnalyzeDecision';
 import Text from '../Text/Text';
 
-export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition}) {
+export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition, refractory}) {
   let intersectionTimeout;
   const [errorState, setErrorState] = useState(false)
+  const [errorText, setErrorText] = useState('null')
 
   const submitDictator = (decisionValue) => {
     SaveDecision({ decisionType: 'dictator', decisionValue: decisionValue });
@@ -53,35 +54,40 @@ export default function Submit({position, valid, decisionType, decisionValue, on
 
 
   const submitDecision = (valid, decisionType, decisionValue) => {
-    if (valid){
-      setErrorState(false)
-    switch (decisionType) {
-      case 'dictator':
-        submitDictator(decisionValue);
-        break;
-      case 'volunteer':
-        submitVolunteer(decisionValue);
-        break;
-      case 'exchange':
-        submitExchange(decisionValue);
-        break;
-      case 'trust':
-        submitTrust(decisionValue);
-        break;
-      default:
-        console.log(`Unknown submission type: ${decisionType}`);
-    }
-  } else {
-    setErrorState(true)
-  }
+      if (valid){
+        setErrorState(false)
+      switch (decisionType) {
+        case 'dictator':
+          submitDictator(decisionValue);
+          break;
+        case 'volunteer':
+          submitVolunteer(decisionValue);
+          break;
+        case 'exchange':
+          submitExchange(decisionValue);
+          break;
+        case 'trust':
+          submitTrust(decisionValue);
+          break;
+        default:
+          console.log(`Unknown submission type: ${decisionType}`);
+        }
+      } else {
+        setErrorState(true)
+        setErrorText("invalid answer")
+      }
   }
 
   const handleIntersection = (payload) => {
       clearTimeout(intersectionTimeout);
-      intersectionTimeout = setTimeout(() => {
-        submitDecision(valid, decisionType, decisionValue);
-        // console.log(payload);
-      }, 500);
+
+      if(refractory == false){
+        intersectionTimeout = setTimeout(() => {
+          submitDecision(valid, decisionType, decisionValue);
+        }, 500);
+      } else {
+        console.log ("submit button refractory period")
+      }
   };
 
   return (
@@ -99,7 +105,7 @@ export default function Submit({position, valid, decisionType, decisionValue, on
         />
     </RigidBody>
 
-    <Text text={`invalid answer`} state={errorState} position={errorPosition} rotation={[-Math.PI/2, 0,0]}/>
+    <Text text={`${errorText}`} state={errorState} position={errorPosition} rotation={[-Math.PI/2, 0,0]}/>
     </>
 );
 }

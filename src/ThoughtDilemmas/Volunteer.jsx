@@ -81,7 +81,7 @@ export default function Volunteer({position}) {
   const [payoutText, setPayoutText] = useState("null")
   const [payoutState, setPayoutState] = useState(false)
   const [resetSensor, setResetSensor] = useState(false)
-  const [resetState, setResetState] = useState(false)
+  const [refractory, setRefractory] = useState(false)
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -137,7 +137,8 @@ export default function Volunteer({position}) {
     }
 
     setTimeout(() => {
-      setResetState(true)
+      //after animation plays out, refractory period is over and can submit/reset again
+      setRefractory(false)
     }, 6000);
   }
 
@@ -155,6 +156,9 @@ export default function Volunteer({position}) {
     if (confed.length > 0) {
       reconcile();
       setResetSensor(false)
+
+      //after submitting, can't reset / submit again
+      setRefractory(true)
     }
   }, [confed]);
 
@@ -164,9 +168,6 @@ export default function Volunteer({position}) {
     setFlipState(false) 
     setPayoutState(false)
     setResetSensor(true)
-
-    setResetState(false)
-
   }
 
   
@@ -209,8 +210,8 @@ export default function Volunteer({position}) {
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
 
-      <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+60, 1, position[2]+15]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} resetState = {resetState} />
+      <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {refractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+60, 1, position[2]+15]}/>
+      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory = {refractory} />
 
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
