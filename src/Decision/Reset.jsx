@@ -5,7 +5,7 @@ export default function Reset({position, onReset, refractory}) {
     if(refractory == false){
       onReset()
     } else {
-      console.log ("reset button refractory period")
+      // console.log ("reset button refractory period")
     }
   }
 

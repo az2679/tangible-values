@@ -15,6 +15,8 @@ import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
 
+import Path from './Path';
+
 
 function Scene() { 
   return (
@@ -41,9 +43,10 @@ function Scene() {
         <Suspense fallback={null}>
           <Physics debug gravity={[0, -9.8,0]} colliders={false}>
             <Ground />
+            <Path />
             <CameraRig>
               <Controls position={[20, 0, 70]} />
-              <Person position={[550, 25, -700]}/>
+              <Person />
               <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 
                 You can give all of it, none of it, or a portion of it, 

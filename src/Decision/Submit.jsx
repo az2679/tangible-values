@@ -86,7 +86,7 @@ export default function Submit({position, valid, decisionType, decisionValue, on
           submitDecision(valid, decisionType, decisionValue);
         }, 500);
       } else {
-        console.log ("submit button refractory period")
+        // console.log ("submit button refractory period")
       }
   };
 
