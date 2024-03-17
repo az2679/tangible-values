@@ -212,9 +212,9 @@ export default function Trust(props) {
     }
   }, [confed]);
 
-  useEffect(() => {
-    console.log(multiply, totalCoins)
-  }, [multiply, totalCoins]);
+  // useEffect(() => {
+  //   console.log(multiply, totalCoins)
+  // }, [multiply, totalCoins]);
 
   const handleReset = () => {
     setConfed(null)

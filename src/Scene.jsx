@@ -16,6 +16,7 @@ import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
 
 import Path from './Path';
+import Model from './Interaction/Model';
 
 
 function Scene() { 
@@ -28,25 +29,28 @@ function Scene() {
         { name: "left", keys: ["ArrowLeft", "a", "A"] },
         { name: "right", keys: ["ArrowRight", "d", "D"] },
       ]}>
-      <Canvas shadows={true} tabIndex={0} >
+      <Canvas shadows={true} tabIndex={0} exposure={3}>
         <color args={["#eeeeee"]} attach="background" />
-        <fogExp2 attach="fog" args={["#eeeeee", 0.0003]} />
+        {/* <fogExp2 attach="fog" args={["#eeeeee", 0.0003]} /> */}
         <axesHelper args={[10]} />
 
-        {/* Camera 🎥 */}
-        {/* Controls */}
 
-        {/* Lights 💡 */}
         <ambientLight intensity={1} />
-        <directionalLight color="#ffffff" position={[50, 50, 0]} intensity={1} />
-        {/* Objects 📦 */}
+        <directionalLight color="#ffffff" position={[25, 50, 25]} intensity={2} />
+
         <Suspense fallback={null}>
           <Physics debug gravity={[0, -9.8,0]} colliders={false}>
-            <Ground />
-            <Path />
+            <Ground color={0xF7F7F7}/>
+            {/* <Path /> */}
+
             <CameraRig>
               <Controls position={[20, 0, 70]} />
+              {/* <Person position={[-550, 25, -700]} /> */}
               <Person />
+
+              {/* <Model src="/coin.glb" position={[0, 10, 0]} rotation={[-Math.PI/2, 10, 0]} scale={25} />
+              <Model src="/coin.glb" position={[10, 10, 0]} rotation={[-Math.PI/2, 0, 0]} scale={2} /> */}
+
               <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 
                 You can give all of it, none of it, or a portion of it, 

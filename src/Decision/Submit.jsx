@@ -80,12 +80,15 @@ export default function Submit({position, valid, decisionType, decisionValue, on
 
   const handleIntersection = (payload) => {
       clearTimeout(intersectionTimeout);
-
+console.log(refractory)
       if(refractory == false){
         intersectionTimeout = setTimeout(() => {
           submitDecision(valid, decisionType, decisionValue);
         }, 500);
+        setErrorState(false)
       } else {
+        setErrorState(true)
+        setErrorText("please wait before answering again")
         // console.log ("submit button refractory period")
       }
   };
