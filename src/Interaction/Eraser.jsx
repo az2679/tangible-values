@@ -7,9 +7,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 export default function Eraser({position, onHoldChange}){
   const gltf = useLoader(GLTFLoader, '/eraser.glb');
 
-  useEffect(() =>{
-    console.log("eraser: ", gltf.scene)
-  },[gltf])
+  // useEffect(() =>{
+    // console.log("eraser: ", gltf.scene)
+  // },[gltf])
 
 
   return (

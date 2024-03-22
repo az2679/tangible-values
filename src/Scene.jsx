@@ -1,7 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState, useRef, useEffect } from "react";
 import { Stats, PerspectiveCamera, OrbitControls, MapControls, KeyboardControls } from "@react-three/drei";
-
 import { Physics, RigidBody } from '@react-three/rapier';
 
 import Ground from './Ground';
@@ -17,6 +16,7 @@ import Trust from './ThoughtDilemmas/Trust';
 
 import Path from './Path';
 import Model from './Interaction/Model';
+import Light from './Components/Light';
 
 
 function Scene() { 
@@ -35,8 +35,12 @@ function Scene() {
         <axesHelper args={[10]} />
 
 
-        <ambientLight intensity={1} />
-        <directionalLight color="#ffffff" position={[25, 50, 25]} intensity={2} />
+        <ambientLight intensity={0.3} />
+        <directionalLight color="#ffffff" position={[0, 300, 200]} intensity={1} />
+        <pointLight position={[0, 30, -350]} />
+        <pointLight position={[0, 10, 0]} />
+        {/* <Light position={[0, 30, -350]} /> */}
+
 
         <Suspense fallback={null}>
           <Physics debug gravity={[0, -9.8,0]} colliders={false}>
@@ -48,8 +52,7 @@ function Scene() {
               {/* <Person position={[-550, 25, -700]} /> */}
               <Person />
 
-              {/* <Model src="/coin.glb" position={[0, 10, 0]} rotation={[-Math.PI/2, 10, 0]} scale={25} />
-              <Model src="/coin.glb" position={[10, 10, 0]} rotation={[-Math.PI/2, 0, 0]} scale={2} /> */}
+              <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} />
 
               <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 

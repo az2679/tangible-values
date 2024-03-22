@@ -47,7 +47,14 @@ export default function Person({ position, onPositionChange, onProximity, onThou
       <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={position ? position : [0, 30, 100]} scale={5} colliders="ball" canSleep={false} name="person">
         <mesh name="person">
           <sphereGeometry />
-          <meshNormalMaterial />
+          <meshPhysicalMaterial
+            color={0xffffff} // Set the color of the sphere
+            transparent // Make the material transparent
+            opacity={0.5} // Set the opacity level for transparency
+            roughness={0.1} // Adjust roughness for reflection
+            metalness={0.9} // Adjust metalness for reflection
+            transmission={0.9} // Adjust transmission for light refraction
+          />
         </mesh>
         <BallCollider args={[1.1, 1.1, 1.1]} sensor 
             onIntersectionEnter={(payload) => {

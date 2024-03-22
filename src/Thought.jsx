@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 
-
 import Instruction from './Text/Instruction';
 import Text from './Text/Text';
 import Label from './Text/Label';
+import Light from './Components/Light';
+
+import Model from './Interaction/Model';
 
 export default function Thought({position, label, labelPosition, startDialogue, instructionDialogue, dialoguePosition, instruction, onInstructionStateChange, proximityState, onProximity, children}) {
   const [labelState, setLabelState] = useState(false);
@@ -13,6 +15,7 @@ export default function Thought({position, label, labelPosition, startDialogue, 
   const [hoverState, setHoverState] = useState(false);
 
   const [updatedDialogue, setUpdatedDialogue] = useState(startDialogue)
+
 
   const handleClick = () => {
     // console.log("test")
@@ -41,6 +44,7 @@ export default function Thought({position, label, labelPosition, startDialogue, 
           <mesh onClick={handleClick}>
             <boxGeometry args={[10, 10, 10]} />
             <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
+            {/* <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} /> */}
           </mesh>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
           <Text text={updatedDialogue} position={dialoguePosition} state={dialogueState} />
@@ -85,7 +89,6 @@ export default function Thought({position, label, labelPosition, startDialogue, 
           </RigidBody>
         ))} */}
 
-        
       </RigidBody>
       {children}
 
