@@ -1,5 +1,5 @@
 import { Text3D, Center } from "@react-three/drei";
-import nunito from "../assets/Nunito_Black_Regular.json"
+import nunito from "../assets/fonts/Nunito_Black_Regular.json"
 
 export default function Label(props) {
   const {position, label, state} = props

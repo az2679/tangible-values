@@ -1,27 +1,14 @@
-import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { Vector3, Plane } from "three";
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useGLTF } from '@react-three/drei';
 
 export default function Eraser({position, onHoldChange}){
-  const gltf = useLoader(GLTFLoader, '/eraser.glb');
-
-  // useEffect(() =>{
-    // console.log("eraser: ", gltf.scene)
-  // },[gltf])
-
+  const { nodes } = useGLTF('/eraser.glb')
 
   return (
     <>
     <RigidBody mass={500} gravityScale={500} type="dynamic" position={position} colliders={false} lockRotations={true} canSleep={false} name="eraser">
 
-      {/* <mesh>
-        <boxGeometry args={[12,6,10]} />
-        <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
-      </mesh> */}
-      <primitive object={gltf.scene} scale={300}/>
-      
+      <mesh geometry={nodes.Eraser_Low_eraser1_0.geometry} material={nodes.Eraser_Low_eraser1_0.material} scale={300} position={[0, -1, 0]} rotation={[-Math.PI/2, 0, 0]} />
 
       <CuboidCollider args={[8, 3, 3]}/>
       <CuboidCollider args={[8, 2, 3]} sensor

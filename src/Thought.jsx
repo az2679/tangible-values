@@ -4,9 +4,7 @@ import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 import Instruction from './Text/Instruction';
 import Text from './Text/Text';
 import Label from './Text/Label';
-import Light from './Components/Light';
 
-import Model from './Interaction/Model';
 
 export default function Thought({position, label, labelPosition, startDialogue, instructionDialogue, dialoguePosition, instruction, onInstructionStateChange, proximityState, onProximity, children}) {
   const [labelState, setLabelState] = useState(false);

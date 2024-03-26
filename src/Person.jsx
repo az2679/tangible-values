@@ -4,6 +4,11 @@ import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import { RigidBody, BallCollider } from '@react-three/rapier';
 
+import { useLoader } from '@react-three/fiber';
+import { RGBELoader } from 'three-stdlib'
+import { MeshRefractionMaterial } from '@react-three/drei';
+import { MeshTransmissionMaterial } from '@react-three/drei';
+
 const SPEED = 100;
 const frontVector = new Vector3();
 const sideVector = new Vector3();
@@ -42,20 +47,55 @@ export default function Person({ position, onPositionChange, onProximity, onThou
       })
     }
 
+
+    const texture = useLoader(RGBELoader, 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr')
+
+    const config = {
+      bounces: 3,
+      aberrationStrength: 0.01,
+      ior: 2.75,
+      fresnel: 1,
+      color: 'white',
+      fastChroma: true
+    }
+
+
   return (
     <>
       <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={position ? position : [0, 30, 100]} scale={5} colliders="ball" canSleep={false} name="person">
+
+      {/* {(texture) => (
+        // <Caustics
+        //   backfaces
+        //   color={config.color}
+        //   position={[0, -0.5, 0]}
+        //   lightSource={[5, 5, -10]}
+        //   worldRadius={0.1}
+        //   ior={1.8}
+        //   backfaceIor={1.1}
+        //   intensity={0.1}> */}
+
         <mesh name="person">
           <sphereGeometry />
-          <meshPhysicalMaterial
-            color={0xffffff} // Set the color of the sphere
-            transparent // Make the material transparent
-            opacity={0.5} // Set the opacity level for transparency
-            roughness={0.1} // Adjust roughness for reflection
-            metalness={0.9} // Adjust metalness for reflection
-            transmission={0.9} // Adjust transmission for light refraction
-          />
+          <meshStandardMaterial color={0xA9A9A9} metalness={0.7} roughness={0} />
+          
+          {/* <meshPhysicalMaterial
+            color={0xffffff} 
+            transparent 
+            opacity={0.5}
+            // roughness={0.1}
+            // metalness={0.9} 
+            // transmission={0.9}
+
+            roughness={0.8} 
+          /> */}
+
+            {/* <MeshRefractionMaterial envMap={texture} {...config} toneMapped={false} /> */}
+            {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#FF8F20" thickness={1} anisotropy={1} /> */}
         </mesh>
+        {/* // </Caustics>
+        )} */}
+
         <BallCollider args={[1.1, 1.1, 1.1]} sensor 
             onIntersectionEnter={(payload) => {
               // console.log(payload)

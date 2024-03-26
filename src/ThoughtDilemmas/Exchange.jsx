@@ -1,12 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useGLTF } from '@react-three/drei';
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
+import Wall from '../Interaction/Wall';
 import gsap from 'gsap';
 
+import { MeshTransmissionMaterial } from '@react-three/drei';
+
 export default function Exchange(props) {
+  const { nodes: appleNodes } = useGLTF('/apple.glb')
+  const { nodes: orangeNodes } = useGLTF('/orange.glb')
+
   const { position } = props;
   const[deceive, setDeceive] = useState(false)
   const[exchange, setExchange] = useState(false)
@@ -202,36 +209,32 @@ export default function Exchange(props) {
 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="deceive" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
-      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 1, position[2]+50]} onSensedChange={handleSensedChange} />       
 
-
-      <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={userFruitPos} canSleep={false} lockRotations={true}>
-        <mesh ref={userFruit}>
-          <boxGeometry args={[15, 10, 10]} />
-          <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
-        </mesh>
+      <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders={false} position={userFruitPos} canSleep={false} lockRotations={true} visible={true}>
+        <mesh 
+        ref={userFruit} 
+        geometry={appleNodes.apple_apple_u1_v1_0.geometry} 
+        // material={appleNodes.apple_apple_u1_v1_0.material} 
+        position={[-1, -5.5,0]} 
+        scale={0.5}>
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+          </mesh>
+        <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
 
-      <RigidBody name="confedFruit" mass={800} gravityScale={800} type="dynamic" colliders="cuboid" position={confedFruitPos} rotation={confedFruitRo} canSleep={false} >
-        <mesh ref = {confedFruit} >
-          <boxGeometry args={[15, 10, 10]} />
-          <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
-        </mesh>
+      <RigidBody name="confedFruit" mass={800} gravityScale={800} type="dynamic" colliders={false} position={confedFruitPos} rotation={confedFruitRo} canSleep={false} visible={true} >
+        <mesh ref = {confedFruit} geometry={orangeNodes.Object_2.geometry} 
+        // material={orangeNodes.Object_2.material} 
+        position={[0, -5, 0]} rotation={[-Math.PI/2, 0, 0]} scale={140} >
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+          </mesh>
+        <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
 
-
-      <RigidBody name="wall" mass={1} type="fixed" colliders="cuboid" position={[position[0]-60, 5, position[2]+180]}>
-      <mesh>
-        <boxGeometry args={[40, 30, 2]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.8} metalness={0.2} />
-       </mesh>
-      </RigidBody>
-      <RigidBody name="wall" mass={1} type="fixed" colliders="cuboid" position={[position[0]+60, 5, position[2]+100]} rotation={[0, -Math.PI*0.3,0]}>
-      <mesh>
-        <boxGeometry args={[40, 30, 2]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.8} metalness={0.2} />
-       </mesh>
-      </RigidBody>
+      <Wall position={[position[0]-60, 5, position[2]+180]} rotation={[0,0,0]}/>
+      <Wall position={[position[0]+60, 5, position[2]+100]} rotation={[0, -Math.PI*0.3,0]}/>
+      
     </>
   );
 }

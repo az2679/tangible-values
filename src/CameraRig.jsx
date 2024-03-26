@@ -27,7 +27,6 @@ export default function CameraRig({ children }) {
   const interactionCam = { x: spherePosition.x, y: 60, z: spherePosition.z + 80 };
   const instructionCam = { x: spherePosition.x, y: 20, z: spherePosition.z + 40 };
 
-
   const handleInstructionStateChange = (newInstructionState) => {
     setInstructionState(newInstructionState);
   };

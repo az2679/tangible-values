@@ -14,9 +14,6 @@ import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
 
-import Path from './Path';
-import Model from './Interaction/Model';
-import Light from './Components/Light';
 
 
 function Scene() { 
@@ -35,24 +32,22 @@ function Scene() {
         <axesHelper args={[10]} />
 
 
-        <ambientLight intensity={0.3} />
+        <ambientLight intensity={1} />
         <directionalLight color="#ffffff" position={[0, 300, 200]} intensity={1} />
-        <pointLight position={[0, 30, -350]} />
-        <pointLight position={[0, 10, 0]} />
-        {/* <Light position={[0, 30, -350]} /> */}
+        <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} />
 
 
         <Suspense fallback={null}>
-          <Physics debug gravity={[0, -9.8,0]} colliders={false}>
+          <Physics  gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
             {/* <Path /> */}
 
             <CameraRig>
               <Controls position={[20, 0, 70]} />
-              {/* <Person position={[-550, 25, -700]} /> */}
-              <Person />
+              <Person position={[0, 105, -1000]} />
+              {/* <Person /> */}
 
-              <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} />
+              {/* <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} /> */}
 
               <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"come closer"} instructionDialogue={"drag the coins to the marked areas in the propsed division"} dialoguePosition={[0, 15, 0]} instruction={`
                 You have been given 10$ and have to decide to how much of it you want to split with another person. 

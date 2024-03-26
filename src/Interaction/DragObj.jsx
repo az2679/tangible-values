@@ -3,10 +3,10 @@ import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import { Vector3 } from "three";
-import Model from './Model';
-
+import { useGLTF } from '@react-three/drei';
 
 export default function DragObj({ name, startPosition, state, plane, lift, num }) {
+  const { nodes } = useGLTF('/coin.glb')
   const [position, setPosition] = useState(startPosition);
 
   const [spring, api] = useSpring(() => ({
@@ -46,10 +46,9 @@ export default function DragObj({ name, startPosition, state, plane, lift, num }
         num={num || 0}
       >
         <CylinderCollider args={[0.5, 2]} position={position} />
-        <animated.mesh {...spring} {...bind()} >
+        <animated.mesh {...spring} {...bind()} geometry={nodes.Object_2.geometry} material={nodes.Object_2.material} scale={2}>
           {/* <cylinderGeometry args={[2, 2, 1, 15, 1]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
-          <Model src="/coin.glb" rotation={[-Math.PI/2, 0, 0]} scale={2} />
         </animated.mesh>
       </RigidBody>
     </>

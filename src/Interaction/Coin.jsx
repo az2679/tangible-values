@@ -1,10 +1,10 @@
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
-import Model from './Model';
+import { useGLTF } from '@react-three/drei';
 
 export default function Coin({ position, onSendCoin, sendPos, delay, payoutState }) {
-
+  const { nodes } = useGLTF('/coin.glb')
   const [coinPos, setCoinPos] = useState([position[0], position[1], position[2]])
   const coinRef = useRef()
 
@@ -33,10 +33,9 @@ export default function Coin({ position, onSendCoin, sendPos, delay, payoutState
     <>
       <RigidBody mass={1} type="dynamic" colliders={false} position={coinPos} canSleep={false} >
         <CylinderCollider args={[0.5, 2]}  />
-        <mesh ref = {coinRef}>
+        <mesh ref = {coinRef} geometry={nodes.Object_2.geometry} material={nodes.Object_2.material} scale={2}>
           {/* <cylinderGeometry args={[2, 2, 1, 15, 1]}  />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
-          <Model src="/coin.glb" rotation={[-Math.PI/2, 0, 0]} scale={2} />
         </mesh>
       </RigidBody>
     </>

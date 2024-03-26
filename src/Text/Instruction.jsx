@@ -1,6 +1,6 @@
 import { RigidBody } from '@react-three/rapier';
 import { Text3D, Center } from "@react-three/drei";
-import lato from "../assets/Lato_Regular.json"
+import lato from "../assets/fonts/Lato_Regular.json"
 
 export default function Instruction(props) {
   const {position, instruction, state, onClick} = props

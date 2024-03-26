@@ -2,8 +2,8 @@ import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { useState } from 'react';
 import { Html } from '@react-three/drei';
 import { Text3D } from "@react-three/drei";
-import lato from "../assets/Lato_Regular.json"
-import nunito from "../assets/Nunito_SemiBold_Regular.json"
+import lato from "../assets/fonts/Lato_Regular.json"
+import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
 function Help({hidden}) {
   return(
