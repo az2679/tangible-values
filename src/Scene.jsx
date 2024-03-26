@@ -8,13 +8,11 @@ import CameraRig from './CameraRig';
 import Person from './Person';
 import Thought from './Thought';
 
-import Controls from './Text/Controls';
+import Foyer from './Text/Foyer';
 import Dictator from './ThoughtDilemmas/Dictator';
 import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
-
-
 
 function Scene() { 
   return (
@@ -28,23 +26,22 @@ function Scene() {
       ]}>
       <Canvas shadows={true} tabIndex={0} exposure={3}>
         <color args={["#eeeeee"]} attach="background" />
-        {/* <fogExp2 attach="fog" args={["#eeeeee", 0.0003]} /> */}
-        <axesHelper args={[10]} />
+        <fogExp2 attach="fog" args={["#eeeeee", 0.0025]} />
+        {/* <axesHelper args={[10]} /> */}
 
 
         <ambientLight intensity={1} />
-        <directionalLight color="#ffffff" position={[0, 300, 200]} intensity={1} />
-        <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} />
+        <directionalLight color="#ffffff" position={[300, 50, 100]} intensity={1} />
+        {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
 
 
         <Suspense fallback={null}>
-          <Physics  gravity={[0, -9.8,0]} colliders={false}>
+          <Physics debug gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
-            {/* <Path /> */}
 
             <CameraRig>
-              <Controls position={[20, 0, 70]} />
-              <Person position={[0, 105, -1000]} />
+              <Foyer position={[20, 0, 70]} />
+              <Person position={[50, 100, -300]} />
               {/* <Person /> */}
 
               {/* <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} /> */}
@@ -90,8 +87,6 @@ function Scene() {
                 
                 <Trust position={[550, 5, -800]} />
               </Thought>
-             
-
 
             </CameraRig>
           </Physics>

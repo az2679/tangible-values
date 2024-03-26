@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import { gsap } from 'gsap';
+import { useGLTF } from '@react-three/drei';
 
 import DragObj from '../Interaction/DragObj';
 import Text from '../Text/Text';
@@ -56,6 +57,8 @@ function CoinMult({position, setDragState, floorPlane, sensedCoinState}){
 
 
 export default function Trust(props) {
+  const { nodes } = useGLTF('/circle_arch.glb')
+
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
@@ -263,6 +266,14 @@ export default function Trust(props) {
       <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane} sensedCoinState={sensedCoinState}/>
 
       {multiply && totalCoins}
+
+      <RigidBody mass={1} type="fixed" colliders="trimesh" >
+      <mesh geometry={nodes.Object_2.geometry} position={[position[0]-170, position[1]-5, position[2]+240]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
+        <meshStandardMaterial color={"white"}/>
+      </mesh>
+      </RigidBody>
+
+
     </>
   );
 }

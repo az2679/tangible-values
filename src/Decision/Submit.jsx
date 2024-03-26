@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import SaveDecision from './SaveDecision';
 import AnalyzeDecision from './AnalyzeDecision';
 import Text from '../Text/Text';
+import ButtonText from '../Text/ButtonText';
 
 export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition, refractory}) {
   let intersectionTimeout;
@@ -98,7 +99,7 @@ console.log(refractory)
     <RigidBody name="submit" mass={1} type="fixed" colliders="cuboid" position={position}>
     <mesh rotation={[-Math.PI/2, 0,0]}>
       <boxGeometry args={[15, 5, 2]} />
-      <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
+      <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2}  />
      </mesh>
      <CuboidCollider args={[7.5, 2.5, 3]} sensor
       onIntersectionEnter={(payload)=>{
@@ -107,6 +108,8 @@ console.log(refractory)
         }}}
         />
     </RigidBody>
+
+    {/* <ButtonText position={position} text={"submit"} /> */}
 
     <Text text={`${errorText}`} state={errorState} position={errorPosition} rotation={[-Math.PI/2, 0,0]}/>
     </>

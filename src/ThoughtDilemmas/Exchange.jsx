@@ -13,6 +13,7 @@ import { MeshTransmissionMaterial } from '@react-three/drei';
 export default function Exchange(props) {
   const { nodes: appleNodes } = useGLTF('/apple.glb')
   const { nodes: orangeNodes } = useGLTF('/orange.glb')
+  const { nodes: archNodes } = useGLTF('/stone_arch.glb')
 
   const { position } = props;
   const[deceive, setDeceive] = useState(false)
@@ -207,7 +208,7 @@ export default function Exchange(props) {
       <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
       <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} />
 
-      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="deceive" sensorPosition={[position[0]-60, 1, position[2]+190]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[40, 20]} sensorArgs={[20, 5,9]} option="deceive" sensorPosition={[position[0]-60, 0.2, position[2]+190]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 1, position[2]+50]} onSensedChange={handleSensedChange} />       
 
@@ -218,7 +219,7 @@ export default function Exchange(props) {
         // material={appleNodes.apple_apple_u1_v1_0.material} 
         position={[-1, -5.5,0]} 
         scale={0.5}>
-          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#636363" thickness={10} anisotropy={1} />
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
@@ -235,6 +236,19 @@ export default function Exchange(props) {
       <Wall position={[position[0]-60, 5, position[2]+180]} rotation={[0,0,0]}/>
       <Wall position={[position[0]+60, 5, position[2]+100]} rotation={[0, -Math.PI*0.3,0]}/>
       
+      <RigidBody mass={1} type="fixed" colliders="hull" >
+      <mesh geometry={archNodes.Arch_01_LPUNHPZBSG1_0.geometry} position={[position[0]-22, position[1]-5, position[2]+330]} rotation={[0, -Math.PI/2, 0]} scale={5}>
+        <meshStandardMaterial color={"white"}/>
+      </mesh>
+      </RigidBody>
+
+      <RigidBody mass={1} type="fixed" colliders="hull" >
+      <mesh geometry={archNodes.Arch_01_1_LPUNHPZBSG1_0.geometry} position={[position[0]+22, position[1]-5, position[2]+330]} rotation={[0, Math.PI/2, 0]} scale={5}>
+        <meshStandardMaterial color={"white"}/>
+      </mesh>
+      </RigidBody>
+    
+
     </>
   );
 }

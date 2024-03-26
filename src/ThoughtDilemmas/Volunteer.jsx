@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import gsap from 'gsap';
+import { useGLTF } from '@react-three/drei';
 
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
@@ -13,6 +14,8 @@ import Paper from '../Interaction/Paper';
 
 
 export default function Volunteer({position}) {
+  const { nodes } = useGLTF('/pointed_arch.glb')
+
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
 
@@ -130,14 +133,19 @@ export default function Volunteer({position}) {
         </mesh>
       </RigidBody>
 
+      <RigidBody mass={1} type="fixed" colliders="cuboid">
       <mesh position={[position[0]+45, 5, position[2]+45]} rotation={[0, -5, 0]}>
         <boxGeometry args={[10, 10, 10]} />
         <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
       </mesh>
+      </RigidBody>
+
+      <RigidBody mass={1} type="fixed" colliders="cuboid">
       <mesh position={[position[0]-45, 5, position[2]+45]} rotation={[0, 5, 0]}>
         <boxGeometry args={[10, 10, 10]} />
         <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
       </mesh>
+      </RigidBody>
 
       <Paper paperPosition={[position[0]-30, 0, position[2]+45]} paperRotation={[0, 4.8, 0]} textPosition={[-12.5,0,2.5]} textRotation={[Math.PI/2, 0, Math.PI]} text={confed[0]} confedState={confedState} flipState={flipState} />
       <Paper paperPosition={[position[0], 0, position[2]+22]} paperRotation={[0, 0, 0]} textPosition={[-12.5,0,-2.5]} textRotation={[-Math.PI/2, 0, Math.PI]} text={confed[1]} confedState={confedState} flipState={flipState} />
@@ -177,6 +185,15 @@ export default function Volunteer({position}) {
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={5} sensorPosition={[position[0]+27, 0, position[2]+131]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={6} sensorPosition={[position[0]+27, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="five" number={7} sensorPosition={[position[0]+20, 0, position[2]+138]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
+
+      <RigidBody mass={1} type="fixed" colliders="trimesh" >
+      <mesh geometry={nodes.Object_4.geometry} position={[position[0]+160, position[1]-5, position[2]+250]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
+        <meshStandardMaterial color={"white"}/>
+      </mesh>
+      </RigidBody>
+
+
+
     </>
   );
 }

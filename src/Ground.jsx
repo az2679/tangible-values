@@ -1,11 +1,14 @@
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { MeshReflectorMaterial } from '@react-three/drei';
+import { GradientTexture } from '@react-three/drei';
+
 
 export default function Ground({color}) {
   return (
+    <>
       <RigidBody type="fixed" colliders={false} name="ground">
-        <mesh position={[0,0,0]} rotation={[-Math.PI/2, 0, 0]} >
-          <planeGeometry args={[10000, 10000]} />
+        <mesh position={[0,0,-500]} rotation={[-Math.PI/2, 0, 0]} >
+          <planeGeometry args={[3000, 3000]} />
           {/* <meshStandardMaterial color={color !== undefined ? color : 0xEEEEEE} /> */}
 
           <MeshReflectorMaterial
@@ -17,11 +20,12 @@ export default function Ground({color}) {
             minDepthThreshold={0.85}
             // color="#151515"
             metalness={0.6}
-            roughness={1}
-          />
-
+            roughness={1}>
+              {/* <GradientTexture stops={[0, 0.5, 1]} colors={['#495057', '#adb5bd', '#e9ecef']} size={10000} /> */}
+            </MeshReflectorMaterial>
         </mesh>
         <CuboidCollider args={[5000, 1, 5000]} position={[0, 0, 0]} />
       </RigidBody>
+    </>
 );
 }

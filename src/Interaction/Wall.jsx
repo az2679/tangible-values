@@ -1,6 +1,7 @@
 import { RigidBody } from '@react-three/rapier'
 import { useRef, useEffect, useMemo, useState } from "react";
 import { TextureLoader } from 'three';
+import { MeshTransmissionMaterial } from '@react-three/drei';
 
 export default function Wall({position, rotation}){
   // const [texturesLoaded, setTexturesLoaded] = useState(false)
@@ -51,7 +52,8 @@ export default function Wall({position, rotation}){
     <RigidBody name="wall" mass={1} type="fixed" colliders="cuboid" position={position} rotation={rotation}>
       <mesh>
         <boxGeometry args={[40, 30, 2]} />
-        <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
+        {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
+        <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
 
         {/* <meshStandardMaterial
           // map={textures.baseColor}

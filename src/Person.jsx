@@ -62,7 +62,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
 
   return (
     <>
-      <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={position ? position : [0, 30, 100]} scale={5} colliders="ball" canSleep={false} name="person">
+      <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={position ? position : [0, 100, 100]} scale={5} colliders="ball" canSleep={false} name="person">
 
       {/* {(texture) => (
         // <Caustics
@@ -77,7 +77,9 @@ export default function Person({ position, onPositionChange, onProximity, onThou
 
         <mesh name="person">
           <sphereGeometry />
-          <meshStandardMaterial color={0xA9A9A9} metalness={0.7} roughness={0} />
+          <meshStandardMaterial color={0xA9A9A9} 
+          metalness={0.7} roughness={0.3} 
+          />
           
           {/* <meshPhysicalMaterial
             color={0xffffff} 

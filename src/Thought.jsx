@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
+import { MeshTransmissionMaterial } from '@react-three/drei';
+import { MeshReflectorMaterial } from '@react-three/drei';
 
 import Instruction from './Text/Instruction';
 import Text from './Text/Text';
@@ -42,7 +44,7 @@ export default function Thought({position, label, labelPosition, startDialogue, 
           <mesh onClick={handleClick}>
             <boxGeometry args={[10, 10, 10]} />
             <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
-            {/* <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} /> */}
+            {/* <MeshTransmissionMaterial samples={16} resolution={256} transmission={0.95} roughness={0.5} clearcoat={0.1} clearcoatRoughness={0.1} color="#636363" thickness={200} ior={1.5} chromaticAberration={1} anisotropy={1} distortion={0} distortionScale={0.2} temporalDistortion={0} attenuationDistance={0.5} attenuationColor={0xffffff}/> */}
           </mesh>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
           <Text text={updatedDialogue} position={dialoguePosition} state={dialogueState} />
@@ -88,6 +90,17 @@ export default function Thought({position, label, labelPosition, startDialogue, 
         ))} */}
 
       </RigidBody>
+
+      <mesh position={[position[0], position[1]-4.8, position[2]+40]} rotation={[-Math.PI/2, 0, 0]} >
+        <ringGeometry args={[198, 202, 32, 1]} />
+        <meshBasicMaterial color="#d3d3d3" transparent opacity={0.9} />
+      </mesh>
+
+      {/* <mesh position={[position[0], position[1]+10, position[2]+0]} rotation={[-Math.PI/2, 0, 0]} >
+        <circleGeometry args={[30, 32]} />
+        <meshBasicMaterial color="#000000" transparent opacity={0.7} />
+      </mesh> */}
+
       {children}
 
       {/* {React.Children.map(children, (child, index) =>

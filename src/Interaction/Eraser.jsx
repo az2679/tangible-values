@@ -1,5 +1,6 @@
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useGLTF } from '@react-three/drei';
+import { MeshTransmissionMaterial } from '@react-three/drei';
 
 export default function Eraser({position, onHoldChange}){
   const { nodes } = useGLTF('/eraser.glb')
@@ -8,7 +9,9 @@ export default function Eraser({position, onHoldChange}){
     <>
     <RigidBody mass={500} gravityScale={500} type="dynamic" position={position} colliders={false} lockRotations={true} canSleep={false} name="eraser">
 
-      <mesh geometry={nodes.Eraser_Low_eraser1_0.geometry} material={nodes.Eraser_Low_eraser1_0.material} scale={300} position={[0, -1, 0]} rotation={[-Math.PI/2, 0, 0]} />
+      <mesh geometry={nodes.Eraser_Low_eraser1_0.geometry} material={nodes.Eraser_Low_eraser1_0.material} scale={300} position={[0, -2, 0]} rotation={[-Math.PI/2, 0, 0]} >
+      <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+      </mesh>
 
       <CuboidCollider args={[8, 3, 3]}/>
       <CuboidCollider args={[8, 2, 3]} sensor

@@ -13,6 +13,7 @@
     "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^9.102.6",
     "@react-three/fiber": "^8.13.7",
+    "@react-three/postprocessing": "^2.16.2",
     "@react-three/rapier": "^1.2.1",
     "gltf-loader": "^1.0.0",
     "gsap": "^3.12.5",
