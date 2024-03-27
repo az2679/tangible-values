@@ -219,7 +219,7 @@ export default function Exchange(props) {
         // material={appleNodes.apple_apple_u1_v1_0.material} 
         position={[-1, -5.5,0]} 
         scale={0.5}>
-          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#636363" thickness={10} anisotropy={1} />
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>

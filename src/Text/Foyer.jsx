@@ -2,7 +2,6 @@ import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { useState } from 'react';
 import { Html } from '@react-three/drei';
 import { Text3D } from "@react-three/drei";
-import lato from "../assets/fonts/Lato_Regular.json"
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
 function Help({hidden}) {
@@ -80,11 +79,11 @@ exploration and contemplation`}
 
 
     <RigidBody mass={1} type="fixed" colliders='hull'>
-        <Text3D font={lato} position={[position[0], 0, position[2]+80]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
+        <Text3D font={nunito} position={[position[0], 0, position[2]+80]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
             {`  w \na s d`}
             <meshBasicMaterial color={"gray"}/>
         </Text3D>
-        <Text3D font={lato} position={[position[0]+30, 0, position[2]+85]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
+        <Text3D font={nunito} position={[position[0]+30, 0, position[2]+85]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
             {`+  mouse`}
             <meshBasicMaterial color={"gray"}/>
         </Text3D>

@@ -46,7 +46,9 @@ export default function DragObj({ name, startPosition, state, plane, lift, num }
         num={num || 0}
       >
         <CylinderCollider args={[0.5, 2]} position={position} />
-        <animated.mesh {...spring} {...bind()} geometry={nodes.Object_2.geometry} material={nodes.Object_2.material} scale={2}>
+        <animated.mesh {...spring} {...bind()} geometry={nodes.Object_2.geometry} 
+        material={nodes.Object_2.material} 
+        scale={2}>
           {/* <cylinderGeometry args={[2, 2, 1, 15, 1]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
         </animated.mesh>

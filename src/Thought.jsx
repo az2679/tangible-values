@@ -3,18 +3,17 @@ import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 import { MeshTransmissionMaterial } from '@react-three/drei';
 import { MeshReflectorMaterial } from '@react-three/drei';
 
-import Instruction from './Text/Instruction';
-import Text from './Text/Text';
+import Dialogue from './Text/Dialogue';
+import Prompt from './Text/Prompt';
 import Label from './Text/Label';
 
 
-export default function Thought({position, label, labelPosition, startDialogue, instructionDialogue, dialoguePosition, instruction, onInstructionStateChange, proximityState, onProximity, children}) {
+export default function Thought({position, label, labelPosition, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
   const [labelState, setLabelState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
   const [dialogueState, setDialogueState] = useState(false);
-  const [hoverState, setHoverState] = useState(false);
-
-  const [updatedDialogue, setUpdatedDialogue] = useState(startDialogue)
+  const [dialogue, setDialogue] = useState(startDialogue)
+  const [dialoguePosition, setDialoguePosition] = useState(startPosition)
 
 
   const handleClick = () => {
@@ -27,16 +26,7 @@ export default function Thought({position, label, labelPosition, startDialogue, 
       setLabelState(!labelState)
     }
   }
- 
-  const handleInstructionClick = () => {
-    // if(instructionState == true){
-    //   setHoverState(!hoverState)
-    // }
-      //set initiate hover state to true
-        //in cam, get mouse pos and onPointerIn, camlook at mouse pos. onPointerOut reset lookat
-        //if false, reset lookat 
-    //pass up 
-  }
+
 
   return (
     <>
@@ -44,11 +34,10 @@ export default function Thought({position, label, labelPosition, startDialogue, 
           <mesh onClick={handleClick}>
             <boxGeometry args={[10, 10, 10]} />
             <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
-            {/* <MeshTransmissionMaterial samples={16} resolution={256} transmission={0.95} roughness={0.5} clearcoat={0.1} clearcoatRoughness={0.1} color="#636363" thickness={200} ior={1.5} chromaticAberration={1} anisotropy={1} distortion={0} distortionScale={0.2} temporalDistortion={0} attenuationDistance={0.5} attenuationColor={0xffffff}/> */}
           </mesh>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
-          <Text text={updatedDialogue} position={dialoguePosition} state={dialogueState} />
-          <Instruction position={[2, 30, -10]} instruction={instruction} state={instructionState} onClick={handleInstructionClick}/>
+          <Dialogue position={dialoguePosition} dialogue={dialogue} state={dialogueState} />
+          <Prompt position={[promptPosition, 30, -10]} prompt={prompt} state={instructionState} />
           <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 50]}
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
@@ -71,7 +60,8 @@ export default function Thought({position, label, labelPosition, startDialogue, 
                 setInstructionState(true)
                 onInstructionStateChange(true)
                 setDialogueState(false)
-                setUpdatedDialogue(instructionDialogue)
+                setDialogue(updateDialogue)
+                setDialoguePosition(updatePosition)
               }
             }} 
             onIntersectionExit={(payload) => {
