@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei';
 import { MeshTransmissionMaterial } from '@react-three/drei';
 
 export default function Eraser({position, onHoldChange}){
-  const { nodes } = useGLTF('/eraser.glb')
+  const { nodes } = useGLTF('/models/eraser.glb')
 
   return (
     <>

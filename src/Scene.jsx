@@ -41,61 +41,60 @@ function Scene() {
 
             <CameraRig>
               <Foyer position={[20, 0, 70]} />
-              {/* <Person position={[50, 100, -300]} /> */}
-              <Person position={[550, 100, -700]} />
+              <Person position={[50, 100, -300]} />
+              {/* <Person position={[550, 300, -700]} /> */}
               {/* <Person /> */}
 
-              {/* <Model src="/bunny.glb" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={5} /> */}
 
-              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"Hey you there ! Come closer"} startPosition={[0, 20, 0]} updateDialogue={`drag the coins to the marked areas \naccording to your propsed division`} updatePosition={[0, 20, 0]} prompt={`
-                               You have been given 10$ and have to decide
-                         how much of it you want to split with another person. 
-                             You can give all of it, none of it, or a portion of it, 
-                  while the other person can only accept what has been given. 
+              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 15, 0]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 15, 0]} prompt={`
+              you have been given 10$ and have to decide
+              how much of it you want to split with another person. 
+              you can give all of it, none of it, or a portion of it, 
+              while the other person can only accept what has been given. 
                       
-                            As the dictator, how will you distribute the coins?
-                `} promptPosition={5}>
+              as the dictator, how will you distribute the coins?
+              `} promptPosition={0}>
                 <Dictator position={[0, 5, -350]} />
               </Thought>
 
-              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"feeling risky?"} startPosition={[0, 15, 0]} updateDialogue={`Color the option by walking over it. \nIf you change your mind, use the eraser.`}  updatePosition={[-30, 15, 0]} prompt={`
-                  You are playing a parlor game with a few people. 
-                       Each person can claim either 1$ or 5$ each. 
-                                  If at least one person chooses 1$, 
-             then everyone will get the amount they wrote down. 
-                     If no one claims 1$, then everyone gets nothing. 
+              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 15, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 15, 0]} prompt={`
+              you are playing a parlor game with a few people. 
+              each person can claim either 1$ or 5$ each. 
+              if at least one person chooses 1$, 
+              then everyone will get the amount they wrote down. 
+              if no one claims 1$, then everyone gets nothing. 
                 
-                                           How much are you claiming?
+              how much are you claiming?
                 `} promptPosition={0}>
                 <Volunteer position={[-550, 5, -800]}/>
               </Thought>
 
-              <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"wanna do a trade?"} startPosition={[0, 15, 0]} updateDialogue={"push the box onto the marked area to exchange \n             or hide it behind the wall to keep"} updatePosition={[-35, 15, 0]} prompt={`
-                “You are playing an exchange game with another person and 
-                                      can keep the item you have or exchange it. 
-            When exchanging, you both have to make a decision beforehand 
-                                without knowing what the other person will do. 
-                                        You have an apple but prefer an orange, 
-                    while the other person has an orange and prefers an apple. 
-                              Both of you prefer obtaining both fruit to just one 
-                                            and prefer either fruit to none at all. 
+              <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"WANNA  DO  A  TRADE ?"} startPosition={[0, 15, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 15, 0]} prompt={`
+              you are playing an exchange game with another person and 
+              can keep the item you have or exchange it. 
+              when exchanging, you both have to make a decision beforehand 
+              without knowing what the other person will do. 
+              you have an apple but prefer an orange, 
+              while the other person has an orange and prefers an apple. 
+              both of you prefer obtaining both fruit to just one 
+              and prefer either fruit to none at all. 
 
-                    Knowing there’s a chance of obtaining both, one, or no fruit, 
-          do you keep your fruit, decieving the other person, or exchange it?”
-                `} promptPosition={0}>
+              knowing there’s a chance of obtaining both, one, or no fruit, 
+              do you keep your fruit, decieving the other person, or exchange it?
+              `} promptPosition={0}>
                   <Exchange position={[0, 5, -1100]} />
               </Thought>
 
-              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"do you trust me?"} startPosition={[0, 15, 0]} updateDialogue={"drag the amount of coins you want \n    to send onto the marked areas"} updatePosition ={[-20, 15, 0]} prompt={`
-                            You have been given 10$ and have to decide 
-                    how much of it you want to pass to another person.
-            In the first stage, you keep the remaining amount not sent, 
-                        while the receiver gains 3 times the amount sent.
-                                    In the second stage, the receiver may 
-pass nothing or any portion of the money they received back to you. 
-            
-                                                 How much are you sending?`
-            } promptPosition={0}> 
+              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 15, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 15, 0]} prompt={`
+              you have been given 10$ and have to decide 
+              how much of it you want to pass to another person.
+              in the first stage, you keep the remaining amount not sent, 
+              while the receiver gains 3 times the amount sent.
+              in the second stage, the receiver may 
+              pass nothing or any portion of the money they received back to you. 
+                          
+              how much are you sending?`
+              } promptPosition={0}> 
                 
                 <Trust position={[550, 5, -800]} />
               </Thought>

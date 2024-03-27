@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Vector3, Plane } from "three";
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, useTexture } from '@react-three/drei';
 
 import DragObj from '../Interaction/DragObj';
 import Sensor from '../Interaction/Sensor';
@@ -28,7 +28,8 @@ function CoinMult({position, setDragState, floorPlane}){
 }
 
 export default function Dictator(props) {
-  const { nodes } = useGLTF('/rounded_arch.glb')
+  const { nodes } = useGLTF('/models/rounded_arch.glb')
+  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
@@ -73,7 +74,8 @@ export default function Dictator(props) {
         if (nodeName.startsWith("Object_")) {
           return (
             <mesh key={nodeName} geometry={nodes[nodeName].geometry} position={[position[0], position[1]-5 , position[2] + 350]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
-              <meshStandardMaterial color="white" />
+              {/* <meshStandardMaterial color="white" /> */}
+              <meshMatcapMaterial matcap={matcap} />
             </mesh>
           );
         }

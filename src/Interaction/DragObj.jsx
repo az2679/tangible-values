@@ -6,7 +6,7 @@ import { Vector3 } from "three";
 import { useGLTF } from '@react-three/drei';
 
 export default function DragObj({ name, startPosition, state, plane, lift, num }) {
-  const { nodes } = useGLTF('/coin.glb')
+  const { nodes } = useGLTF('/models/coin.glb')
   const [position, setPosition] = useState(startPosition);
 
   const [spring, api] = useSpring(() => ({

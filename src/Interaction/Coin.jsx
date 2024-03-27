@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { useGLTF } from '@react-three/drei';
 
 export default function Coin({ position, onSendCoin, sendPos, delay, payoutState }) {
-  const { nodes } = useGLTF('/coin.glb')
+  const { nodes } = useGLTF('/models/coin.glb')
   const [coinPos, setCoinPos] = useState([position[0], position[1], position[2]])
   const coinRef = useRef()
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import React, { useState, useEffect } from 'react';
+import { RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import { gsap } from 'gsap';
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, useTexture } from '@react-three/drei';
 
 import DragObj from '../Interaction/DragObj';
 import Text from '../Text/Text';
@@ -10,6 +10,8 @@ import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
 import Coin from '../Interaction/Coin';
+
+
 
 function SensorMult({option, position, handleSensedChange, i, resetSensor}){
   return(
@@ -57,7 +59,8 @@ function CoinMult({position, setDragState, floorPlane, sensedCoinState}){
 
 
 export default function Trust(props) {
-  const { nodes } = useGLTF('/circle_arch.glb')
+  const { nodes } = useGLTF('/models/circle_arch.glb')
+  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const { position } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
@@ -269,7 +272,8 @@ export default function Trust(props) {
 
       <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={nodes.Object_2.geometry} position={[position[0]-170, position[1]-5, position[2]+240]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
-        <meshStandardMaterial color={"white"}/>
+        {/* <meshStandardMaterial color={"white"}/> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
 

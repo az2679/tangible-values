@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
-import { MeshTransmissionMaterial } from '@react-three/drei';
-import { MeshReflectorMaterial } from '@react-three/drei';
+
 
 import Dialogue from './Text/Dialogue';
 import Prompt from './Text/Prompt';
@@ -15,7 +14,6 @@ export default function Thought({position, label, labelPosition, startDialogue, 
   const [dialogue, setDialogue] = useState(startDialogue)
   const [dialoguePosition, setDialoguePosition] = useState(startPosition)
 
-
   const handleClick = () => {
     // console.log("test")
     if(proximityState == true){
@@ -26,7 +24,6 @@ export default function Thought({position, label, labelPosition, startDialogue, 
       setLabelState(!labelState)
     }
   }
-
 
   return (
     <>

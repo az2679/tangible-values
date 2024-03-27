@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, useTexture } from '@react-three/drei';
+
+import { MeshTransmissionMaterial } from '@react-three/drei';
+
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
@@ -8,12 +11,12 @@ import Reset from '../Decision/Reset';
 import Wall from '../Interaction/Wall';
 import gsap from 'gsap';
 
-import { MeshTransmissionMaterial } from '@react-three/drei';
 
 export default function Exchange(props) {
-  const { nodes: appleNodes } = useGLTF('/apple.glb')
-  const { nodes: orangeNodes } = useGLTF('/orange.glb')
-  const { nodes: archNodes } = useGLTF('/stone_arch.glb')
+  const { nodes: appleNodes } = useGLTF('/models/apple.glb')
+  const { nodes: orangeNodes } = useGLTF('/models/orange.glb')
+  const { nodes: archNodes } = useGLTF('/models/stone_arch.glb')
+  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const { position } = props;
   const[deceive, setDeceive] = useState(false)
@@ -238,13 +241,15 @@ export default function Exchange(props) {
       
       <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={archNodes.Arch_01_LPUNHPZBSG1_0.geometry} position={[position[0]-22, position[1]-5, position[2]+330]} rotation={[0, -Math.PI/2, 0]} scale={5}>
-        <meshStandardMaterial color={"white"}/>
+        {/* <meshStandardMaterial color={"white"}/> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
 
       <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={archNodes.Arch_01_1_LPUNHPZBSG1_0.geometry} position={[position[0]+22, position[1]-5, position[2]+330]} rotation={[0, Math.PI/2, 0]} scale={5}>
-        <meshStandardMaterial color={"white"}/>
+        {/* <meshStandardMaterial color={"white"}/> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
     

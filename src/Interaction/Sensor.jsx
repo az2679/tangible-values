@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { MeshTransmissionMaterial } from '@react-three/drei';
 
 export default function Sensor({ type, args, sensorArgs, option, number, sensorPosition, onSensedChange, eraserState, resetSensor }) {
   const [count, setCount] = useState(0);
@@ -37,12 +36,6 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
         <mesh position={[0, 0.1, 0]} rotation={[-Math.PI/2, 0, 0]}>
           <planeGeometry args={args} />
           <meshBasicMaterial color={type === "color" ? color : "gray"} />
-          {/* <meshStandardMaterial color={0xA9A9A9} 
-          metalness={0.7} roughness={0.2} 
-          /> */}
-
-
-          
         </mesh>
         <CuboidCollider sensor args={sensorArgs} 
           onIntersectionEnter={(payload) => {

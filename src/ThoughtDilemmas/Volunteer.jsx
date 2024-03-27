@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useState, useEffect } from "react";
+import { RigidBody } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
-import gsap from 'gsap';
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, useTexture } from '@react-three/drei';
 
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
@@ -14,7 +13,8 @@ import Paper from '../Interaction/Paper';
 
 
 export default function Volunteer({position}) {
-  const { nodes } = useGLTF('/pointed_arch.glb')
+  const { nodes } = useGLTF('/models/pointed_arch.glb')
+  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
@@ -188,7 +188,8 @@ export default function Volunteer({position}) {
 
       <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={nodes.Object_4.geometry} position={[position[0]+160, position[1]-5, position[2]+250]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
-        <meshStandardMaterial color={"white"}/>
+        {/* <meshStandardMaterial color={"white"}/> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
 
