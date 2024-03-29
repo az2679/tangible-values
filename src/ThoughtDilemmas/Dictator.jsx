@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Vector3, Plane } from "three";
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useGLTF, useTexture } from '@react-three/drei';
+import { MeshTransmissionMaterial } from '@react-three/drei';
 
 import DragObj from '../Interaction/DragObj';
 import Sensor from '../Interaction/Sensor';
@@ -49,12 +50,12 @@ export default function Dictator(props) {
 
   return (
     <>
-      <Text text={`${dictator}`} state={true} position={[position[0]-30, 10, position[2]+90]} />
-      <Text text={`${reciever}`} state={true} position={[position[0]+30, 10, position[2]+90]} />
+      <Text text={`${dictator}`} state={true} position={[position[0]-30, 10, position[2]+85]} />
+      <Text text={`${reciever}`} state={true} position={[position[0]+30, 10, position[2]+85]} />
       <Text text={`dictator`} state={true} position={[position[0]-30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
       <Text text={`reciever`} state={true} position={[position[0]+30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
 
-      <Submit position={[50, 0, -350]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0] +40, 1, position[2]+15]} refractory={false}/>
+      <Submit position={[50, 0, -350]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0]+51, 1, position[2]+15]} refractory={false}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[50, 0, -350]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
@@ -64,8 +65,8 @@ export default function Dictator(props) {
       /> 
 
 
-      <Sensor type="number" args={[25, 15]} sensorArgs={[13, 5,9]} option="dictator" number={0} sensorPosition={[position[0]-30, 1, position[2]+100]} onSensedChange={handleSensedChange} />
-      <Sensor type="number" args={[25, 15]} sensorArgs={[13, 5,9]} option="reciever" number={0} sensorPosition={[position[0]+30, 1, position[2]+100]} onSensedChange={handleSensedChange} />
+      <Sensor type="number" args={[35, 15]} sensorArgs={[13, 5,9]} option="dictator" number={0} sensorPosition={[position[0]-30, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
+      <Sensor type="number" args={[35, 15]} sensorArgs={[13, 5,9]} option="reciever" number={0} sensorPosition={[position[0]+30, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
 
       <CoinMult position={[position[0], position[1], position[2]+140]} setDragState = {setDragState} floorPlane = {floorPlane}/>
       
@@ -76,6 +77,7 @@ export default function Dictator(props) {
             <mesh key={nodeName} geometry={nodes[nodeName].geometry} position={[position[0], position[1]-5 , position[2] + 350]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
               {/* <meshStandardMaterial color="white" /> */}
               <meshMatcapMaterial matcap={matcap} />
+              {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#ffffff" thickness={10} anisotropy={1} /> */}
             </mesh>
           );
         }

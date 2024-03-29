@@ -26,6 +26,7 @@ export default function Exchange(props) {
   const[confedState, setConfedState] = useState(false)
   const[confedText, setConfedText] = useState("null")
   const[confedText1, setConfedText1] = useState("n")
+  const [confedTextPosition, setConfedTextPosition] = useState([position[0], 15, position[2]+50])
 
   const userFruit = useRef()
   const [userFruitPos, setUserFruitPos] = useState([position[0]-30, 5, position[2]+125])
@@ -168,9 +169,11 @@ export default function Exchange(props) {
     if(confed == true){
       setConfedText("trade")
       setConfedText1("O")
+      setConfedTextPosition([position[0]-7, 15, position[2]+50])
     } else {
       setConfedText("deceive")
       setConfedText1("X")
+      setConfedTextPosition([position[0], 15, position[2]+50])
     }
 
     setTimeout(() => {
@@ -205,15 +208,15 @@ export default function Exchange(props) {
       <Text text={`<-->`} state={true} position={[position[0]-30, 0, position[2]+50]} rotation={[-Math.PI/2, 0, 0]} />
       <Text text={`trade`} state={exchange} position={[position[0]-60, 15, position[2]+50]} />
       <Text text={`deceive`} state={deceive} position={[position[0]-60, 15, position[2]+190]} />
-      <Text text={`${confedText}`} state={confedState} position={[position[0], 15, position[2]+50]} />
-      <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} />
+      <Text text={`${confedText}`} state={confedState} position={confedTextPosition} />
+      {/* <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} /> */}
 
-      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
       <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} />
 
-      <Sensor type="boolean" args={[40, 20]} sensorArgs={[20, 5,9]} option="deceive" sensorPosition={[position[0]-60, 0.2, position[2]+190]} onSensedChange={handleSensedChange} /> 
-      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 1, position[2]+50]} onSensedChange={handleSensedChange} /> 
-      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 1, position[2]+50]} onSensedChange={handleSensedChange} />       
+      <Sensor type="boolean" args={[38, 20]} sensorArgs={[20, 5,9]} option="deceive" sensorPosition={[position[0]-60, 0.5, position[2]+192]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 0.5, position[2]+50]} onSensedChange={handleSensedChange} /> 
+      <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="confed" sensorPosition={[position[0], 0.5, position[2]+50]} onSensedChange={handleSensedChange} />       
 
       <RigidBody name="fruit" mass={800} gravityScale={800} type="dynamic" colliders={false} position={userFruitPos} canSleep={false} lockRotations={true} visible={true}>
         <mesh 
@@ -222,7 +225,7 @@ export default function Exchange(props) {
         // material={appleNodes.apple_apple_u1_v1_0.material} 
         position={[-1, -5.5,0]} 
         scale={0.5}>
-          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#494949" thickness={10} anisotropy={1} />
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
@@ -231,7 +234,7 @@ export default function Exchange(props) {
         <mesh ref = {confedFruit} geometry={orangeNodes.Object_2.geometry} 
         // material={orangeNodes.Object_2.material} 
         position={[0, -5, 0]} rotation={[-Math.PI/2, 0, 0]} scale={140} >
-          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} />
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>

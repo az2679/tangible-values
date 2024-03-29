@@ -7,7 +7,7 @@ export default function Wall({position, rotation}){
       <mesh>
         <boxGeometry args={[40, 30, 2]} />
         {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
-        <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} />
+        <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} />
       </mesh>
     </RigidBody>
   );

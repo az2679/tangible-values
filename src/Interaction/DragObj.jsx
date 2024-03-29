@@ -4,6 +4,7 @@ import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import { Vector3 } from "three";
 import { useGLTF } from '@react-three/drei';
+import { MeshTransmissionMaterial } from '@react-three/drei';
 
 export default function DragObj({ name, startPosition, state, plane, lift, num }) {
   const { nodes } = useGLTF('/models/coin.glb')
@@ -49,6 +50,7 @@ export default function DragObj({ name, startPosition, state, plane, lift, num }
         <animated.mesh {...spring} {...bind()} geometry={nodes.Object_2.geometry} 
         material={nodes.Object_2.material} 
         scale={2}>
+          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} />
           {/* <cylinderGeometry args={[2, 2, 1, 15, 1]} />
           <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
         </animated.mesh>

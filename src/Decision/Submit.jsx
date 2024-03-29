@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import SaveDecision from './SaveDecision';
 import AnalyzeDecision from './AnalyzeDecision';
 import Text from '../Text/Text';
-import ButtonText from '../Text/ButtonText';
+import Button from '../Components/Button';
 
 export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition, refractory}) {
   let intersectionTimeout;
@@ -81,7 +81,7 @@ export default function Submit({position, valid, decisionType, decisionValue, on
 
   const handleIntersection = (payload) => {
       clearTimeout(intersectionTimeout);
-console.log(refractory)
+      // console.log(refractory)
       if(refractory == false){
         intersectionTimeout = setTimeout(() => {
           submitDecision(valid, decisionType, decisionValue);
@@ -89,7 +89,7 @@ console.log(refractory)
         setErrorState(false)
       } else {
         setErrorState(true)
-        setErrorText("please wait before answering again")
+        setErrorText(`please wait \nbefore answering \nagain`)
         // console.log ("submit button refractory period")
       }
   };
@@ -97,10 +97,14 @@ console.log(refractory)
   return (
     <>
     <RigidBody name="submit" mass={1} type="fixed" colliders="cuboid" position={position}>
-    <mesh rotation={[-Math.PI/2, 0,0]}>
+    {/* <mesh rotation={[-Math.PI/2, 0,0]}>
       <boxGeometry args={[15, 5, 2]} />
-      <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2}  />
-     </mesh>
+      <meshBasicMaterial color="#ffffff" />
+     </mesh> */}
+     <Button position={[0,0,0]} text={'SUBMIT'} />
+
+
+
      <CuboidCollider args={[7.5, 2.5, 3]} sensor
       onIntersectionEnter={(payload)=>{
         if(payload.other.rigidBodyObject.name === "person"){
@@ -108,8 +112,6 @@ console.log(refractory)
         }}}
         />
     </RigidBody>
-
-    {/* <ButtonText position={position} text={"submit"} /> */}
 
     <Text text={`${errorText}`} state={errorState} position={errorPosition} rotation={[-Math.PI/2, 0,0]}/>
     </>

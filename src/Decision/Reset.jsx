@@ -1,4 +1,5 @@
 import { RigidBody } from '@react-three/rapier';
+import Button from '../Components/Button';
 
 export default function Reset({position, onReset, refractory}) {
   const handleClick = () => {
@@ -13,9 +14,12 @@ export default function Reset({position, onReset, refractory}) {
     <>
     <RigidBody name="reset" mass={1} type="fixed" colliders="cuboid" position={position}>
     <mesh rotation={[-Math.PI/2, 0,0]} onClick={handleClick}>
-      <boxGeometry args={[15, 5, 2]} />
-      <meshStandardMaterial color="red" roughness={0.8} metalness={0.2} />
+      <boxGeometry args={[19, 5, 2]} />
+      <meshBasicMaterial transparent opacity={0}/>
      </mesh>
+
+     <Button position={[0,0,0]} text={'RESET'} />
+
     </RigidBody>
     </>
 );

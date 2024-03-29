@@ -80,6 +80,7 @@ export default function Trust(props) {
   const [payoutState , setPayoutState] = useState(false)
 
   const [userText, setUserText] = useState(`null`)
+  const [confedText, setConfedText] = useState(`null`)
 
   const [sendPos, setSendPos] = useState([550, 10, -600])
   const [sendCoinsCalled, setSendCoinsCalled] = useState(false);
@@ -200,12 +201,14 @@ export default function Trust(props) {
   useEffect(() => {
     if(multiply){
     setTimeout(() => {
-      setUserText(`total: ${userCounter + confed}`)
+      setUserText(`${userCounter + confed}`)
+      setConfedText(`${(confedCounter * 3) - confed}`)
     }, 5000)
     } else {
-      setUserText(`remaining: ${userCounter}`)
+      setUserText(`${userCounter}`)
+      setConfedText(`${confedCounter}`)
     }
-  }, [userCounter, multiply]);
+  }, [userCounter, confedCounter, multiply]);
 
 
   useEffect(() => {
@@ -255,15 +258,17 @@ export default function Trust(props) {
 
   return (
     <>
-      <Text text={`${confedCounter}`} state={!confedState} position={[position[0], 0, position[2]+75]} rotation={[-Math.PI*0.1, 0, 0]}/>
-      <Text text={userText} state={true} position={[position[0], 2, position[2]+195]} rotation={[-Math.PI*0.1, 0, 0]}/>
-      <Text text={`stage 2, returned: ${confed}`} state={confedState} position={[position[0], 2, position[2]+55]} rotation={[-Math.PI*0.1, 0, 0]}/>
+      <Text text={confedText} state={true} position={[position[0]-6, 2, position[2]+60]} rotation={[-Math.PI*0.5, 0, -Math.PI]}/>
+      <Text text={userText} state={true} position={[position[0]+3, 2, position[2]+145]} rotation={[-Math.PI*0.5, 0, 0]}/>
 
-      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+40, 1, position[2]+15]}/>
+      <Text text={`giving ${confedCounter}`} state={!confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
+      <Text text={`returning ${confed}`} state={confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
+
+      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
       <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory}/>
 
-      <SensorMult option="confed" position={[position[0], position[1], position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
-      <SensorMult option="user" position={[position[0], position[1], position[2]+125]} handleSensedChange={handleSensedChange} i={-1} resetSensor={false}/>
+      <SensorMult option="confed" position={[position[0], position[1]+0.5, position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
+      <SensorMult option="user" position={[position[0], position[1]+0.5, position[2]+125]} handleSensedChange={handleSensedChange} i={-1} resetSensor={false}/>
       {/* <Sensor type="number" args={[40, 30]} sensorArgs={[20, 4,15]} option="user" number={0} sensorPosition={[position[0], 0, position[2]+170]} onSensedChange={handleSensedChange} /> */}
 
       <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane} sensedCoinState={sensedCoinState}/>

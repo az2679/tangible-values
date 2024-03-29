@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
-
+import { useCubeTexture, Float } from '@react-three/drei';
 
 import Dialogue from './Text/Dialogue';
 import Prompt from './Text/Prompt';
@@ -8,6 +8,11 @@ import Label from './Text/Label';
 
 
 export default function Thought({position, label, labelPosition, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
+  const texture = useCubeTexture(
+    ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
+    {path: "./textures/sky/"}
+    )
+  
   const [labelState, setLabelState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
   const [dialogueState, setDialogueState] = useState(false);
@@ -28,10 +33,19 @@ export default function Thought({position, label, labelPosition, startDialogue, 
   return (
     <>
       <RigidBody name = "thought" mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
-          <mesh onClick={handleClick}>
-            <boxGeometry args={[10, 10, 10]} />
-            <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} />
+        <Float
+        speed={1} 
+        rotationIntensity={1} 
+        floatIntensity={1} 
+        floatingRange={[-1.5, 1.5]}
+        >
+          <mesh onClick={handleClick} position={[0, 6, 0]}>
+            {/* <boxGeometry args={[10, 10, 10]} /> */}
+            {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
+            <octahedronGeometry args={[8]} />
+            <meshBasicMaterial color={"lightgray"} envMap={texture} reflectivity={1}/>
           </mesh>
+        </Float>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
           <Dialogue position={dialoguePosition} dialogue={dialogue} state={dialogueState} />
           <Prompt position={[promptPosition, 30, -10]} prompt={prompt} state={instructionState} />

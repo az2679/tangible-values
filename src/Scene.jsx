@@ -41,12 +41,12 @@ function Scene() {
 
             <CameraRig>
               <Foyer position={[20, 0, 70]} />
-              <Person position={[50, 100, -300]} />
-              {/* <Person position={[550, 300, -700]} /> */}
+              {/* <Person position={[50, 100, -300]} /> */}
+              <Person position={[-550, 300, -700]} />
               {/* <Person /> */}
 
 
-              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 15, 0]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 15, 0]} prompt={`
+              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 20, 0]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 0]} prompt={`
               you have been given 10$ and have to decide
               how much of it you want to split with another person. 
               you can give all of it, none of it, or a portion of it, 
@@ -57,7 +57,7 @@ function Scene() {
                 <Dictator position={[0, 5, -350]} />
               </Thought>
 
-              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 15, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 15, 0]} prompt={`
+              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 20, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} prompt={`
               you are playing a parlor game with a few people. 
               each person can claim either 1$ or 5$ each. 
               if at least one person chooses 1$, 
@@ -69,7 +69,7 @@ function Scene() {
                 <Volunteer position={[-550, 5, -800]}/>
               </Thought>
 
-              <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"WANNA  DO  A  TRADE ?"} startPosition={[0, 15, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 15, 0]} prompt={`
+              <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"WANNA  DO  A  TRADE ?"} startPosition={[0, 20, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 20, 0]} prompt={`
               you are playing an exchange game with another person and 
               can keep the item you have or exchange it. 
               when exchanging, you both have to make a decision beforehand 
@@ -85,7 +85,7 @@ function Scene() {
                   <Exchange position={[0, 5, -1100]} />
               </Thought>
 
-              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 15, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 15, 0]} prompt={`
+              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 20, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 20, 0]} prompt={`
               you have been given 10$ and have to decide 
               how much of it you want to pass to another person.
               in the first stage, you keep the remaining amount not sent, 

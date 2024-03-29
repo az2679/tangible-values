@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useTexture } from '@react-three/drei';
 
 export default function Sensor({ type, args, sensorArgs, option, number, sensorPosition, onSensedChange, eraserState, resetSensor }) {
+  const matcap = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
+
   const [count, setCount] = useState(0);
   const [bool, setBool] = useState(false);
   const [color, setColor] = useState("gray");
+  const [opacity, setOpacity] = useState(0);
   const [colorState, setColorState] = useState(false);
   const [num, setNum] = useState(0);
 
@@ -16,9 +20,11 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
     } else if (type === "color") {
       onSensedChange(option, number, colorState, eraserState);
       if(colorState==true){
-        setColor("lightgray")
+        setColor("#494949")
+        setOpacity(1)
       } else {
         setColor("gray")
+        setOpacity(0)
       }
     }
   }, [count, bool, colorState, num]);
@@ -35,7 +41,8 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
       <RigidBody name="sensor" mass={1} type="fixed" colliders={false} position={sensorPosition}>
         <mesh position={[0, 0.1, 0]} rotation={[-Math.PI/2, 0, 0]}>
           <planeGeometry args={args} />
-          <meshBasicMaterial color={type === "color" ? color : "gray"} />
+          {/* <meshBasicMaterial color={type === "color" ? color : "gray"}/> */}
+          <meshBasicMaterial color={"#494949"} transparent opacity={opacity}/>
         </mesh>
         <CuboidCollider sensor args={sensorArgs} 
           onIntersectionEnter={(payload) => {
@@ -66,6 +73,52 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
           }}
         />
       </RigidBody>
+
+
+      <mesh position={[sensorPosition[0] + args[0]/2 + 0.5, sensorPosition[1], sensorPosition[2]]} rotation={[-Math.PI/2, 0, 0]}>
+        {type !== "color" && (
+          <>
+            <capsuleGeometry args={[0.5, args[1], 4, 8]} />
+            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+          </>
+        )}
+        {type === "color" && (
+          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+        )}
+      </mesh>
+      <mesh position={[sensorPosition[0] - args[0]/2 - 0.5, sensorPosition[1], sensorPosition[2]]} rotation={[-Math.PI/2, 0, 0]}>
+        {type !== "color" && (
+          <>
+            <capsuleGeometry args={[0.5, args[1], 4, 8]} />
+            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+          </>
+        )}
+        {type === "color" && (
+          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+        )}
+      </mesh>
+      <mesh position={[sensorPosition[0], sensorPosition[1], sensorPosition[2]+args[1]/2]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
+        {type !== "color" && (
+          <>
+            <capsuleGeometry args={[0.5, args[0], 4, 8]} />
+            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+          </>
+        )}
+        {type === "color" && (
+          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+        )}
+      </mesh>
+      <mesh position={[sensorPosition[0], sensorPosition[1], sensorPosition[2]-args[1]/2]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
+        {type !== "color" && (
+          <>
+            <capsuleGeometry args={[0.5, args[0], 4, 8]} />
+            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+          </>
+        )}
+        {type === "color" && (
+          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+        )}
+      </mesh>
     </>
   );
 }
