@@ -60,11 +60,9 @@ export default function Dictator(props) {
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
             setSubmitted(true)
-            console.log(submitted)
           }
         }} 
       /> 
-
 
       <Sensor type="number" args={[35, 15]} sensorArgs={[17, 5,7]} option="dictator" number={0} sensorPosition={[position[0]-50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
       <Sensor type="number" args={[35, 15]} sensorArgs={[17, 5,7]} option="reciever" number={0} sensorPosition={[position[0]+50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
@@ -93,16 +91,16 @@ export default function Dictator(props) {
     <Direction text={"TRUST GAME"} position={[220,5,-550]} rotation={[0,-Math.PI*0.25,0]} scale={3} state={submitted} />
 
 
-    <Path position={[0,0,0]} i={1} rotation={[0,0,0]} visible = {true}/>
+    {/* <Path position={[0,0,0]} i={1} rotation={[0,0,0]} state = {true}/> */}
 
-    <Path position={[250,0,-500]} i={1} rotation={[0,Math.PI*0.25,0]} visible = {submitted} />
-    <Path position={[250,0,-625]} i={-1} rotation={[0,Math.PI*0.25,0]} visible = {submitted} />
+    <Path position={[250,0,-500]} i={1} rotation={[0,Math.PI*0.25,0]} state = {submitted} />
+    <Path position={[250,0,-625]} i={-1} rotation={[0,Math.PI*0.25,0]} state = {submitted} />
 
-    <Path position={[0,0,-600]} i={-1} rotation={[0,0,0]} visible = {submitted}/>
-    <Path position={[0,0,-750]} i={1} rotation={[0,0,0]} visible = {submitted} />
+    <Path position={[0,0,-600]} i={-1} rotation={[0,0,0]} state = {submitted}/>
+    <Path position={[0,0,-750]} i={1} rotation={[0,0,0]} state = {submitted} />
 
-    <Path position={[-250,0,-500]} i={-1} rotation={[0,-Math.PI*0.25,0]} visible = {submitted} />
-    <Path position={[-250,0,-625]} i={1} rotation={[0,-Math.PI*0.25,0]} visible = {submitted} />
+    <Path position={[-250,0,-500]} i={-1} rotation={[0,-Math.PI*0.25,0]} state = {submitted} />
+    <Path position={[-250,0,-625]} i={1} rotation={[0,-Math.PI*0.25,0]} state = {submitted} />
 
     </>
   );

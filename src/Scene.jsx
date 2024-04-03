@@ -26,7 +26,7 @@ function Scene() {
       ]}>
       <Canvas shadows={true} tabIndex={0} exposure={3}>
         <color args={["#eeeeee"]} attach="background" />
-        <fogExp2 attach="fog" args={["#eeeeee", 0.0025]} />
+        <fogExp2 attach="fog" args={["#eeeeee", 0.003]} />
         {/* <axesHelper args={[10]} /> */}
 
 
@@ -41,9 +41,9 @@ function Scene() {
 
             <CameraRig>
               <Foyer position={[20, 0, 70]} />
-              <Person position={[50, 100, -300]} />
+              {/* <Person position={[50, 100, -300]} /> */}
               {/* <Person position={[-550, 300, -700]} /> */}
-              {/* <Person /> */}
+              <Person />
 
 
               <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
@@ -53,7 +53,7 @@ function Scene() {
               while the other person can only accept what has been given. 
                       
               as the dictator, how will you distribute the coins?
-              `} promptPosition={[0, 40, 90]}>
+              `} promptPosition={[0, 40, 130]}>
                 <Dictator position={[0, 5, -470]} />
               </Thought>
 

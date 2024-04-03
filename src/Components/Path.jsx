@@ -1,20 +1,34 @@
-export default function Path({position, rotation, i, visible}) {
+import { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+
+export default function Path({position, rotation, i, state}) {
+  const pathRef = useRef();
+
+  useEffect(() => {
+    if (pathRef.current && state == true){
+      gsap.to(pathRef.current.position, {
+        y: 26,
+        duration: 1, 
+      });
+  } 
+  },[state, pathRef])
+
   return (
     <>
-    <group rotation={rotation} visible={visible}>
-      <mesh position={[position[0]+(5 *i),25,position[2]-30]} rotation={[Math.PI/2, 0, 0]}>
+    <group ref={pathRef} rotation={rotation} >
+      <mesh position={[position[0]+(5 *i),-1,position[2]-30]} rotation={[Math.PI/2, 0, 0]}>
         <planeGeometry args={[10, 10]} />
-        <meshBasicMaterial color={"gray"} />
+        <meshBasicMaterial color={"gray"} transparent opacity={0}  />
       </mesh> 
 
-      <mesh position={[position[0]-(5 *i),25,position[2]]} rotation={[Math.PI/2, 0, 0]}>
+      <mesh position={[position[0]-(5 *i),-1,position[2]]} rotation={[Math.PI/2, 0, 0]}>
         <planeGeometry args={[10, 10]} />
-        <meshBasicMaterial color={"gray"} />
+        <meshBasicMaterial color={"gray"} transparent opacity={0}  />
       </mesh>
 
-      <mesh position={[position[0]+(5 *i),25,position[2]+30]} rotation={[Math.PI/2, 0, 0]}>
+      <mesh position={[position[0]+(5 *i),-1,position[2]+30]} rotation={[Math.PI/2, 0, 0]}>
         <planeGeometry args={[10, 10]} />
-        <meshBasicMaterial color={"gray"} />
+        <meshBasicMaterial color={"gray"} transparent opacity={0}  />
       </mesh>
 
       </group>
