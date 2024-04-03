@@ -9,7 +9,7 @@ import Sensor from '../Interaction/Sensor';
 import Text from '../Text/Text';
 import Submit from '../Decision/Submit';
 import Path from '../Components/Path';
-
+import Direction from '../Text/Direction';
 
 function CoinMult({position, setDragState, floorPlane}){
   return(
@@ -38,7 +38,7 @@ export default function Dictator(props) {
   const [dictator, setDictator] = useState(0);
   const [reciever, setReciever] = useState(0);
 
-  const [pathState, setPathState] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const handleSensedChange = (option, number, count) => {
     if(option == "dictator"){
@@ -50,33 +50,34 @@ export default function Dictator(props) {
 
   return (
     <>
-      <Text text={`${dictator}`} state={true} position={[position[0]-30, 10, position[2]+85]} />
-      <Text text={`${reciever}`} state={true} position={[position[0]+30, 10, position[2]+85]} />
-      <Text text={`dictator`} state={true} position={[position[0]-30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
-      <Text text={`reciever`} state={true} position={[position[0]+30, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
+      <Text text={`${dictator}`} state={true} position={[position[0]-50, 10, position[2]+85]} />
+      <Text text={`${reciever}`} state={true} position={[position[0]+50, 10, position[2]+85]} />
+      <Text text={`dictator`} state={true} position={[position[0]-50, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
+      <Text text={`reciever`} state={true} position={[position[0]+50, 1, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
 
-      <Submit position={[50, 0, -350]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0]+51, 1, position[2]+15]} refractory={false}/>
-      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[50, 0, -350]}
+      <Submit position={[0, 0, -370]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0]-20, 1, position[2]+40]} refractory={false}/>
+      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[0, 0, -370]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
-            setPathState(true)
+            setSubmitted(true)
+            console.log(submitted)
           }
         }} 
       /> 
 
 
-      <Sensor type="number" args={[35, 15]} sensorArgs={[13, 5,9]} option="dictator" number={0} sensorPosition={[position[0]-30, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
-      <Sensor type="number" args={[35, 15]} sensorArgs={[13, 5,9]} option="reciever" number={0} sensorPosition={[position[0]+30, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
+      <Sensor type="number" args={[35, 15]} sensorArgs={[17, 5,7]} option="dictator" number={0} sensorPosition={[position[0]-50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
+      <Sensor type="number" args={[35, 15]} sensorArgs={[17, 5,7]} option="reciever" number={0} sensorPosition={[position[0]+50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
 
-      <CoinMult position={[position[0], position[1], position[2]+140]} setDragState = {setDragState} floorPlane = {floorPlane}/>
+      <CoinMult position={[position[0], position[1], position[2]+80]} setDragState = {setDragState} floorPlane = {floorPlane}/>
       
       <RigidBody mass={1} type="fixed" colliders="hull">
       {Object.keys(nodes).map((nodeName) => {
         if (nodeName.startsWith("Object_")) {
           return (
-            <mesh key={nodeName} geometry={nodes[nodeName].geometry} position={[position[0], position[1]-5 , position[2] + 350]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
-              {/* <meshStandardMaterial color="white" /> */}
-              <meshMatcapMaterial matcap={matcap} />
+            <mesh key={nodeName} geometry={nodes[nodeName].geometry} position={[position[0], position[1]-5 , position[2] + 420]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
+              <meshStandardMaterial color="white" />
+              {/* <meshMatcapMaterial matcap={matcap} /> */}
               {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#ffffff" thickness={10} anisotropy={1} /> */}
             </mesh>
           );
@@ -86,16 +87,22 @@ export default function Dictator(props) {
     </RigidBody>
 
 
+    <Direction text={"DICTATOR GAME"} position={[0,5,-450]} rotation={[0,0,0]} scale={3} state={!submitted} />
+    <Direction text={"VOLUNTEER'S DILEMMA"} position={[-220,5,-550]} rotation={[0,Math.PI*0.25,0]} scale={3} state={submitted} />
+    <Direction text={"EXCHANGE GAME"} position={[0,5,-625]} rotation={[0,0,0]} scale={3} state={submitted} />
+    <Direction text={"TRUST GAME"} position={[220,5,-550]} rotation={[0,-Math.PI*0.25,0]} scale={3} state={submitted} />
+
+
     <Path position={[0,0,0]} i={1} rotation={[0,0,0]} visible = {true}/>
 
-    <Path position={[0,0,-500]} i={-1} rotation={[0,0,0]} visible = {pathState}/>
-    <Path position={[0,0,-650]} i={1} rotation={[0,0,0]} visible = {pathState} />
+    <Path position={[250,0,-500]} i={1} rotation={[0,Math.PI*0.25,0]} visible = {submitted} />
+    <Path position={[250,0,-625]} i={-1} rotation={[0,Math.PI*0.25,0]} visible = {submitted} />
 
-    <Path position={[150,0,-400]} i={1} rotation={[0,Math.PI*0.25,0]} visible = {pathState} />
-    <Path position={[150,0,-600]} i={-1} rotation={[0,Math.PI*0.25,0]} visible = {pathState} />
+    <Path position={[0,0,-600]} i={-1} rotation={[0,0,0]} visible = {submitted}/>
+    <Path position={[0,0,-750]} i={1} rotation={[0,0,0]} visible = {submitted} />
 
-    <Path position={[-150,0,-400]} i={-1} rotation={[0,-Math.PI*0.25,0]} visible = {pathState} />
-    <Path position={[-150,0,-600]} i={1} rotation={[0,-Math.PI*0.25,0]} visible = {pathState} />
+    <Path position={[-250,0,-500]} i={-1} rotation={[0,-Math.PI*0.25,0]} visible = {submitted} />
+    <Path position={[-250,0,-625]} i={1} rotation={[0,-Math.PI*0.25,0]} visible = {submitted} />
 
     </>
   );

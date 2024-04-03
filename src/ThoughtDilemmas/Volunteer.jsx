@@ -267,9 +267,9 @@ export default function Volunteer({position}) {
 
 
       <RigidBody mass={1} type="fixed" colliders="trimesh" >
-      <mesh geometry={nodes.Object_4.geometry} position={[position[0]+160, position[1]-5, position[2]+250]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
-        {/* <meshStandardMaterial color={"white"}/> */}
-        <meshMatcapMaterial matcap={matcap} />
+      <mesh geometry={nodes.Object_4.geometry} position={[position[0]+250, position[1]-5, position[2]+175]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
+        <meshStandardMaterial color={"white"}/>
+        {/* <meshMatcapMaterial matcap={matcap} /> */}
       </mesh>
       </RigidBody>
 

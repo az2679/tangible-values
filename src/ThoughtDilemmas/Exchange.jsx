@@ -251,8 +251,8 @@ export default function Exchange(props) {
 
       <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={archNodes.Arch_01_1_LPUNHPZBSG1_0.geometry} position={[position[0]+22, position[1]-5, position[2]+330]} rotation={[0, Math.PI/2, 0]} scale={5}>
-        {/* <meshStandardMaterial color={"white"}/> */}
-        <meshMatcapMaterial matcap={matcap} />
+        <meshStandardMaterial color={"white"}/>
+        {/* <meshMatcapMaterial matcap={matcap} /> */}
       </mesh>
       </RigidBody>
     

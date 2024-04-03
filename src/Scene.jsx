@@ -36,25 +36,25 @@ function Scene() {
 
 
         <Suspense fallback={null}>
-          <Physics gravity={[0, -9.8,0]} colliders={false}>
+          <Physics  gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
 
             <CameraRig>
               <Foyer position={[20, 0, 70]} />
-              {/* <Person position={[50, 100, -300]} /> */}
-              <Person position={[-550, 300, -700]} />
+              <Person position={[50, 100, -300]} />
+              {/* <Person position={[-550, 300, -700]} /> */}
               {/* <Person /> */}
 
 
-              <Thought key={"dictator"} position={[0, 5, -350]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 20, 0]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 0]} prompt={`
+              <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
               you have been given 10$ and have to decide
               how much of it you want to split with another person. 
               you can give all of it, none of it, or a portion of it, 
               while the other person can only accept what has been given. 
                       
               as the dictator, how will you distribute the coins?
-              `} promptPosition={0}>
-                <Dictator position={[0, 5, -350]} />
+              `} promptPosition={[0, 40, 90]}>
+                <Dictator position={[0, 5, -470]} />
               </Thought>
 
               <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 20, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} prompt={`
@@ -65,7 +65,7 @@ function Scene() {
               if no one claims 1$, then everyone gets nothing. 
                 
               how much are you claiming?
-                `} promptPosition={0}>
+                `} >
                 <Volunteer position={[-550, 5, -800]}/>
               </Thought>
 
@@ -81,7 +81,7 @@ function Scene() {
 
               knowing there’s a chance of obtaining both, one, or no fruit, 
               do you keep your fruit, decieving the other person, or exchange it?
-              `} promptPosition={0}>
+              `} >
                   <Exchange position={[0, 5, -1100]} />
               </Thought>
 
@@ -94,8 +94,7 @@ function Scene() {
               pass nothing or any portion of the money they received back to you. 
                           
               how much are you sending?`
-              } promptPosition={0}> 
-                
+              } > 
                 <Trust position={[550, 5, -800]} />
               </Thought>
 

@@ -276,9 +276,9 @@ export default function Trust(props) {
       {multiply && totalCoins}
 
       <RigidBody mass={1} type="fixed" colliders="trimesh" >
-      <mesh geometry={nodes.Object_2.geometry} position={[position[0]-170, position[1]-5, position[2]+240]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
-        {/* <meshStandardMaterial color={"white"}/> */}
-        <meshMatcapMaterial matcap={matcap} />
+      <mesh geometry={nodes.Object_2.geometry} position={[position[0]-250, position[1]-5, position[2]+175]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
+        <meshStandardMaterial color={"white"}/>
+        {/* <meshMatcapMaterial matcap={matcap} /> */}
       </mesh>
       </RigidBody>
 

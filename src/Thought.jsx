@@ -7,7 +7,7 @@ import Prompt from './Text/Prompt';
 import Label from './Text/Label';
 
 
-export default function Thought({position, label, labelPosition, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
+export default function Thought({position, meshPos, label, labelPosition, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
     {path: "./textures/sky/"}
@@ -35,11 +35,11 @@ export default function Thought({position, label, labelPosition, startDialogue, 
       <RigidBody name = "thought" mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
         <Float
         speed={1} 
-        rotationIntensity={1} 
+        rotationIntensity={0} 
         floatIntensity={1} 
-        floatingRange={[-1.5, 1.5]}
+        floatingRange={[-1, 1]}
         >
-          <mesh onClick={handleClick} position={[0, 6, 0]}>
+          <mesh onClick={handleClick} position={meshPos ? meshPos : [0, 6, 0]}>
             {/* <boxGeometry args={[10, 10, 10]} /> */}
             {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
             <octahedronGeometry args={[8]} />
@@ -48,8 +48,8 @@ export default function Thought({position, label, labelPosition, startDialogue, 
         </Float>
           <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
           <Dialogue position={dialoguePosition} dialogue={dialogue} state={dialogueState} />
-          <Prompt position={[promptPosition, 30, -10]} prompt={prompt} state={instructionState} />
-          <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 50]}
+          <Prompt position={promptPosition ? promptPosition : [0, 30, -10]} prompt={prompt} state={instructionState} />
+          <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 40]}
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
               setDialogueState(true)
@@ -65,7 +65,7 @@ export default function Thought({position, label, labelPosition, startDialogue, 
               }
             }} />
             {/*instruction prox sensor*/}
-            <CapsuleCollider args={[5, 30, 5]} sensor 
+            <CapsuleCollider args={[5, 30, 5]} sensor position={meshPos ? meshPos : [0,0,0]}
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
                 setInstructionState(true)
