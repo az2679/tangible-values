@@ -222,19 +222,19 @@ export default function Exchange(props) {
         <mesh 
         ref={userFruit} 
         geometry={appleNodes.apple_apple_u1_v1_0.geometry} 
-        // material={appleNodes.apple_apple_u1_v1_0.material} 
+        material={appleNodes.apple_apple_u1_v1_0.material} 
         position={[-1, -5.5,0]} 
         scale={0.5}>
-          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#494949" thickness={10} anisotropy={1} />
+          {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#494949" thickness={10} anisotropy={1} /> */}
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
 
       <RigidBody name="confedFruit" mass={800} gravityScale={800} type="dynamic" colliders={false} position={confedFruitPos} rotation={confedFruitRo} canSleep={false} visible={true} >
         <mesh ref = {confedFruit} geometry={orangeNodes.Object_2.geometry} 
-        // material={orangeNodes.Object_2.material} 
+        material={orangeNodes.Object_2.material} 
         position={[0, -5, 0]} rotation={[-Math.PI/2, 0, 0]} scale={140} >
-          <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} />
+          {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
