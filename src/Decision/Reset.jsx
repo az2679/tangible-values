@@ -1,5 +1,5 @@
 import { RigidBody } from '@react-three/rapier';
-import Button from '../Components/Button';
+import Button from './Button';
 
 export default function Reset({position, onReset, refractory}) {
   const handleClick = () => {

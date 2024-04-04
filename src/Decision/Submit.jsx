@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import SaveDecision from './SaveDecision';
 import AnalyzeDecision from './AnalyzeDecision';
 import Text from '../Text/Text';
-import Button from '../Components/Button';
+import Button from './Button';
 
 export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition, refractory}) {
   let intersectionTimeout;

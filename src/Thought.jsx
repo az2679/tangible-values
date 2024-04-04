@@ -36,7 +36,7 @@ export default function Thought({position, meshPos, label, labelPosition, startD
         <Float
         speed={1} 
         rotationIntensity={0} 
-        floatIntensity={1} 
+        floatIntensity={2} 
         floatingRange={[-1, 1]}
         >
           <mesh onClick={handleClick} position={meshPos ? meshPos : [0, 6, 0]}>

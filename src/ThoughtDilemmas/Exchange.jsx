@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useGLTF, useTexture } from '@react-three/drei';
-
+import gsap from 'gsap';
 import { MeshTransmissionMaterial } from '@react-three/drei';
 
 import Text from '../Text/Text';
@@ -9,7 +9,7 @@ import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
 import Wall from '../Interaction/Wall';
-import gsap from 'gsap';
+import Path from '../Components/Path';
 
 
 export default function Exchange(props) {
@@ -35,9 +35,11 @@ export default function Exchange(props) {
   const [confedFruitRo, setConfedFruitRo] = useState([0, -Math.PI*0.1,0])
 
   const [payoutState, setPayoutState] = useState(false)
+  const [reaction, setReaction] = useState("null")
   const [resetPos, setResetPos] = useState(false)
   const [resetRefractory, setResetRefractory] = useState(false)
   const [submitRefractory, setSubmitRefractory] = useState(false)
+  const [pathState, setPathState] = useState(false)
 
   const handleSensedChange = (option, bool) => {
     if(option == "deceive"){
@@ -160,10 +162,17 @@ export default function Exchange(props) {
     
     if(confed == true && exchange == true){
       console.log(`equal trade: confed ${confed}, user ${exchange}`)
+      setReaction(':>')
     } else if (confed == true && deceive == true || confed == false && exchange == true){
       console.log(`unequal trade: confed ${confed}, user ${exchange}`)
+      if(confed == true && deceive == true){
+        setReaction(':<')
+      } else {
+        setReaction(':}')
+      }
     } else if (confed == false && deceive == true){
       console.log(`no trade: confed ${confed}, user ${exchange}`)
+      setReaction(':{')
     }
 
     if(confed == true){
@@ -173,7 +182,7 @@ export default function Exchange(props) {
     } else {
       setConfedText("deceive")
       setConfedText1("X")
-      setConfedTextPosition([position[0], 15, position[2]+50])
+      setConfedTextPosition([position[0]-6, 15, position[2]+50])
     }
 
     setTimeout(() => {
@@ -182,6 +191,7 @@ export default function Exchange(props) {
 
     setTimeout(() => {
       setResetRefractory(false)
+      setPathState(true)
     }, 10000);
   }
 
@@ -200,7 +210,9 @@ export default function Exchange(props) {
     setPayoutState(false)
     setResetPos(true)
 
+    setPathState(false)
     setSubmitRefractory(false)
+
   }
 
   return (
@@ -210,8 +222,10 @@ export default function Exchange(props) {
       <Text text={`deceive`} state={deceive} position={[position[0]-60, 15, position[2]+190]} />
       <Text text={`${confedText}`} state={confedState} position={confedTextPosition} />
       {/* <Text text={`${confedText1}`} state={confedState} position={[position[0], 5, position[2]+50]} /> */}
+      <Text text={reaction} position={[position[0]-2, 15, position[2] + 7]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} scale={3} state={false} /> 
+      {/*confedState*/}
 
-      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
+      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]-53, 1, position[2]+100]}/>
       <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} />
 
       <Sensor type="boolean" args={[38, 20]} sensorArgs={[20, 5,9]} option="deceive" sensorPosition={[position[0]-60, 0.5, position[2]+192]} onSensedChange={handleSensedChange} /> 
@@ -256,6 +270,13 @@ export default function Exchange(props) {
       </mesh>
       </RigidBody>
     
+
+
+      <Path position={[position[0]-800, position[1], position[2]+300]} i={-1} rotation={[0,-Math.PI*0.2,0]} state = {pathState}/>
+      <Path position={[position[0]-775, position[1], position[2]+500]} i={1} rotation={[0,-Math.PI*0.2,0]} state = {pathState}/>
+
+      <Path position={[position[0]+775, position[1], position[2]+300]} i={1} rotation={[0,Math.PI*0.2,0]} state = {pathState}/>
+      <Path position={[position[0]+750, position[1], position[2]+500]} i={-1} rotation={[0,Math.PI*0.2,0]} state = {pathState}/>
 
     </>
   );

@@ -6,7 +6,7 @@ import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
 export default function Text(props) {
   const matcap = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
-  const {text, state, position, rotation, scale} = props
+  const {text, state, position, rotation, scale, font} = props
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function Text(props) {
       <Center top position={position ? position : [0, 15, 0]} rotation={rotation ? rotation : [0, 0, 0]} >
         <Text3D 
         visible={state}
-        font={nunito}
+        font={font ? font : nunito}
         scale={scale ? scale:[4, 4, 3]} 
         letterSpacing={0.5}
         height={0.01}
@@ -26,7 +26,7 @@ export default function Text(props) {
         // curveSegments={64}
         >
           {text}
-          <meshNormalMaterial />
+          {/* <meshNormalMaterial /> */}
           <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
         </Text3D>
       </Center>

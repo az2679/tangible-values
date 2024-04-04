@@ -10,6 +10,7 @@ import Sensor from '../Interaction/Sensor';
 import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
 import Coin from '../Interaction/Coin';
+import Path from '../Components/Path';
 
 
 
@@ -78,6 +79,8 @@ export default function Trust(props) {
   const [renderCoins, setRenderCoins] = useState([]);
   const [totalCoins, setTotalCoins] = useState([]);
   const [payoutState , setPayoutState] = useState(false)
+  const [reactionState, setReactionState] = useState(false)
+  const [reaction, setReaction] = useState(`null`)
 
   const [userText, setUserText] = useState(`null`)
   const [confedText, setConfedText] = useState(`null`)
@@ -88,6 +91,7 @@ export default function Trust(props) {
 
   const [resetRefractory , setResetRefractory] = useState(false)
   const [submitRefractory , setSubmitRefractory] = useState(false)
+  const [pathState, setPathState] = useState(false)
 
 
 
@@ -127,6 +131,7 @@ export default function Trust(props) {
       //max 1 sensed
       const totalUserSensed = Object.values(userSensors).map(value => Math.min(value.count, 1)).reduce((acc, currentValue) => acc + currentValue, 0);
       setUserCounter(totalUserSensed);
+
     }, [confedSensors, userSensors]);
 
 
@@ -162,7 +167,9 @@ export default function Trust(props) {
     };
 
     const reconcile = () => {
-      console.log(confedSensors)
+      setReactionState(true)
+      setReaction(':|')
+
       const sensed = [];
       for (const [number, data] of Object.entries(confedSensors)) {
         if (data.count === 1) {
@@ -189,12 +196,14 @@ export default function Trust(props) {
 
     setTimeout(() => {
       setConfedState(true)
+      setReaction(':)')
       console.log(`Stage 2: Returned ${confed}`)
     }, 3000);
 
     setTimeout(() => {
       setResetRefractory(false)
-    }, (confed*2000)+10000);
+      setPathState(true)
+    }, (confed*1000)+5000);
   };
 
   
@@ -226,9 +235,13 @@ export default function Trust(props) {
   // }, [multiply, totalCoins]);
 
   const handleReset = () => {
+    setPathState(false)
+
     setConfed(null)
     setConfedState(false)
     setMultiply(false)
+
+    setReactionState(false)
 
     setInitialCoins([])
     setRenderCoins([])
@@ -263,6 +276,8 @@ export default function Trust(props) {
 
       <Text text={`giving ${confedCounter}`} state={!confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`returning ${confed}`} state={confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
+      <Text text={reaction} position={[position[0]-1.5, 12, position[2] + 8]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} state={false} scale={3}/> 
+      {/*reactionState*/}
 
       <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
       <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory}/>
@@ -282,7 +297,7 @@ export default function Trust(props) {
       </mesh>
       </RigidBody>
 
-
+      <Path position={[position[0]+325, position[1], position[2]+900]} i={-1} rotation={[0,Math.PI*0.4,0]} state = {pathState}/>
     </>
   );
 }

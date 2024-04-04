@@ -10,7 +10,7 @@ import Reset from '../Decision/Reset';
 import Coin from '../Interaction/Coin';
 import Eraser from '../Interaction/Eraser';
 import Paper from '../Interaction/Paper';
-
+import Path from '../Components/Path';
 
 export default function Volunteer({position}) {
   const { nodes } = useGLTF('/models/pointed_arch.glb')
@@ -33,11 +33,13 @@ export default function Volunteer({position}) {
   const [confed, setConfed] = useState([])
   const [flipState, setFlipState] = useState(false)
   const [payoutText, setPayoutText] = useState("null")
+  const [reaction, setReaction] = useState("null")
   const [payoutState, setPayoutState] = useState(false)
   const [payoutPosition, setPayoutPosition] = useState([position[0], 0, position[2]+45])
   const [resetSensor, setResetSensor] = useState(false)
   const [resetRefractory, setResetRefractory] = useState(false)
   const [submitRefractory, setSubmitRefractory] = useState(false)
+  const [pathState, setPathState] = useState(false)
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -84,13 +86,16 @@ export default function Volunteer({position}) {
       setPayoutState(false)
       setPayoutText(`try again \nnext time`)
       setPayoutPosition([position[0]-12, 0, position[2]+45])
+      setReaction(':/')
     } else {
       console.log(`Pay Out: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
       setPayoutText(`win`)
       setPayoutPosition([position[0], 0, position[2]+45])
+      setReaction(':]')
 
       setTimeout(() => {
         setPayoutState(true)
+        setPathState(true)
       }, 3500);
     }
 
@@ -127,6 +132,7 @@ export default function Volunteer({position}) {
     setFlipState(false) 
     setPayoutState(false)
     setResetSensor(true)
+    setPathState(false)
 
     setSubmitRefractory(false)
   }
@@ -168,6 +174,8 @@ export default function Volunteer({position}) {
       {payoutState && renderCoins(confed[2], [position[0]+30, 0, position[2]+45])}
 
       <Text text={payoutText} state={flipState} position={payoutPosition} rotation={[-Math.PI * 0.5, 0,0]}/>
+      <Text text={reaction} position={[position[0]-1.5, 15, position[2] + 7]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} state={false} scale={3}/> 
+      {/*flipState*/}
 
       <Eraser position={[position[0], 15, position[2]+180]} onHoldChange={handleHoldChange} />
       {/* <DragObj name="eraser" startPosition={[position[0]-45, 1, position[2]-20]} state={setDragState} plane={floorPlane} lift={1}/> */}
@@ -273,7 +281,7 @@ export default function Volunteer({position}) {
       </mesh>
       </RigidBody>
 
-
+      <Path position={[position[0]+1400, position[1], position[2]+1100]} i={-1} rotation={[0,Math.PI*0.75,0]} state = {pathState}/>
 
     </>
   );

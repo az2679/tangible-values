@@ -7,12 +7,14 @@ import Ground from './Ground';
 import CameraRig from './CameraRig';
 import Person from './Person';
 import Thought from './Thought';
-
 import Foyer from './Text/Foyer';
+
 import Dictator from './ThoughtDilemmas/Dictator';
 import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
+
+import Reaction from './Components/Reaction';
 
 function Scene() { 
   return (
@@ -36,17 +38,16 @@ function Scene() {
 
 
         <Suspense fallback={null}>
-          <Physics  gravity={[0, -9.8,0]} colliders={false}>
+          <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
 
             <CameraRig>
               <Foyer position={[20, 0, 70]} />
               {/* <Person position={[50, 100, -300]} /> */}
-              {/* <Person position={[-550, 300, -700]} /> */}
-              <Person />
+              <Person position={[0, 300, -700]} />
+              {/* <Person /> */}
 
-
-              <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HEY YOU THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
+              <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HELLO THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
               you have been given 10$ and have to decide
               how much of it you want to split with another person. 
               you can give all of it, none of it, or a portion of it, 
