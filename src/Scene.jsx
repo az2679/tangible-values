@@ -1,9 +1,10 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState, useRef, useEffect } from "react";
-import { Stats, PerspectiveCamera, OrbitControls, MapControls, KeyboardControls } from "@react-three/drei";
-import { Physics, RigidBody } from '@react-three/rapier';
+import { Suspense, useEffect, useState } from "react";
+import { Stats, KeyboardControls, Loader } from "@react-three/drei";
+import { Physics } from '@react-three/rapier';
 
-import Ground from './Ground';
+import LoadingScreen from './Components/LoadingScreen';
+import Ground from './Components/Ground';
 import CameraRig from './CameraRig';
 import Person from './Person';
 import Thought from './Thought';
@@ -14,10 +15,19 @@ import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
 
-import Reaction from './Components/Reaction';
-
 function Scene() { 
-  return (
+  // const [distanceToThoughts, setDistanceToThoughts] = useState([])
+  // useEffect(()=>{
+  //   let newDistance = []
+  //   for(let i =0;i<distanceToThoughts.length; i++){
+  //     let distanceToThought = dist();
+  //     newDistance.push(distanceToThought);
+  //   }
+  //   setDistanceToThoughts(newDistance)
+  // },[//user postion])
+
+
+  return ( 
     <div id="canvas_wrapper">
       <KeyboardControls
       map={[
@@ -37,17 +47,17 @@ function Scene() {
         {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
 
 
-        <Suspense fallback={null}>
+        <Suspense fallback={<LoadingScreen />}>
           <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
 
             <CameraRig>
               <Foyer position={[20, 0, 70]} />
               {/* <Person position={[50, 100, -300]} /> */}
-              <Person position={[0, 300, -700]} />
-              {/* <Person /> */}
-
-              <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} label= {"Dictator's Game"} labelPosition={[100, -7, 250]} startDialogue={"HELLO THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
+              {/* <Person position={[0, 300, -700]} /> */}
+              <Person />
+              {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
+              <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} startDialogue={"HELLO THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
               you have been given 10$ and have to decide
               how much of it you want to split with another person. 
               you can give all of it, none of it, or a portion of it, 
@@ -58,7 +68,7 @@ function Scene() {
                 <Dictator position={[0, 5, -470]} />
               </Thought>
 
-              <Thought key={"volunteer"} position={[-550, 5, -800]} label= {"Volunteer's Dilemma"} labelPosition={[-100, -7, 250]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 20, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} prompt={`
+              {/* <Thought key={"volunteer"} position={[-550, 5, -800]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 20, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} prompt={`
               you are playing a parlor game with a few people. 
               each person can claim either 1$ or 5$ each. 
               if at least one person chooses 1$, 
@@ -68,9 +78,9 @@ function Scene() {
               how much are you claiming?
                 `} >
                 <Volunteer position={[-550, 5, -800]}/>
-              </Thought>
+              </Thought> */}
 
-              <Thought key={"exchange"} position={[0, 5, -1100]} label= {"Exchange Game"} labelPosition={[100, -7, 260]} startDialogue={"WANNA  DO  A  TRADE ?"} startPosition={[0, 20, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 20, 0]} prompt={`
+              {/* <Thought key={"exchange"} position={[0, 5, -1100]} startDialogue={"WANNA  DO  A  TRADE ?"} startPosition={[0, 20, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 20, 0]} prompt={`
               you are playing an exchange game with another person and 
               can keep the item you have or exchange it. 
               when exchanging, you both have to make a decision beforehand 
@@ -84,9 +94,9 @@ function Scene() {
               do you keep your fruit, decieving the other person, or exchange it?
               `} >
                   <Exchange position={[0, 5, -1100]} />
-              </Thought>
+              </Thought> */}
 
-              <Thought position={[550, 5, -800]} label={"Trust Game"} labelPosition={[-120, -7, 260]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 20, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 20, 0]} prompt={`
+              {/* <Thought position={[550, 5, -800]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 20, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 20, 0]} prompt={`
               you have been given 10$ and have to decide 
               how much of it you want to pass to another person.
               in the first stage, you keep the remaining amount not sent, 
@@ -97,7 +107,7 @@ function Scene() {
               how much are you sending?`
               } > 
                 <Trust position={[550, 5, -800]} />
-              </Thought>
+              </Thought> */}
 
             </CameraRig>
           </Physics>
@@ -105,6 +115,7 @@ function Scene() {
         <Stats />
       </Canvas>
       </KeyboardControls>
+      {/* <Loader /> */}
     </div>
   );
 }

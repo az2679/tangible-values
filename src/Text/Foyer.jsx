@@ -38,14 +38,14 @@ export default function Foyer({position}) {
   return (
     <>
     <RigidBody mass={1} type="fixed" colliders='hull'>
-        <Text3D font={nunito} position={[position[0]-100, 0, position[2]+120]} rotation={[-Math.PI * 0.5, 0,0]} scale={3} letterSpacing={0.1} >
+        <Text3D font={nunito} position={[position[0]-120, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]} scale={4} letterSpacing={0.1} >
             {`TANGIBLE VALUES`}
             <meshBasicMaterial color={"black"}/>
         </Text3D>
     </RigidBody>
 
     <RigidBody mass={1} type="fixed" colliders='hull'>
-        <Text3D font={nunito} position={[position[0]-120, 15, position[2]+80]} rotation={[-Math.PI * 0.5, 0,0]} scale={3} letterSpacing={0.1} >
+        <Text3D font={nunito} position={[position[0]-140, 15, position[2]+60]} rotation={[-Math.PI * 0.5, 0,0]} scale={4} letterSpacing={0.1} >
             {`a gallery space for direct 
 interaction with thought experiments, 
 providing a dynamic environment for 
@@ -79,11 +79,11 @@ exploration and contemplation`}
 
 
     <RigidBody mass={1} type="fixed" colliders='hull'>
-        <Text3D font={nunito} position={[position[0], 0, position[2]+80]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
+        <Text3D font={nunito} position={[position[0]+20, 0, position[2]+90]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
             {`  w \na s d`}
             <meshBasicMaterial color={"gray"}/>
         </Text3D>
-        <Text3D font={nunito} position={[position[0]+30, 0, position[2]+85]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
+        <Text3D font={nunito} position={[position[0]+50, 0, position[2]+95]} rotation={[-Math.PI * 0.5, 0,0]} scale={5} letterSpacing={0.3} >
             {`+  mouse`}
             <meshBasicMaterial color={"gray"}/>
         </Text3D>

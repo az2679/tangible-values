@@ -4,7 +4,6 @@ import { useCubeTexture, Float } from '@react-three/drei';
 
 import Dialogue from './Text/Dialogue';
 import Prompt from './Text/Prompt';
-import Label from './Text/Label';
 
 
 export default function Thought({position, meshPos, label, labelPosition, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
@@ -13,22 +12,10 @@ export default function Thought({position, meshPos, label, labelPosition, startD
     {path: "./textures/sky/"}
     )
   
-  const [labelState, setLabelState] = useState(false);
   const [instructionState, setInstructionState] = useState(false);
   const [dialogueState, setDialogueState] = useState(false);
   const [dialogue, setDialogue] = useState(startDialogue)
   const [dialoguePosition, setDialoguePosition] = useState(startPosition)
-
-  const handleClick = () => {
-    // console.log("test")
-    if(proximityState == true){
-    // setInstructionState(!instructionState)
-    // onInstructionStateChange(!instructionState)
-    setLabelState(false)
-    } else {
-      setLabelState(!labelState)
-    }
-  }
 
   return (
     <>
@@ -39,14 +26,13 @@ export default function Thought({position, meshPos, label, labelPosition, startD
         floatIntensity={2} 
         floatingRange={[-1, 1]}
         >
-          <mesh onClick={handleClick} position={meshPos ? meshPos : [0, 6, 0]}>
+          <mesh position={meshPos ? meshPos : [0, 6, 0]}>
             {/* <boxGeometry args={[10, 10, 10]} /> */}
             {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
             <octahedronGeometry args={[8]} />
             <meshBasicMaterial color={"lightgray"} envMap={texture} reflectivity={1}/>
           </mesh>
         </Float>
-          <Label position={labelPosition ? labelPosition : [100, -8, 160]} label={label} state={labelState}/>
           <Dialogue position={dialoguePosition} dialogue={dialogue} state={dialogueState} />
           <Prompt position={promptPosition ? promptPosition : [0, 30, -10]} prompt={prompt} state={instructionState} />
           <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 40]}
