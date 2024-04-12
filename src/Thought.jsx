@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 import { useCubeTexture, Float } from '@react-three/drei';
 
-import Dialogue from './Text/Dialogue';
 import Prompt from './Text/Prompt';
+import Text from './Text/Text';
 
 
-export default function Thought({position, meshPos, label, labelPosition, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
+export default function Thought({position, meshPos, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
     {path: "./textures/sky/"}
@@ -30,10 +30,10 @@ export default function Thought({position, meshPos, label, labelPosition, startD
             {/* <boxGeometry args={[10, 10, 10]} /> */}
             {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
             <octahedronGeometry args={[8]} />
-            <meshBasicMaterial color={"lightgray"} envMap={texture} reflectivity={1}/>
+            <meshBasicMaterial color={"#878787"} envMap={texture} reflectivity={1}/>
           </mesh>
         </Float>
-          <Dialogue position={dialoguePosition} dialogue={dialogue} state={dialogueState} />
+          <Text position={dialoguePosition} text={dialogue} state={dialogueState} scale={[2, 2, 3]} rotation={[-Math.PI*0.1, 0, 0]}/>
           <Prompt position={promptPosition ? promptPosition : [0, 30, -10]} prompt={prompt} state={instructionState} />
           <CapsuleCollider args={[5, 200, 5]} sensor position={[0, 0, 40]}
             onIntersectionEnter={(payload) => {

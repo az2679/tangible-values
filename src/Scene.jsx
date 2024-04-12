@@ -14,6 +14,7 @@ import Dictator from './ThoughtDilemmas/Dictator';
 import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
+import About from './Text/About';
 
 function Scene() { 
   // const [distanceToThoughts, setDistanceToThoughts] = useState([])
@@ -26,6 +27,25 @@ function Scene() {
   //   setDistanceToThoughts(newDistance)
   // },[//user postion])
 
+  const [submissions, setSubmissions] = useState([]);
+  const [complete, setComplete] = useState(false);
+  
+  const countSubmissions = (index, position) => {
+    setSubmissions((prevPositions) => ({
+      ...prevPositions,
+      [index]: position,
+    }));
+  };
+
+  useEffect(() => {
+    if (submissions && Object.keys(submissions).length == 4) {
+      if(Object.values(submissions).every((value) => value === true)){
+        setTimeout(() => {
+          setComplete(true);
+        }, 1000);
+      }
+    }
+  }, [submissions]);
 
   return ( 
     <div id="canvas_wrapper">
@@ -56,6 +76,7 @@ function Scene() {
               {/* <Person position={[50, 100, -300]} /> */}
               {/* <Person position={[0, 300, -700]} /> */}
               <Person />
+
               {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
               <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} startDialogue={"HELLO THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
               you have been given 10$ and have to decide
@@ -65,7 +86,7 @@ function Scene() {
                       
               as the dictator, how will you distribute the coins?
               `} promptPosition={[0, 40, 130]}>
-                <Dictator position={[0, 5, -470]} />
+                <Dictator position={[0, 5, -470]} sendSubmit={countSubmissions}/>
               </Thought>
 
               {/* <Thought key={"volunteer"} position={[-550, 5, -800]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 20, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} prompt={`
@@ -77,10 +98,10 @@ function Scene() {
                 
               how much are you claiming?
                 `} >
-                <Volunteer position={[-550, 5, -800]}/>
+                <Volunteer position={[-550, 5, -800]} sendSubmit={countSubmissions}/>
               </Thought> */}
 
-              {/* <Thought key={"exchange"} position={[0, 5, -1100]} startDialogue={"WANNA  DO  A  TRADE ?"} startPosition={[0, 20, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 20, 0]} prompt={`
+              {/* <Thought key={"exchange"} position={[0, 5, -1100]} startDialogue={"WANNA  MAKE  A  TRADE ?"} startPosition={[0, 20, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 20, 0]} prompt={`
               you are playing an exchange game with another person and 
               can keep the item you have or exchange it. 
               when exchanging, you both have to make a decision beforehand 
@@ -93,7 +114,7 @@ function Scene() {
               knowing there’s a chance of obtaining both, one, or no fruit, 
               do you keep your fruit, decieving the other person, or exchange it?
               `} >
-                  <Exchange position={[0, 5, -1100]} />
+                  <Exchange position={[0, 5, -1100]} sendSubmit={countSubmissions} />
               </Thought> */}
 
               {/* <Thought position={[550, 5, -800]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 20, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 20, 0]} prompt={`
@@ -106,8 +127,12 @@ function Scene() {
                           
               how much are you sending?`
               } > 
-                <Trust position={[550, 5, -800]} />
+                <Trust position={[550, 5, -800]} sendSubmit={countSubmissions} />
               </Thought> */}
+
+              
+              {/* {complete && <About />} */}
+              <About />
 
             </CameraRig>
           </Physics>
@@ -115,7 +140,6 @@ function Scene() {
         <Stats />
       </Canvas>
       </KeyboardControls>
-      {/* <Loader /> */}
     </div>
   );
 }

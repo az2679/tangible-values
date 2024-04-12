@@ -18,7 +18,7 @@ export default function Ground({color}) {
             mixStrength={15}
             depthScale={1}
             minDepthThreshold={0.85}
-            color="#eeeeee"
+            color="#e6e6e6"
             metalness={0.6}
             roughness={1}>
               {/* <GradientTexture stops={[0, 0.5, 1]} colors={['#495057', '#adb5bd', '#e9ecef']} size={10000} /> */}

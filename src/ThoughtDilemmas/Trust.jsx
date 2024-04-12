@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RigidBody } from "@react-three/rapier";
+import { RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import { gsap } from 'gsap';
 import { useGLTF, useTexture } from '@react-three/drei';
@@ -63,7 +63,7 @@ export default function Trust(props) {
   const { nodes } = useGLTF('/models/circle_arch.glb')
   const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
-  const { position } = props;
+  const { position, sendSubmit } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
   const [confedSensors, setConfedSensors] = useState({});
@@ -92,6 +92,8 @@ export default function Trust(props) {
   const [resetRefractory , setResetRefractory] = useState(false)
   const [submitRefractory , setSubmitRefractory] = useState(false)
   const [pathState, setPathState] = useState(false)
+
+  const [submitted, setSubmitted] = useState(false)
 
 
 
@@ -268,11 +270,14 @@ export default function Trust(props) {
     setSubmitRefractory(false)
   }
     
+  useEffect(()=> {
+    sendSubmit("trust", submitted)
+  },[submitted])
 
   return (
     <>
-      <Text text={confedText} state={true} position={[position[0]-6, 2, position[2]+60]} rotation={[-Math.PI*0.5, 0, -Math.PI]}/>
-      <Text text={userText} state={true} position={[position[0]+3, 2, position[2]+145]} rotation={[-Math.PI*0.5, 0, 0]}/>
+      <Text text={confedText} state={true} position={[position[0]-6, 0, position[2]+60]} rotation={[-Math.PI*0.5, 0, -Math.PI]}/>
+      <Text text={userText} state={true} position={[position[0]+3, 0, position[2]+145]} rotation={[-Math.PI*0.5, 0, 0]}/>
 
       <Text text={`giving ${confedCounter}`} state={!confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={`returning ${confed}`} state={confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
@@ -280,7 +285,14 @@ export default function Trust(props) {
       {/*reactionState*/}
 
       <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory}/>
+      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]+0, 0, position[2]+160]}
+        onIntersectionExit={(payload) => {
+          if(payload.other.rigidBodyObject.children[0].name == "person" && (confedCounter + userCounter === 10)){
+            setSubmitted(true)
+          }
+        }} 
+      /> 
+      {/* <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory}/> */}
 
       <SensorMult option="confed" position={[position[0], position[1]+0.5, position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
       <SensorMult option="user" position={[position[0], position[1]+0.5, position[2]+125]} handleSensedChange={handleSensedChange} i={-1} resetSensor={false}/>
@@ -292,8 +304,7 @@ export default function Trust(props) {
 
       <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={nodes.Object_2.geometry} position={[position[0]-250, position[1]-5, position[2]+175]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
-        <meshStandardMaterial color={"white"}/>
-        {/* <meshMatcapMaterial matcap={matcap} /> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
 

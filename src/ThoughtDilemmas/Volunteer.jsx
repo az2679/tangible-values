@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { RigidBody } from "@react-three/rapier";
+import { RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
 import { useGLTF, useTexture, useCubeTexture } from '@react-three/drei';
 
@@ -12,7 +12,7 @@ import Eraser from '../Interaction/Eraser';
 import Paper from '../Interaction/Paper';
 import Path from '../Components/Path';
 
-export default function Volunteer({position}) {
+export default function Volunteer({position, sendSubmit}) {
   const { nodes } = useGLTF('/models/pointed_arch.glb')
   const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
   const matcapChrome = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
@@ -40,6 +40,8 @@ export default function Volunteer({position}) {
   const [resetRefractory, setResetRefractory] = useState(false)
   const [submitRefractory, setSubmitRefractory] = useState(false)
   const [pathState, setPathState] = useState(false)
+
+  const [submitted, setSubmitted] = useState(false)
 
   const handleHoldChange = (holdState) => {
     setEraserState(holdState)
@@ -137,6 +139,10 @@ export default function Volunteer({position}) {
     setSubmitRefractory(false)
   }
 
+  useEffect(()=> {
+    sendSubmit("volunteer", submitted)
+  },[submitted])
+
   
   return (
     <>
@@ -187,7 +193,14 @@ export default function Volunteer({position}) {
 
 
       <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory = {resetRefractory} />
+      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0], 0, position[2]+85]}
+        onIntersectionExit={(payload) => {
+          if(payload.other.rigidBodyObject.children[0].name == "person" && (majority !== "tie")){
+            setSubmitted(true)
+          }
+        }} 
+      /> 
+      {/* <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory = {resetRefractory} /> */}
 
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
@@ -276,8 +289,7 @@ export default function Volunteer({position}) {
 
       <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={nodes.Object_4.geometry} position={[position[0]+250, position[1]-5, position[2]+175]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
-        <meshStandardMaterial color={"white"}/>
-        {/* <meshMatcapMaterial matcap={matcap} /> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
 

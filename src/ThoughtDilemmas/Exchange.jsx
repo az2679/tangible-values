@@ -10,6 +10,7 @@ import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
 import Wall from '../Interaction/Wall';
 import Path from '../Components/Path';
+import { MeshBasicMaterial } from 'three';
 
 
 export default function Exchange(props) {
@@ -18,7 +19,7 @@ export default function Exchange(props) {
   const { nodes: archNodes } = useGLTF('/models/stone_arch.glb')
   const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
-  const { position } = props;
+  const { position, sendSubmit } = props;
   const[deceive, setDeceive] = useState(false)
   const[exchange, setExchange] = useState(false)
 
@@ -40,6 +41,8 @@ export default function Exchange(props) {
   const [resetRefractory, setResetRefractory] = useState(false)
   const [submitRefractory, setSubmitRefractory] = useState(false)
   const [pathState, setPathState] = useState(false)
+
+  const [submitted, setSubmitted] = useState(false)
 
   const handleSensedChange = (option, bool) => {
     if(option == "deceive"){
@@ -215,8 +218,14 @@ export default function Exchange(props) {
 
   }
 
+  useEffect(()=> {
+    sendSubmit("exchange", submitted)
+  },[submitted])
+
   return (
     <>
+      <Text text={`you`} state={true} position={[position[0]-60, 0, position[2]+70]} rotation={[-Math.PI/2, 0,0]}/>
+      <Text text={`trader`} state={true} position={[position[0], 0, position[2]+70]} rotation={[-Math.PI/2, 0,0]}/>
       <Text text={`<-->`} state={true} position={[position[0]-30, 0, position[2]+50]} rotation={[-Math.PI/2, 0, 0]} />
       <Text text={`trade`} state={exchange} position={[position[0]-60, 15, position[2]+50]} />
       <Text text={`deceive`} state={deceive} position={[position[0]-60, 15, position[2]+190]} />
@@ -226,7 +235,14 @@ export default function Exchange(props) {
       {/*confedState*/}
 
       <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]-53, 1, position[2]+100]}/>
-      <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} />
+      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]-30, 0, position[2]+80]}
+        onIntersectionExit={(payload) => {
+          if(payload.other.rigidBodyObject.children[0].name == "person" && (deceive || exchange)){
+            setSubmitted(true)
+          }
+        }} 
+      /> 
+      {/* <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} /> */}
 
       <Sensor type="boolean" args={[38, 20]} sensorArgs={[20, 5,9]} option="deceive" sensorPosition={[position[0]-60, 0.5, position[2]+192]} onSensedChange={handleSensedChange} /> 
       <Sensor type="boolean" args={[30, 20]} sensorArgs={[13, 5,9]} option="exchange" sensorPosition={[position[0]-60, 0.5, position[2]+50]} onSensedChange={handleSensedChange} /> 
@@ -236,18 +252,20 @@ export default function Exchange(props) {
         <mesh 
         ref={userFruit} 
         geometry={appleNodes.apple_apple_u1_v1_0.geometry} 
-        material={appleNodes.apple_apple_u1_v1_0.material} 
+        // material={appleNodes.apple_apple_u1_v1_0.material} 
         position={[-1, -5.5,0]} 
         scale={0.5}>
           {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#494949" thickness={10} anisotropy={1} /> */}
+          <meshStandardMaterial color="#97989d" transparent opacity={0.7}/>
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
 
       <RigidBody name="confedFruit" mass={800} gravityScale={800} type="dynamic" colliders={false} position={confedFruitPos} rotation={confedFruitRo} canSleep={false} visible={true} >
         <mesh ref = {confedFruit} geometry={orangeNodes.Object_2.geometry} 
-        material={orangeNodes.Object_2.material} 
-        position={[0, -5, 0]} rotation={[-Math.PI/2, 0, 0]} scale={140} >
+        // material={orangeNodes.Object_2.material} 
+        position={[0, -6, 0]} rotation={[-Math.PI/2, 0, 0]} scale={140} >
+          <meshStandardMaterial color="#97989d" transparent opacity={0.7}/>
           {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
@@ -265,8 +283,7 @@ export default function Exchange(props) {
 
       <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={archNodes.Arch_01_1_LPUNHPZBSG1_0.geometry} position={[position[0]+22, position[1]-5, position[2]+330]} rotation={[0, Math.PI/2, 0]} scale={5}>
-        <meshStandardMaterial color={"white"}/>
-        {/* <meshMatcapMaterial matcap={matcap} /> */}
+        <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
     

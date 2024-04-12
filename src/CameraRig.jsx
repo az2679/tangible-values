@@ -107,7 +107,7 @@ export default function CameraRig({ children }) {
       />
 
       {React.Children.map(children, (child) =>
-        cloneElement(child, {
+        child && cloneElement(child, {
           cameraPosition,
           spherePosition,
           onPositionChange: handleSpherePositionChange,
