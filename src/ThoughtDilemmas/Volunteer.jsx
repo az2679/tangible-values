@@ -140,7 +140,7 @@ export default function Volunteer({position, sendSubmit}) {
   }
 
   useEffect(()=> {
-    sendSubmit("volunteer", submitted)
+    sendSubmit('volunteer', submitted)
   },[submitted])
 
   

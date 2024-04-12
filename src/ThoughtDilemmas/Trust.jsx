@@ -271,7 +271,7 @@ export default function Trust(props) {
   }
     
   useEffect(()=> {
-    sendSubmit("trust", submitted)
+    sendSubmit('trust', submitted)
   },[submitted])
 
   return (

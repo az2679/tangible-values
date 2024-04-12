@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
 import { useCubeTexture, Float } from '@react-three/drei';
+import { useEffect } from 'react';
 
 import Prompt from './Text/Prompt';
 import Text from './Text/Text';
 
 
-export default function Thought({position, meshPos, startDialogue, updateDialogue, startPosition, updatePosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children}) {
+export default function Thought({position, meshPos, startDialogue, startPosition, updateDialogue, updatePosition, endDialogue, endPosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children, submissions}) {
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
     {path: "./textures/sky/"}
@@ -16,6 +17,30 @@ export default function Thought({position, meshPos, startDialogue, updateDialogu
   const [dialogueState, setDialogueState] = useState(false);
   const [dialogue, setDialogue] = useState(startDialogue)
   const [dialoguePosition, setDialoguePosition] = useState(startPosition)
+
+  // useEffect(() => {
+  //   React.Children.forEach(children, (child, index) => {
+  //     if (React.isValidElement(child)) {
+  //       console.log(submissions, index)
+  //       if (submissions && submissions[index] === true) {
+  //         setDialogue(endDialogue)
+  //         setDialoguePosition(endPosition)
+  //       }
+  //     }
+  //   });
+  // }, [submissions, children]);
+
+  useEffect(() => {
+    React.Children.forEach(children, (child, key) => {
+      const childKey = child.key;
+      const submissionValue = submissions && submissions[childKey];
+  console.log(childKey)
+      if (submissionValue === true) {
+        setDialogue(endDialogue);
+        setDialoguePosition(endPosition);
+      }
+    });
+  }, [submissions, children]);
 
   return (
     <>

@@ -30,10 +30,10 @@ function Scene() {
   const [submissions, setSubmissions] = useState([]);
   const [complete, setComplete] = useState(false);
   
-  const countSubmissions = (index, position) => {
-    setSubmissions((prevPositions) => ({
-      ...prevPositions,
-      [index]: position,
+  const countSubmissions = (key, submitState) => {
+    setSubmissions((prevSubmitState) => ({
+      ...prevSubmitState,
+      [key]: submitState,
     }));
   };
 
@@ -78,61 +78,97 @@ function Scene() {
               <Person />
 
               {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
-              <Thought key={"dictator"} position={[0, 5, -370]} meshPos={[0,6, 150]} startDialogue={"HELLO THERE ! COME CLOSER"} startPosition={[0, 20, 150]} updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} prompt={`
-              you have been given 10$ and have to decide
-              how much of it you want to split with another person. 
-              you can give all of it, none of it, or a portion of it, 
-              while the other person can only accept what has been given. 
-                      
-              as the dictator, how will you distribute the coins?
-              `} promptPosition={[0, 40, 130]}>
-                <Dictator position={[0, 5, -470]} sendSubmit={countSubmissions}/>
+              <Thought key={"dictatorGame"} 
+                position={[0, 5, -370]} 
+                meshPos={[0,6, 150]} 
+                startDialogue={"HELLO THERE ! COME CLOSER"} 
+                startPosition={[0, 20, 150]} 
+                updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} 
+                endDialogue={`TAKE YOUR TIME`}
+                endPosition={[15, 20, 150]} 
+                prompt={`
+                  you have been given 10$ and have to decide
+                  how much of it you want to split with another person. 
+                  you can give all of it, none of it, or a portion of it, 
+                  while the other person can only accept what has been given. 
+                          
+                  as the dictator, how will you distribute the coins?
+                `} 
+                promptPosition={[0, 40, 130]}
+                submissions={submissions} >
+                <Dictator key={"dictator"} position={[0, 5, -470]} sendSubmit={countSubmissions}/>
               </Thought>
 
-              {/* <Thought key={"volunteer"} position={[-550, 5, -800]} startDialogue={"FEELING  RISKY  TODAY ?"} startPosition={[0, 20, 0]} updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} prompt={`
-              you are playing a parlor game with a few people. 
-              each person can claim either 1$ or 5$ each. 
-              if at least one person chooses 1$, 
-              then everyone will get the amount they wrote down. 
-              if no one claims 1$, then everyone gets nothing. 
-                
-              how much are you claiming?
-                `} >
-                <Volunteer position={[-550, 5, -800]} sendSubmit={countSubmissions}/>
-              </Thought> */}
+              <Thought key={"volunteerDilemma"} 
+                position={[-550, 5, -800]} 
+                startDialogue={"FEELING  RISKY  TODAY ?"} 
+                startPosition={[0, 20, 0]} 
+                updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} 
+                endDialogue={`MAY LUCK BE ON YOUR SIDE`}
+                endPosition={[0, 20, 0]}
+                prompt={`
+                  you are playing a parlor game with a few people. 
+                  each person can claim either 1$ or 5$ each. 
+                  if at least one person chooses 1$, 
+                  then everyone will get the amount they wrote down. 
+                  if no one claims 1$, then everyone gets nothing. 
+                    
+                  how much are you claiming?
+                `} 
+                submissions={submissions} >
+                <Volunteer key={"volunteer"} position={[-550, 5, -800]} sendSubmit={countSubmissions}/>
+              </Thought>
 
-              {/* <Thought key={"exchange"} position={[0, 5, -1100]} startDialogue={"WANNA  MAKE  A  TRADE ?"} startPosition={[0, 20, 0]} updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} updatePosition={[-35, 20, 0]} prompt={`
-              you are playing an exchange game with another person and 
-              can keep the item you have or exchange it. 
-              when exchanging, you both have to make a decision beforehand 
-              without knowing what the other person will do. 
-              you have an apple but prefer an orange, 
-              while the other person has an orange and prefers an apple. 
-              both of you prefer obtaining both fruit to just one 
-              and prefer either fruit to none at all. 
+              <Thought key={"exchangeGame"} 
+                position={[0, 5, -1100]} 
+                startDialogue={"WANNA  MAKE  A  TRADE ?"} 
+                startPosition={[0, 20, 0]} 
+                updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} 
+                updatePosition={[-35, 20, 0]} 
+                endDialogue={`ONCE BITTEN, TWICE SHY.`}
+                endPosition={[0, 20, 0]}
+                prompt={`
+                  you are playing an exchange game with another person and 
+                  can keep the item you have or exchange it. 
+                  when exchanging, you both have to make a decision beforehand 
+                  without knowing what the other person will do. 
+                  you have an apple but prefer an orange, 
+                  while the other person has an orange and prefers an apple. 
+                  both of you prefer obtaining both fruit to just one 
+                  and prefer either fruit to none at all. 
 
-              knowing there’s a chance of obtaining both, one, or no fruit, 
-              do you keep your fruit, decieving the other person, or exchange it?
-              `} >
-                  <Exchange position={[0, 5, -1100]} sendSubmit={countSubmissions} />
-              </Thought> */}
+                  knowing there’s a chance of obtaining both, one, or no fruit, 
+                  do you keep your fruit, decieving the other person, or exchange it?
+                  `} 
+                  submissions={submissions} >
+                  <Exchange key={"exchange"} position={[0, 5, -1100]} sendSubmit={countSubmissions} />
+              </Thought>
 
-              {/* <Thought position={[550, 5, -800]} startDialogue={"DO  YOU  TRUST  ME ?"} startPosition={[0, 20, 0]} updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} updatePosition ={[-20, 20, 0]} prompt={`
-              you have been given 10$ and have to decide 
-              how much of it you want to pass to another person.
-              in the first stage, you keep the remaining amount not sent, 
-              while the receiver gains 3 times the amount sent.
-              in the second stage, the receiver may 
-              pass nothing or any portion of the money they received back to you. 
-                          
-              how much are you sending?`
-              } > 
-                <Trust position={[550, 5, -800]} sendSubmit={countSubmissions} />
-              </Thought> */}
+              <Thought key={"trustGame"} 
+                position={[550, 5, -800]} 
+                startDialogue={"DO  YOU  TRUST  ME ?"} 
+                startPosition={[0, 20, 0]} 
+                updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} 
+                updatePosition ={[-20, 20, 0]} 
+                endDialogue={`FOOL ME ONCE, SHAME ON YOU. \nFOOL ME TWICE, SHAME ON ME.`}
+                endPosition={[0, 20, 0]}
+                prompt={`
+                  you have been given 10$ and have to decide 
+                  how much of it you want to pass to another person.
+                  in the first stage, you keep the remaining amount not sent, 
+                  while the receiver gains 3 times the amount sent.
+                  in the second stage, the receiver may 
+                  pass nothing or any portion of the money they received back to you. 
+                              
+                  how much are you sending?
+                  `} 
+                  submissions={submissions} > 
+                <Trust key={"trust"} position={[550, 5, -800]} sendSubmit={countSubmissions} />
+              </Thought>
 
               
               {/* {complete && <About />} */}
-              <About />
+              {/* <About /> */}
 
             </CameraRig>
           </Physics>

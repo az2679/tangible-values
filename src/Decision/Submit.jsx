@@ -89,7 +89,7 @@ export default function Submit({position, valid, decisionType, decisionValue, on
         setErrorState(false)
       } else {
         setErrorState(true)
-        setErrorText(`please wait \nbefore answering \nagain`)
+        setErrorText(`please refresh \nbefore answering \nagain`)
         // console.log ("submit button refractory period")
       }
   };

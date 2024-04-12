@@ -49,7 +49,7 @@ export default function Dictator(props) {
   };
 
   useEffect(()=> {
-    sendSubmit("dictator", submitted)
+    sendSubmit('dictator', submitted)
   },[submitted])
 
   return (

@@ -219,7 +219,7 @@ export default function Exchange(props) {
   }
 
   useEffect(()=> {
-    sendSubmit("exchange", submitted)
+    sendSubmit('exchange', submitted)
   },[submitted])
 
   return (
