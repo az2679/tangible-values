@@ -13,7 +13,7 @@ const frontVector = new Vector3();
 const sideVector = new Vector3();
 const direction = new Vector3();
 
-export default function Person({ position, onPositionChange, onProximity, onThoughtPosition }) {
+export default function Person({ position, onPositionChange, onProximity, onThoughtPosition, sendPosition }) {
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
     {path: "./textures/sky/"}
@@ -36,11 +36,16 @@ export default function Person({ position, onPositionChange, onProximity, onThou
     ref.current.setLinvel({x:direction.x, y: velocity.y, z:direction.z})
 
     const spherePosition = ref.current.translation();
-    onPositionChange({
-      x: spherePosition.x,
-      y: spherePosition.y,
-      z: spherePosition.z,
-    })
+    // onPositionChange({
+    //   x: spherePosition.x,
+    //   y: spherePosition.y,
+    //   z: spherePosition.z,
+    // })
+    sendPosition({
+        x: spherePosition.x,
+        y: spherePosition.y,
+        z: spherePosition.z,
+      })
   });
 
   const handleThoughtPosition = (thoughtPosition) => {
@@ -50,6 +55,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
       z: thoughtPosition.z + 20
     })
   }
+
 
   return (
     <>

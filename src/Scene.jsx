@@ -29,6 +29,7 @@ function Scene() {
 
   const [submissions, setSubmissions] = useState([]);
   const [complete, setComplete] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 100, z: 150 });
   
   const countSubmissions = (key, submitState) => {
     setSubmissions((prevSubmitState) => ({
@@ -46,6 +47,15 @@ function Scene() {
       }
     }
   }, [submissions]);
+
+  const storePosition = (newPosition) => {
+    setPosition(newPosition);
+  };
+
+  // useEffect(() => {
+  //   passPosition
+  // }, [position]);
+
 
   return ( 
     <div id="canvas_wrapper">
@@ -71,11 +81,11 @@ function Scene() {
           <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
 
-            <CameraRig>
+            <CameraRig newSpherePosition={position}>
               <Foyer position={[20, 0, 70]} />
               {/* <Person position={[50, 100, -300]} /> */}
               {/* <Person position={[0, 300, -700]} /> */}
-              <Person />
+              <Person sendPosition = {storePosition}/>
 
               {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
               <Thought key={"dictatorGame"} 
@@ -99,7 +109,7 @@ function Scene() {
                 <Dictator key={"dictator"} position={[0, 5, -470]} sendSubmit={countSubmissions}/>
               </Thought>
 
-              <Thought key={"volunteerDilemma"} 
+              {/* <Thought key={"volunteerDilemma"} 
                 position={[-550, 5, -800]} 
                 startDialogue={"FEELING  RISKY  TODAY ?"} 
                 startPosition={[0, 20, 0]} 
@@ -164,7 +174,7 @@ function Scene() {
                   `} 
                   submissions={submissions} > 
                 <Trust key={"trust"} position={[550, 5, -800]} sendSubmit={countSubmissions} />
-              </Thought>
+              </Thought> */}
 
               
               {/* {complete && <About />} */}

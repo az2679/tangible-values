@@ -3,7 +3,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-export default function CameraRig({ children }) {
+export default function CameraRig({ children, newSpherePosition }) {
   const cameraRef = useRef();
 
   const [spherePosition, setSpherePosition] = useState({ x: 0, y: 0, z: 0 });
@@ -35,9 +35,13 @@ export default function CameraRig({ children }) {
     setProximityState(newProximityState);
   };
 
-  const handleSpherePositionChange = (newPosition) => {
-    setSpherePosition(newPosition);
-  };
+  // const handleSpherePositionChange = (newPosition) => {
+  //   setSpherePosition(newPosition);
+  // };
+
+  useEffect(()=>{
+    setSpherePosition(newSpherePosition);
+  }, [newSpherePosition]);
 
   const handleThoughtPosition = (newThoughtPosition) => {
     setThoughtPosition(newThoughtPosition)
@@ -110,7 +114,7 @@ export default function CameraRig({ children }) {
         child && cloneElement(child, {
           cameraPosition,
           spherePosition,
-          onPositionChange: handleSpherePositionChange,
+          // onPositionChange: handleSpherePositionChange,
           instructionState,
           onInstructionStateChange: handleInstructionStateChange,
           proximityState,

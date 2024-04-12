@@ -18,23 +18,10 @@ export default function Thought({position, meshPos, startDialogue, startPosition
   const [dialogue, setDialogue] = useState(startDialogue)
   const [dialoguePosition, setDialoguePosition] = useState(startPosition)
 
-  // useEffect(() => {
-  //   React.Children.forEach(children, (child, index) => {
-  //     if (React.isValidElement(child)) {
-  //       console.log(submissions, index)
-  //       if (submissions && submissions[index] === true) {
-  //         setDialogue(endDialogue)
-  //         setDialoguePosition(endPosition)
-  //       }
-  //     }
-  //   });
-  // }, [submissions, children]);
-
   useEffect(() => {
     React.Children.forEach(children, (child, key) => {
       const childKey = child.key;
       const submissionValue = submissions && submissions[childKey];
-  console.log(childKey)
       if (submissionValue === true) {
         setDialogue(endDialogue);
         setDialoguePosition(endPosition);
