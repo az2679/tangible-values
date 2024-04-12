@@ -19,13 +19,43 @@ export default function About({position}){
 
   return(
     <>
-    <Html center
-    style={{ 
+      <RigidBody name = "about" mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
+        <Float
+        speed={2} 
+        rotationIntensity={0} 
+        floatIntensity={2} 
+        floatingRange={[-1, 1]}
+        >
+          <mesh position={[0, 10, 0]}>
+            <octahedronGeometry args={[8]} />
+            {/* <meshBasicMaterial color={"#262626"} envMap={texture} reflectivity={1}/> */}
+            <meshMatcapMaterial color={"white"} matcap={matcap} />
+          </mesh>
+        </Float>
+        <Label position={[0, 20, -20]} text={`thank you for sharing your thoughts \nwanna listen to some of the ones \ni had that led to this project?`} state={true} scale={[4, 4, 5]} rotation={[-Math.PI*0.1, 0, 0]}/>
+        <Label position={[83, 36.5, -27]} text={`:)`} state={true} scale={[4, 4, 5]} rotation={[-Math.PI*0.1, 0, -Math.PI*0.5]}/>
+        <CapsuleCollider args={[5, 10, 5]} sensor 
+        // position={position ? position : [0,0,0]}
+            onIntersectionEnter={(payload) => {
+              if(payload.other.rigidBodyObject.children[0].name == "person"){
+                setAboutState(true)
+              }
+            }} 
+            onIntersectionExit={(payload) => {
+              if(payload.other.rigidBodyObject.children[0].name == "person"){
+                setAboutState(false)
+              }
+            }} 
+          />
+
+        <Html
+        center
+        style={{ 
           opacity: aboutState ? 1 : 0,
           backgroundColor:"#ededed",
-          height: '100vh',
-          width: '100vw',
-          padding: '5vh 25vw',
+          height: '125vh',
+          width: '125vw',
+          padding: '25vh 35vw',
           boxSizing: 'border-box',
           letterSpacing: '0.1px',
           lineHeight: '1.3',
@@ -34,7 +64,7 @@ export default function About({position}){
           fontfamily: nunito,
           }}
       >
-        <p style={{fontSize: '21px', letterSpacing: '0.5px', wordSpacing: '1px'}}> 
+        <p style={{fontSize: '23px', letterSpacing: '0.5px', wordSpacing: '1px'}}> 
         Why do I do the things I do? 
         </p>
         <p> 
@@ -46,39 +76,11 @@ export default function About({position}){
         <p>
         However, the focus of the project is to make values more tangible, and in doing so, I hope to make thought experiments more enjoyable. Through improving the tangibility of actions, these efforts give some tangibility to values upheld when thinking through the scenarios presented.
         </p>
-        <p style={{fontSize: '21px', letterSpacing: '1px', wordSpacing: '1px', textAlign: 'right'}}>
-        from, athena
+        <p style={{fontSize: '22px', letterSpacing: '1px', wordSpacing: '1px', textAlign: 'right'}}>
+        with appreciation, athena
         </p>
       </Html>
 
-      <RigidBody name = "about" mass={1} type="fixed" position={position ? position : [0, 0, 0]} colliders="cuboid" >
-        <Float
-        speed={2} 
-        rotationIntensity={0} 
-        floatIntensity={2} 
-        floatingRange={[-1, 1]}
-        >
-          <mesh position={position ? position : [0, 15, 0]}>
-            <octahedronGeometry args={[8]} />
-            {/* <meshBasicMaterial color={"#262626"} envMap={texture} reflectivity={1}/> */}
-            <meshMatcapMaterial color={"white"} matcap={matcap} />
-          </mesh>
-        </Float>
-        <Label position={[0, 30, 0]} text={`thank you for sharing your thoughts \nwanna listen to some of the ones \ni had that led to this project?`} state={true} scale={[4, 4, 5]} rotation={[-Math.PI*0.1, 0, 0]}/>
-        <Label position={[83, 46.5, -7]} text={`:)`} state={true} scale={[4, 4, 5]} rotation={[-Math.PI*0.1, 0, -Math.PI*0.5]}/>
-        <CapsuleCollider args={[5, 20, 5]} sensor position={position ? position : [0,0,0]}
-            onIntersectionEnter={(payload) => {
-              if(payload.other.rigidBodyObject.children[0].name == "person"){
-                setAboutState(true)
-              }
-            }} 
-            //remove after debug
-            onIntersectionExit={(payload) => {
-              if(payload.other.rigidBodyObject.children[0].name == "person"){
-                setAboutState(false)
-              }
-            }} 
-          />
       </RigidBody>
     </>
   )

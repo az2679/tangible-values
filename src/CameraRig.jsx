@@ -3,7 +3,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-export default function CameraRig({ children, newSpherePosition }) {
+export default function CameraRig({ children }) {
   const cameraRef = useRef();
 
   const [spherePosition, setSpherePosition] = useState({ x: 0, y: 0, z: 0 });
@@ -20,7 +20,6 @@ export default function CameraRig({ children, newSpherePosition }) {
 
   const { x: camX, y: camY, z: camZ } = cameraPosition;
   const { x: targetX, y: targetY, z: targetZ } = targetPosition;
-  // const { x: sphereX, y: sphereY, z: sphereZ } = spherePosition;
 
   const [index, setIndex] = useState(0);
   const thirdPersonCam = { x: spherePosition.x, y: 100, z: spherePosition.z + 150 };
@@ -35,13 +34,9 @@ export default function CameraRig({ children, newSpherePosition }) {
     setProximityState(newProximityState);
   };
 
-  // const handleSpherePositionChange = (newPosition) => {
-  //   setSpherePosition(newPosition);
-  // };
-
-  useEffect(()=>{
-    setSpherePosition(newSpherePosition);
-  }, [newSpherePosition]);
+  const handleSpherePositionChange = (newPosition) => {
+    setSpherePosition(newPosition);
+  };
 
   const handleThoughtPosition = (newThoughtPosition) => {
     setThoughtPosition(newThoughtPosition)
@@ -114,7 +109,7 @@ export default function CameraRig({ children, newSpherePosition }) {
         child && cloneElement(child, {
           cameraPosition,
           spherePosition,
-          // onPositionChange: handleSpherePositionChange,
+          onPositionChange: handleSpherePositionChange,
           instructionState,
           onInstructionStateChange: handleInstructionStateChange,
           proximityState,

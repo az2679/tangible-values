@@ -29,7 +29,6 @@ function Scene() {
 
   const [submissions, setSubmissions] = useState([]);
   const [complete, setComplete] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 100, z: 150 });
   
   const countSubmissions = (key, submitState) => {
     setSubmissions((prevSubmitState) => ({
@@ -39,23 +38,19 @@ function Scene() {
   };
 
   useEffect(() => {
-    if (submissions && Object.keys(submissions).length == 4) {
+    if (submissions && Object.keys(submissions).length > 0) {
+      // if(Object.values(submissions).some((value) => value === true)){
       if(Object.values(submissions).every((value) => value === true)){
         setTimeout(() => {
           setComplete(true);
-        }, 1000);
+        }, 3000);
       }
     }
   }, [submissions]);
 
-  const storePosition = (newPosition) => {
-    setPosition(newPosition);
-  };
-
-  // useEffect(() => {
-  //   passPosition
-  // }, [position]);
-
+  const handleProximityToThoughts = (proximityToThoughts) => {
+  //   console.log(proximityToThoughts)
+  }
 
   return ( 
     <div id="canvas_wrapper">
@@ -76,16 +71,13 @@ function Scene() {
         <directionalLight color="#ffffff" position={[300, 50, 100]} intensity={1} />
         {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
 
-
         <Suspense fallback={<LoadingScreen />}>
           <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
 
-            <CameraRig newSpherePosition={position}>
+            <CameraRig >
               <Foyer position={[20, 0, 70]} />
-              {/* <Person position={[50, 100, -300]} /> */}
-              {/* <Person position={[0, 300, -700]} /> */}
-              <Person sendPosition = {storePosition}/>
+              <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} />
 
               {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
               <Thought key={"dictatorGame"} 
