@@ -4,6 +4,8 @@ import { Html } from '@react-three/drei';
 import { Text3D } from "@react-three/drei";
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
+import Path from './Path';
+
 function Help({hidden}) {
   return(
     <Html position={[ -140, 20, 0]} 
@@ -88,6 +90,9 @@ exploration and contemplation`}
             <meshBasicMaterial color={"gray"}/>
         </Text3D>
     </RigidBody>
+
+
+    <Path position={[0,0,25]} i={1} rotation={[0,0,0]} state = {true}/>
     </>
 );
 }

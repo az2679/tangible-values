@@ -16,8 +16,8 @@ import { MeshBasicMaterial } from 'three';
 export default function Exchange(props) {
   const { nodes: appleNodes } = useGLTF('/models/apple.glb')
   const { nodes: orangeNodes } = useGLTF('/models/orange.glb')
-  const { nodes: archNodes } = useGLTF('/models/stone_arch.glb')
-  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
+  // const { nodes: archNodes } = useGLTF('/models/stone_arch.glb')
+  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const { position, sendSubmit } = props;
   const[deceive, setDeceive] = useState(false)
@@ -256,7 +256,8 @@ export default function Exchange(props) {
         position={[-1, -5.5,0]} 
         scale={0.5}>
           {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#494949" thickness={10} anisotropy={1} /> */}
-          <meshStandardMaterial color="#97989d" transparent opacity={0.7}/>
+          {/* <meshStandardMaterial color="#97989d" transparent opacity={0.7}/> */}
+          <meshBasicMaterial color="#44454c"/>
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
@@ -265,7 +266,8 @@ export default function Exchange(props) {
         <mesh ref = {confedFruit} geometry={orangeNodes.Object_2.geometry} 
         // material={orangeNodes.Object_2.material} 
         position={[0, -6, 0]} rotation={[-Math.PI/2, 0, 0]} scale={140} >
-          <meshStandardMaterial color="#97989d" transparent opacity={0.7}/>
+          <meshBasicMaterial color="#44454c"/>
+          {/* <meshStandardMaterial color="#97989d" transparent opacity={0.7}/> */}
           {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
           </mesh>
         <CuboidCollider args={[5, 5, 5]} />
@@ -274,9 +276,8 @@ export default function Exchange(props) {
       <Wall position={[position[0]-60, 5, position[2]+180]} rotation={[0,0,0]}/>
       <Wall position={[position[0]+60, 5, position[2]+100]} rotation={[0, -Math.PI*0.3,0]}/>
       
-      <RigidBody mass={1} type="fixed" colliders="hull" >
+      {/* <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={archNodes.Arch_01_LPUNHPZBSG1_0.geometry} position={[position[0]-22, position[1]-5, position[2]+330]} rotation={[0, -Math.PI/2, 0]} scale={5}>
-        {/* <meshStandardMaterial color={"white"}/> */}
         <meshMatcapMaterial matcap={matcap} />
       </mesh>
       </RigidBody>
@@ -285,7 +286,7 @@ export default function Exchange(props) {
       <mesh geometry={archNodes.Arch_01_1_LPUNHPZBSG1_0.geometry} position={[position[0]+22, position[1]-5, position[2]+330]} rotation={[0, Math.PI/2, 0]} scale={5}>
         <meshMatcapMaterial matcap={matcap} />
       </mesh>
-      </RigidBody>
+      </RigidBody> */}
     
 
 

@@ -60,8 +60,8 @@ function CoinMult({position, setDragState, floorPlane, sensedCoinState}){
 
 
 export default function Trust(props) {
-  const { nodes } = useGLTF('/models/circle_arch.glb')
-  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
+  // const { nodes } = useGLTF('/models/circle_arch.glb')
+  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const { position, sendSubmit } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
@@ -302,11 +302,11 @@ export default function Trust(props) {
 
       {multiply && totalCoins}
 
-      <RigidBody mass={1} type="fixed" colliders="trimesh" >
+      {/* <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={nodes.Object_2.geometry} position={[position[0]-250, position[1]-5, position[2]+175]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
         <meshMatcapMaterial matcap={matcap} />
       </mesh>
-      </RigidBody>
+      </RigidBody> */}
 
       <Path position={[position[0]+325, position[1], position[2]+900]} i={-1} rotation={[0,Math.PI*0.4,0]} state = {pathState}/>
     </>

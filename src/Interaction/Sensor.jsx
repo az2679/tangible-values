@@ -42,7 +42,8 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
         <mesh position={[0, 0.1, 0]} rotation={[-Math.PI/2, 0, 0]}>
           <planeGeometry args={args} />
           {/* <meshBasicMaterial color={type === "color" ? color : "gray"}/> */}
-          <meshBasicMaterial color={"#5c5c61"} transparent opacity={opacity}/>
+          <meshBasicMaterial color={"#5c5c61"} transparent opacity={opacity}/> 
+          {/* #7a7a8c */}
         </mesh>
         <CuboidCollider sensor args={sensorArgs} 
           onIntersectionEnter={(payload) => {

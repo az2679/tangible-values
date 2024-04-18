@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Vector3, Plane } from "three";
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { useGLTF, useTexture } from '@react-three/drei';
-import { MeshTransmissionMaterial } from '@react-three/drei';
 
 import DragObj from '../Interaction/DragObj';
 import Sensor from '../Interaction/Sensor';
@@ -29,8 +28,8 @@ function CoinMult({position, setDragState, floorPlane}){
 }
 
 export default function Dictator(props) {
-  const { nodes } = useGLTF('/models/rounded_arch.glb')
-  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
+  // const { nodes } = useGLTF('/models/rounded_arch.glb')
+  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
 
   const { position, sendSubmit } = props;
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
@@ -73,37 +72,18 @@ export default function Dictator(props) {
 
       <CoinMult position={[position[0], position[1], position[2]+80]} setDragState = {setDragState} floorPlane = {floorPlane}/>
       
-      <RigidBody mass={1} type="fixed" colliders="hull">
+      {/* <RigidBody mass={1} type="fixed" colliders="hull">
       {Object.keys(nodes).map((nodeName) => {
         if (nodeName.startsWith("Object_")) {
           return (
             <mesh key={nodeName} geometry={nodes[nodeName].geometry} position={[position[0], position[1]-5 , position[2] + 445]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
               <meshMatcapMaterial matcap={matcap} />
-              {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#ffffff" thickness={10} anisotropy={1} /> */}
             </mesh>
           );
         }
         return null;
       })}
-    </RigidBody>
-
-
-    <Label text={"DICTATOR GAME"} position={[0,5,-450]} rotation={[0,0,0]} scale={3} state={!submitted} />
-    <Label text={"VOLUNTEER'S DILEMMA"} position={[-220,5,-550]} rotation={[0,Math.PI*0.25,0]} scale={3} state={submitted} />
-    <Label text={"EXCHANGE GAME"} position={[0,5,-625]} rotation={[0,0,0]} scale={3} state={submitted} />
-    <Label text={"TRUST GAME"} position={[220,5,-550]} rotation={[0,-Math.PI*0.25,0]} scale={3} state={submitted} />
-
-
-    <Path position={[0,0,25]} i={1} rotation={[0,0,0]} state = {true}/>
-
-    <Path position={[250,0,-500]} i={1} rotation={[0,Math.PI*0.25,0]} state = {submitted} />
-    <Path position={[250,0,-625]} i={-1} rotation={[0,Math.PI*0.25,0]} state = {submitted} />
-
-    <Path position={[0,0,-600]} i={-1} rotation={[0,0,0]} state = {submitted}/>
-    <Path position={[0,0,-750]} i={1} rotation={[0,0,0]} state = {submitted} />
-
-    <Path position={[-250,0,-500]} i={-1} rotation={[0,-Math.PI*0.25,0]} state = {submitted} />
-    <Path position={[-250,0,-625]} i={1} rotation={[0,-Math.PI*0.25,0]} state = {submitted} />
+    </RigidBody> */}
 
     </>
   );

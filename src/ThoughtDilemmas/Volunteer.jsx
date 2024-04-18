@@ -13,8 +13,8 @@ import Paper from '../Interaction/Paper';
 import Path from '../Components/Path';
 
 export default function Volunteer({position, sendSubmit}) {
-  const { nodes } = useGLTF('/models/pointed_arch.glb')
-  const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
+  // const { nodes } = useGLTF('/models/pointed_arch.glb')
+  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
   const matcapChrome = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
@@ -287,11 +287,11 @@ export default function Volunteer({position, sendSubmit}) {
 
 
 
-      <RigidBody mass={1} type="fixed" colliders="trimesh" >
+      {/* <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={nodes.Object_4.geometry} position={[position[0]+250, position[1]-5, position[2]+175]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
         <meshMatcapMaterial matcap={matcap} />
       </mesh>
-      </RigidBody>
+      </RigidBody> */}
 
       <Path position={[position[0]+1400, position[1], position[2]+1100]} i={-1} rotation={[0,Math.PI*0.75,0]} state = {pathState}/>
 

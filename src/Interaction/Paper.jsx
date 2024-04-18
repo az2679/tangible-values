@@ -31,7 +31,8 @@ export default function Paper({paperPosition, paperRotation, textPosition, textR
   return(
       <mesh ref={paper} position={paperPosition} rotation={paperRotation}>
         <boxGeometry args={[10, 0.5, 12]} />
-        <meshBasicMaterial color="#7a7a8c" roughness={0.8} metalness={0.2} />
+        {/* <meshBasicMaterial color="#7a7a8c" roughness={0.8} metalness={0.2} /> */}
+        <meshBasicMaterial color="#97989d" />
         {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#A9A9A9" thickness={10} anisotropy={1} /> */}
         <Text text={`${text}`} state={confedState} position={textPosition} rotation={textRotation}/>
       </mesh>

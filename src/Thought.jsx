@@ -92,7 +92,7 @@ export default function Thought({position, meshPos, startDialogue, startPosition
 
       <mesh position={[position[0], position[1]-4.8, position[2]+40]} rotation={[-Math.PI/2, 0, 0]} >
         <ringGeometry args={[198, 202, 32, 1]} />
-        <meshBasicMaterial color="#d3d3d3" transparent opacity={0.9} />
+        <meshBasicMaterial color="#d3d3d3"/>
       </mesh>
 
       {/* <mesh position={[position[0], position[1]+10, position[2]+0]} rotation={[-Math.PI/2, 0, 0]} >

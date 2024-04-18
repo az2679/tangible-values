@@ -11,7 +11,8 @@ export default function Wall({position, rotation}){
         <boxGeometry args={[40, 30, 2]} />
         {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} transparent opacity={0.7}/> */}
         {/* <meshMatcapMaterial matcap={matcap} transparent opacity={0.7} /> */}
-        <MeshTransmissionMaterial resolution={124} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} />
+        <meshBasicMaterial color="#97989d" />
+        {/* <MeshTransmissionMaterial resolution={124} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
       </mesh>
     </RigidBody>
   );

@@ -50,7 +50,8 @@ export default function DragObj({ name, startPosition, state, plane, lift, num }
         <animated.mesh {...spring} {...bind()} scale={2} geometry={nodes.Object_2.geometry} 
         // material={nodes.Object_2.material} 
         >
-          <meshStandardMaterial color="#515161" transparent opacity={0.8}/>
+          <meshBasicMaterial color="#44454c"/>
+          {/* <meshStandardMaterial color="#515161" transparent opacity={0.8}/> */}
           {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
 
           {/* <cylinderGeometry args={[2, 2, 1, 15, 1]} />

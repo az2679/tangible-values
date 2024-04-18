@@ -20,13 +20,17 @@ const direction = new Vector3();
 export default function Person({ position, onPositionChange, onProximity, onThoughtPosition, submissions, sendProximityToThoughts }) {
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
-    {path: "./textures/sky/"}
+    {path: "./envmap/"}
     )
 
   const ref = useRef();
   const [, get] = useKeyboardControls();
   const [distanceToThoughts, setDistanceToThoughts] = useState([0, 0, 0, 0]);
-  const [aboutPosition, setAboutPosition] = useState([0, 0, 0])
+  const [aboutPosition, setAboutPosition] = useState([0, 0, 0]);
+
+  const thoughts = [new Vector3(0, 0, -275), new Vector3(-510, 5, -730), new Vector3(0, 0, -1010), new Vector3(510, 5, -730)];
+
+
 
   useFrame(() => {
     const { forward, backward, left, right } = get()
@@ -47,6 +51,18 @@ export default function Person({ position, onPositionChange, onProximity, onThou
       y: spherePosition.y,
       z: spherePosition.z,
     })
+
+
+    const spherePosVec = new Vector3(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
+
+    const newDistance = thoughts.map(thought => spherePosVec.distanceTo(new Vector3(...thought)));
+    setDistanceToThoughts(newDistance);
+ 
+    const proximityToThoughts = distanceToThoughts.map(distance => distance < 250);
+    sendProximityToThoughts(proximityToThoughts)
+
+    // console.log(spherePosVec, distanceToThoughts, proximityToThoughts)
+
   });
 
   const handleThoughtPosition = (thoughtPosition) => {
@@ -59,7 +75,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
 
 
   useEffect(()=>{
-    console.log(submissions, ref.current.translation(), aboutPosition)
+    // console.log(submissions, ref.current.translation(), aboutPosition)
     setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
   },[submissions])
 
@@ -69,18 +85,19 @@ export default function Person({ position, onPositionChange, onProximity, onThou
   //trust: [position[0]-250, position[1]-5, position[2]+175] + [550, 5, -800] -> [300, 0, -625]
 
   // useEffect(() => {
-  //   const thoughts = [[0, 0, -25], [-300, 0, -625], [0, 0, -1100], [300, 0, -625]]; 
-  //   const spherePosition = [ref.current.translation().x, ref.current.translation().y, ref.current.translation().z];
+  //   const thoughts = [new Vector3(0, 0, -25), new Vector3(-300, 0, -625), new Vector3(0, 0, -1100), new Vector3(300, 0, -625)];  //replace with useMemo later
+  //   const spherePosition = new Vector3(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
   //   const newDistance = thoughts.map(thought => spherePosition.distanceTo(new Vector3(...thought)));
   //  setDistanceToThoughts(newDistance);
 
-  //   const proximityToThoughts = distanceToThoughts.map(distance => distance < 25);
+  //   const proximityToThoughts = distanceToThoughts.map(distance => distance < 250);
   //   sendProximityToThoughts(proximityToThoughts)
 
-  //   console.log(spherePosition, distanceToThoughts)
-  //   console.log(spherePosition, thoughts[0], spherePosition.distanceTo(thoughts[0]))
-  // }, [ref.current.translation()]);
+  //   // console.log(spherePosition, distanceToThoughts, proximityToThoughts)
+  //   // console.log(spherePosition, thoughts[0], spherePosition.distanceTo(thoughts[0]))
+  // }, [ref.current]);
 
+  //dictator: [0, 0, -275] w rad of 250
 
   return (
     <>
@@ -91,7 +108,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
           {/* <meshStandardMaterial color={0xA9A9A9} 
           metalness={0.7} roughness={0.3} 
           /> */}
-          <meshBasicMaterial color={"#d0d5db"} envMap={texture} reflectivity={1}/>
+          <meshBasicMaterial color={"#b4b9bf"} envMap={texture} reflectivity={1}/>
         </mesh>
 
         <BallCollider args={[1.1, 1.1, 1.1]} sensor 
@@ -106,6 +123,12 @@ export default function Person({ position, onPositionChange, onProximity, onThou
           } 
         />
       </RigidBody>
+
+
+      {/* <mesh position={[510, 5, -730]} rotation={[-Math.PI/2, 0, 0]} >
+        <ringGeometry args={[250, 251, 32, 1]} />
+        <meshBasicMaterial color="red" />
+      </mesh> */}
 
       {submissions && <About position={aboutPosition}/>}
     </>
