@@ -42,8 +42,6 @@ function Scene() {
   }, [submissions]);
 
   const handleProximityToThoughts = (proximity) => {
-    // console.log(proximity)
-
     // setProximityToThoughts([proximity[0], proximity[1], proximity[2], proximity[3]])
   }
 
@@ -61,7 +59,6 @@ function Scene() {
         <fogExp2 attach="fog" args={["#eeeeee", 0.003]} />
         {/* <axesHelper args={[10]} /> */}
 
-
         <ambientLight intensity={1} />
         <directionalLight color="#ffffff" position={[300, 50, 100]} intensity={1} />
         {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
@@ -76,11 +73,9 @@ function Scene() {
               <Foyer position={[20, 0, 70]} />
               <Archways dictatorPos={[0, 5, -470]} volunteerPos={[-550, 5, -800]} exchangePos={[0, 5, -1100]} trustPos={[550, 5, -800]}/>
               <Directory submitted={submissions.dictator} />
-
-              <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} />
               {/* <LoadingScreen /> */}
 
-              {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
+              <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} />
 
             {proximityToThoughts[0] && 
               <Thought key={"dictatorGame"} 

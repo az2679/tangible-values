@@ -17,7 +17,8 @@ export default function Archways({dictatorPos, volunteerPos, exchangePos, trustP
         if (nodeName.startsWith("Object_")) {
           return (
             <mesh key={nodeName} geometry={dictator[nodeName].geometry} position={[dictatorPos[0], dictatorPos[1]-5 , dictatorPos[2] + 445]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
-              <meshMatcapMaterial matcap={matcap} />
+              {/* <meshMatcapMaterial matcap={matcap} /> */}
+              <meshMatcapMaterial color={"#bbbdc9"} matcap={matcap} />
             </mesh>
           );
         }
@@ -28,26 +29,26 @@ export default function Archways({dictatorPos, volunteerPos, exchangePos, trustP
     {/* volunteer */}
         <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={volunteer.Object_4.geometry} position={[volunteerPos[0]+250, volunteerPos[1]-5, volunteerPos[2]+175]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
-        <meshMatcapMaterial matcap={matcap} />
+        <meshMatcapMaterial color={"#bbbdc9"} matcap={matcap} />
       </mesh>
     </RigidBody>
 
     {/* exchange */}
     <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={exchange.Arch_01_LPUNHPZBSG1_0.geometry} position={[exchangePos[0]-22, exchangePos[1]-5, exchangePos[2]+330]} rotation={[0, -Math.PI/2, 0]} scale={5}>
-        <meshMatcapMaterial matcap={matcap} />
+        <meshMatcapMaterial color={"#bbbdc9"} matcap={matcap} />
       </mesh>
     </RigidBody>
     <RigidBody mass={1} type="fixed" colliders="hull" >
       <mesh geometry={exchange.Arch_01_1_LPUNHPZBSG1_0.geometry} position={[exchangePos[0]+22, exchangePos[1]-5, exchangePos[2]+330]} rotation={[0, Math.PI/2, 0]} scale={5}>
-        <meshMatcapMaterial matcap={matcap} />
+      <meshMatcapMaterial color={"#bbbdc9"} matcap={matcap} />
       </mesh>
     </RigidBody>
 
     {/* trust */}
     <RigidBody mass={1} type="fixed" colliders="trimesh" >
       <mesh geometry={trust.Object_2.geometry} position={[trustPos[0]-250, trustPos[1]-5, trustPos[2]+175]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
-        <meshMatcapMaterial matcap={matcap} />
+        <meshMatcapMaterial color={"#bbbdc9"} matcap={matcap} />
       </mesh>
       </RigidBody>
 

@@ -15,10 +15,10 @@ export default function Ground({color}) {
             blur={[400, 100]}
             resolution={1024}
             mixBlur={1}
-            mixStrength={15}
+            mixStrength={20}
             depthScale={1}
             minDepthThreshold={0.85}
-            color="#e6e6e6"
+            color=  "#e6e6e6"
             metalness={0.6}
             roughness={1}>
               {/* <GradientTexture stops={[0, 0.5, 1]} colors={['#495057', '#adb5bd', '#e9ecef']} size={10000} /> */}

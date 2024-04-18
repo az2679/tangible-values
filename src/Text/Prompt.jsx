@@ -26,7 +26,7 @@ export default function Prompt(props) {
         >
           {prompt}
           {/* <meshBasicMaterial color={"gray"} /> */}
-          <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
+          <meshMatcapMaterial color={"#707070"} matcap={matcap} />
         </Text3D>
         </Center>
     </RigidBody>

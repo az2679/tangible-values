@@ -42,7 +42,7 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
         <mesh position={[0, 0.1, 0]} rotation={[-Math.PI/2, 0, 0]}>
           <planeGeometry args={args} />
           {/* <meshBasicMaterial color={type === "color" ? color : "gray"}/> */}
-          <meshBasicMaterial color={"#5c5c61"} transparent opacity={opacity}/> 
+          <meshBasicMaterial color={"#696870"} transparent opacity={opacity}/> 
           {/* #7a7a8c */}
         </mesh>
         <CuboidCollider sensor args={sensorArgs} 
@@ -80,44 +80,44 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
         {type !== "color" && (
           <>
             <capsuleGeometry args={[0.5, args[1], 4, 8]} />
-            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+            <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={1} />
           </>
         )}
         {type === "color" && (
-          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+          <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={0} />
         )}
       </mesh>
       <mesh position={[sensorPosition[0] - args[0]/2 - 0.5, sensorPosition[1], sensorPosition[2]]} rotation={[-Math.PI/2, 0, 0]}>
         {type !== "color" && (
           <>
             <capsuleGeometry args={[0.5, args[1], 4, 8]} />
-            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+            <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={1} />
           </>
         )}
         {type === "color" && (
-          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+          <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={0} />
         )}
       </mesh>
       <mesh position={[sensorPosition[0], sensorPosition[1], sensorPosition[2]+args[1]/2]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         {type !== "color" && (
           <>
             <capsuleGeometry args={[0.5, args[0], 4, 8]} />
-            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+            <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={1} />
           </>
         )}
         {type === "color" && (
-          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+          <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={0} />
         )}
       </mesh>
       <mesh position={[sensorPosition[0], sensorPosition[1], sensorPosition[2]-args[1]/2]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         {type !== "color" && (
           <>
             <capsuleGeometry args={[0.5, args[0], 4, 8]} />
-            <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={1} />
+            <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={1} />
           </>
         )}
         {type === "color" && (
-          <meshMatcapMaterial color={"darkgray"} matcap={matcap} opacity={0} />
+          <meshMatcapMaterial color={"#909199"} matcap={matcap} opacity={0} />
         )}
       </mesh>
     </>

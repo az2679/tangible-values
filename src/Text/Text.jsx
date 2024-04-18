@@ -27,7 +27,7 @@ export default function Text(props) {
         >
           {text}
           {/* <meshNormalMaterial /> */}
-          <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
+          <meshMatcapMaterial color={"#909199"} matcap={matcap} />
         </Text3D>
       </Center>
     </RigidBody>
