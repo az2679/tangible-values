@@ -14,7 +14,7 @@ import Dictator from './ThoughtDilemmas/Dictator';
 import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
-import About from './Text/About';
+import About from './Components/About';
 
 function Scene() { 
   // const [distanceToThoughts, setDistanceToThoughts] = useState([])
@@ -71,16 +71,19 @@ function Scene() {
         <directionalLight color="#ffffff" position={[300, 50, 100]} intensity={1} />
         {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
 
-        <Suspense fallback={<LoadingScreen />}>
+        <Suspense 
+        // fallback={<LoadingScreen />}
+        >
           <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
 
             <CameraRig >
-              <Foyer position={[20, 0, 70]} />
-              <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} />
+              {/* <Foyer position={[20, 0, 70]} />
+              <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} /> */}
+              <LoadingScreen />
 
               {/* {distanceToThoughts[0] < radiusOfTheThought? //render the componenet: null } */}
-              <Thought key={"dictatorGame"} 
+              {/* <Thought key={"dictatorGame"} 
                 position={[0, 5, -370]} 
                 meshPos={[0,6, 150]} 
                 startDialogue={"HELLO THERE ! COME CLOSER"} 
@@ -99,7 +102,7 @@ function Scene() {
                 promptPosition={[0, 40, 130]}
                 submissions={submissions} >
                 <Dictator key={"dictator"} position={[0, 5, -470]} sendSubmit={countSubmissions}/>
-              </Thought>
+              </Thought> */}
 
               {/* <Thought key={"volunteerDilemma"} 
                 position={[-550, 5, -800]} 
@@ -119,9 +122,9 @@ function Scene() {
                 `} 
                 submissions={submissions} >
                 <Volunteer key={"volunteer"} position={[-550, 5, -800]} sendSubmit={countSubmissions}/>
-              </Thought>
+              </Thought> */}
 
-              <Thought key={"exchangeGame"} 
+              {/* <Thought key={"exchangeGame"} 
                 position={[0, 5, -1100]} 
                 startDialogue={"WANNA  MAKE  A  TRADE ?"} 
                 startPosition={[0, 20, 0]} 
@@ -144,9 +147,9 @@ function Scene() {
                   `} 
                   submissions={submissions} >
                   <Exchange key={"exchange"} position={[0, 5, -1100]} sendSubmit={countSubmissions} />
-              </Thought>
+              </Thought> */}
 
-              <Thought key={"trustGame"} 
+              {/* <Thought key={"trustGame"} 
                 position={[550, 5, -800]} 
                 startDialogue={"DO  YOU  TRUST  ME ?"} 
                 startPosition={[0, 20, 0]} 

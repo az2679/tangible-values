@@ -10,7 +10,7 @@ import { useCubeTexture } from '@react-three/drei';
 
 import { useState, useEffect } from 'react';
 
-import About from './Text/About';
+import About from './Components/About';
 
 const SPEED = 100;
 const frontVector = new Vector3();

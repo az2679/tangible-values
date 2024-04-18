@@ -5,7 +5,7 @@ import { useCubeTexture, Float } from '@react-three/drei';
 import { useTexture } from '@react-three/drei';
 
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
-import Label from './Label';
+import Label from '../Text/Label';
 
 export default function About({position}){
   const texture = useCubeTexture(
