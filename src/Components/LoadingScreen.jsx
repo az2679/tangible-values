@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTexture, useCubeTexture, Text3D, ContactShadows } from "@react-three/drei";
+import { Vector3 } from "three";
 
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
@@ -11,12 +12,6 @@ import sphereFrag from "../shaders/sphereFrag.glsl";
 import textVert from "../shaders/textVert.glsl";
 import textFrag from "../shaders/textFrag.glsl";
 
-import { useProgress, Html } from '@react-three/drei'
-import { useEffect, useState } from 'react';
-
-function map(inVal, inMin, inMax,  outMin, outMax) {
-  return ((inVal - inMin) / (inMax - inMin) * (outMax - outMin) + outMin);
-}
 
 export default function LoadingScreen({ position }) {
   const matcap = useTexture("./matcaps/3B3C3F_DAD9D5_929290_ABACA8.png");
@@ -29,44 +24,59 @@ export default function LoadingScreen({ position }) {
   const octahedronRef = useRef();
   const sphereRef = useRef();
   const textRef = useRef();
+  const shapes = useRef([]);
+  const targetRef = useRef();
 
-  const { active, progress, errors, item, loaded, total } = useProgress()
-  const [individualProgress, setIndividualProgress] = useState({});
+  const numShapes = 10; 
+  const fade = 1.8; 
+  const delay = 1;
+  let currentShape = 0;
+  let opacity = 1;
+  let elapsedTime = 0;
+
+  // const targetPosition = new THREE.Vector3(x, y, z); 
+
 
   useEffect(() => {
-    if (total) {
-      setIndividualProgress(prevState => ({
-        ...prevState,
-        [item]: progress
-      }));
-    }
-  }, [progress, item, total]);
+    shapes.current.forEach((shape, index) => {
+      const angle = (index / numShapes) * Math.PI * 2;
+      const x = Math.cos(angle) * 120;
+      const y = Math.sin(angle) * -30;
+      const z = Math.sin(angle) * 100;
+      shape.position.set(x, y - 10, z - 180);
+    });
+  }, []);
 
-  let overallProgress = 0;
-  for (const key in individualProgress) {
-    overallProgress += individualProgress[key];
-  }
-
-// console.log(individualProgress, overallProgress, Object.keys(individualProgress).length, total)
-//   // console.log(map(overallProgress, 0, 1300,  0, 100))
-
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const { clock } = state;
-    octahedronRef.current.material.uniforms.uTime.value =
-      clock.getElapsedTime();
+    octahedronRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
     sphereRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
     textRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
 
+    elapsedTime += delta;
+    if (elapsedTime >= fade + delay) {
+      elapsedTime = 0;
+      currentShape = (currentShape + 1) % numShapes;
+    }
+    if (elapsedTime <= fade) {
+      opacity = Math.max(0, 1 - (elapsedTime / (fade * 0.5)));
+    } else {
+      opacity = Math.min(1, (elapsedTime - ((fade*0.5) + delay)) / fade);
+    }
+
+    shapes.current.forEach((shape, index) => {
+      shape.material.opacity = index === currentShape ? opacity : 1;
+    });
   });
 
   return (
     <>
       <mesh
         ref={octahedronRef}
-        position={position ? position : [0, 0, -150]}
+        position={position ? position : [0, 0, -160]}
         scale={[1, 1, 1]}
         rotation={[Math.PI * 0.15, 0, 0]}
-        castShadow
+        receiveShadow castShadow
       >
         <octahedronGeometry args={[10]} />
         <shaderMaterial
@@ -77,7 +87,7 @@ export default function LoadingScreen({ position }) {
             uTime: { value: 0.0 },
             uMatCap: { value: matcap },
             uBounceSpeed: { value: 1.0 },
-            uBounceHeight: { value: 14.0 },
+            uBounceHeight: { value: 30.0 },
           }}
         />
       </mesh>
@@ -87,6 +97,7 @@ export default function LoadingScreen({ position }) {
         position={position ? position : [0, -10, -200]}
         scale={0.85}
         rotation={[0, 0, 0]}
+        receiveShadow castShadow
       >
         <sphereGeometry args={[10]} />
         <shaderMaterial
@@ -96,7 +107,7 @@ export default function LoadingScreen({ position }) {
           uniforms={{
             uTime: { value: 0.0 },
             uEnvMap: { value: envmap },
-            uMovementRadius: { value: 50.0 },
+            uMovementRadius: { value: 60.0 },
           }}
         />
       </mesh>
@@ -104,9 +115,9 @@ export default function LoadingScreen({ position }) {
       <Text3D
         ref={textRef}
         font={nunito}
-        position={[-40, 30, -150]}
+        position={[-50, 60, -150]}
         rotation={[0, 0, 0]}
-        scale={[4, 4, 6]}
+        scale={[5, 5, 7]}
         letterSpacing={0.5}
         height={0.01}
         lineHeight={1}
@@ -127,23 +138,53 @@ export default function LoadingScreen({ position }) {
         />
       </Text3D>
 
-      {/* <mesh position={[40, 5, -150 ]} scale={30} castShadow>
-        <boxGeometry args={[1, 1, 1]}/>
-        <meshStandardMaterial color={"black"}/>
+      {[...Array(numShapes)].map((_, index) => (
+        index % 2 === 0 ? ( 
+          <mesh key={index} ref={(ref) => (shapes.current[index] = ref)} receiveShadow castShadow>
+            <octahedronGeometry args={[2]} />
+            <meshStandardMaterial color="#696870" transparent/> 
+          </mesh>
+        ) : (
+          <mesh key={index} ref={(ref) => (shapes.current[index] = ref)} receiveShadow castShadow>
+            <sphereGeometry args={[2]} />
+            <meshStandardMaterial color="#44454c" transparent />
+          </mesh>
+        )
+      ))}
+
+      <ContactShadows
+        opacity={1}
+        scale={500}
+        blur={1}
+        far={1000}
+        resolution={256}
+        color="#000000"
+      />
+
+      <mesh receiveShadow rotation={[-Math.PI * 0.43, 0, 0]} position={[0, -45, -100]}>
+        <planeGeometry args={[2000, 2000]} />
+        <meshStandardMaterial color="#eeeeee" />
       </mesh>
 
-      <ContactShadows opacity={1} scale={100} blur={1} far={5} resolution={256} color="#000000" /> */}
 
-      <Html center>{Math.round(overallProgress/11)} %</Html>
-
-      {/* <mesh
-        position={[0, 0, -150]}
-        scale={[1, 1, 1]}
-        rotation={[Math.PI * 0.15, 0, 0]}
-      >
-        <octahedronGeometry args={[10]} />
-        <meshBasicMaterial color={"white"} />
-      </mesh> */}
+      <mesh position={new Vector3(0, 0, -150)} ref={targetRef} />
+      <ambientLight intensity={1} />
+      {/* <directionalLight
+        position={[0, 100, -50]} 
+        target={targetRef.current}
+        intensity={1}
+        castShadow 
+        shadow-mapSize-width={1024} 
+        shadow-mapSize-height={1024} 
+        shadow-camera-far={1000} 
+        shadow-camera-left={-100}
+        shadow-camera-right={100}
+        shadow-camera-top={100}
+        shadow-camera-bottom={-100}
+        shadowCameraVisible 
+      /> */}
+      
+      
 
 
 

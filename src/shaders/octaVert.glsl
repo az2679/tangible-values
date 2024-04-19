@@ -35,7 +35,7 @@ void main() {
   modelPos.y += bouncePos;
 
   //rotation: 1 360 degree revolution when y is between 9 and 14 and unwinds when drops back down
-  float l = smoothstep(uBounceHeight-5.0, uBounceHeight, modelPos.y);
+  float l = smoothstep((uBounceHeight*0.6), uBounceHeight, modelPos.y);
   float rotationAngle = 0.0;
 
   if (modelPos.y >= uBounceHeight-5.0 && modelPos.y <= uBounceHeight) {

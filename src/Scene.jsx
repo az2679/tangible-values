@@ -64,7 +64,7 @@ function Scene() {
         {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
 
         <Suspense 
-        // fallback={<LoadingScreen />}
+        fallback={<LoadingScreen />}
         >
           <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>

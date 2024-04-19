@@ -23,13 +23,14 @@ void main() {
     // moving sphere closer to octahedron when in front of it
     if (abs(sin(uTime * 0.5 + 0.5)) >= 0.85) {
         float t = smoothstep(0.80, 1.0, abs(sin(uTime * 0.5 + 0.5)));
-        worldPos.z = mix(worldPos.z, worldPos.z - uMovementRadius, t* 0.5);
+        worldPos.z = mix(worldPos.z, worldPos.z - (uMovementRadius*0.5), t* 0.5);
+        worldPos.y = mix(worldPos.y, worldPos.y + (uMovementRadius * 0.15), t* 0.5);
     }
 
     // sphere moving along polar coordinates
-    worldPos.x += uMovementRadius * cos(angle);
-    worldPos.z += uMovementRadius * 0.8 * sin(angle);
-    worldPos.y -= 20.0 * sin(angle);
+    worldPos.x += uMovementRadius * 1.2 * cos(angle);
+    worldPos.z += uMovementRadius * 1.0 * sin(angle);
+    worldPos.y -= 15.0 * sin(angle);
 
   gl_Position = projectionMatrix * viewMatrix * worldPos;
 
