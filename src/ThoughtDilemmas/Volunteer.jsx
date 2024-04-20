@@ -82,13 +82,13 @@ export default function Volunteer({position, sendSubmit}) {
     }, 1000);
 
     if (majority === 5 && confed[0] === 5 && confed[1] === 5 && confed[2] === 5){
-      console.log(`Lost: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
+      // console.log(`Lost: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
       setPayoutState(false)
       setPayoutText(`try again \nnext time`)
       setPayoutPosition([position[0]-12, 0, position[2]+45])
       setReaction(':/')
     } else {
-      console.log(`Pay Out: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
+      // console.log(`Pay Out: User ${majority}, Confed1 ${confed[0]}, Confed2 ${confed[1]}, Confed3 ${confed[2]}`)
       setPayoutText(`win`)
       setPayoutPosition([position[0], 0, position[2]+45])
       setReaction(':]')
@@ -136,6 +136,7 @@ export default function Volunteer({position, sendSubmit}) {
 
   useEffect(()=> {
     sendSubmit('volunteer', submitted)
+    // console.log(`volunteer: ${submitted}`)
   },[submitted])
 
   
@@ -181,7 +182,7 @@ export default function Volunteer({position, sendSubmit}) {
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
       <Submit position={[position[0], 0, position[2]+180]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
-      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0], 0, position[2]+85]}
+      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0], 0, position[2]+180]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (majority !== "tie")){
             setSubmitted(true)

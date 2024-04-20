@@ -42,6 +42,7 @@ export default function Dictator({position, sendSubmit}) {
 
   useEffect(()=> {
     sendSubmit('dictator', submitted)
+    // console.log(`dictator: ${submitted}`)
   },[submitted])
 
   return (

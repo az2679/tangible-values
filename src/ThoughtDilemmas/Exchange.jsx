@@ -153,17 +153,17 @@ export default function Exchange({position, sendSubmit}) {
     setConfedState(true)
     
     if(confed == true && exchange == true){
-      console.log(`equal trade: confed ${confed}, user ${exchange}`)
+      // console.log(`equal trade: confed ${confed}, user ${exchange}`)
       setReaction(':>')
     } else if (confed == true && deceive == true || confed == false && exchange == true){
-      console.log(`unequal trade: confed ${confed}, user ${exchange}`)
+      // console.log(`unequal trade: confed ${confed}, user ${exchange}`)
       if(confed == true && deceive == true){
         setReaction(':<')
       } else {
         setReaction(':}')
       }
     } else if (confed == false && deceive == true){
-      console.log(`no trade: confed ${confed}, user ${exchange}`)
+      // console.log(`no trade: confed ${confed}, user ${exchange}`)
       setReaction(':{')
     }
 
@@ -209,6 +209,7 @@ export default function Exchange({position, sendSubmit}) {
 
   useEffect(()=> {
     sendSubmit('exchange', submitted)
+    // console.log(`exchange: ${submitted}`)
   },[submitted])
 
   return (

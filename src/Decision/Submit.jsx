@@ -11,13 +11,13 @@ export default function Submit({position, valid, decisionType, decisionValue, on
   const [errorState, setErrorState] = useState(false)
   const [errorText, setErrorText] = useState('null')
   const submitDictator = (decisionValue) => {
-    SaveDecision({ decisionType: 'dictator', decisionValue: decisionValue });
-    AnalyzeDecision('dictator');
+    // SaveDecision({ decisionType: 'dictator', decisionValue: decisionValue });
+    // AnalyzeDecision('dictator');
   }
 
   const submitVolunteer = (decisionValue) => {
-    SaveDecision({ decisionType: 'volunteer', decisionValue: decisionValue });
-    AnalyzeDecision('volunteer');
+    // SaveDecision({ decisionType: 'volunteer', decisionValue: decisionValue });
+    // AnalyzeDecision('volunteer');
     const randomAssignment = () => {
       if(Math.floor(Math.random()*5) < 4){
         return 5
@@ -29,8 +29,8 @@ export default function Submit({position, valid, decisionType, decisionValue, on
   }
 
   const submitExchange = (decisionValue) => {
-    SaveDecision({ decisionType: 'exchange', decisionValue: decisionValue });
-    AnalyzeDecision('exchange');
+    // SaveDecision({ decisionType: 'exchange', decisionValue: decisionValue });
+    // AnalyzeDecision('exchange');
     const randomAssignment = () => {
       if(Math.floor(Math.random()*2) == 0){
         return true
@@ -42,8 +42,8 @@ export default function Submit({position, valid, decisionType, decisionValue, on
   }
 
   const submitTrust = (decisionValue) => {
-    SaveDecision({ decisionType: 'trust', decisionValue: decisionValue });
-    AnalyzeDecision('trust');
+    // SaveDecision({ decisionType: 'trust', decisionValue: decisionValue });
+    // AnalyzeDecision('trust');
     const randomAssignment = () => {
       return Math.floor(Math.random()*((decisionValue*3) + 1));
     }

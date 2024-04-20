@@ -26,6 +26,7 @@ function Scene() {
       ...prevSubmitState,
       [key]: submitState,
     }));
+    console.log(submissions)
   };
 
   const handleProximityToThoughts = (proximity) => {
