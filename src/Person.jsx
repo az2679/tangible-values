@@ -71,7 +71,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
   useEffect(() => {
     setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
     if (submissions && Object.keys(submissions).length > 0) {
-      if(Object.values(submissions).some((value) => value === true)){
+      if(Object.values(submissions).every((value) => value === true)){
         setTimeout(() => {
           setComplete(true);
         }, 3000);
