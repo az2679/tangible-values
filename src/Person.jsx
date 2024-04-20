@@ -77,7 +77,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
         }, 3000);
       }
     }
-    // console.log(submissions, complete, aboutPosition)
+    console.log(submissions, complete, aboutPosition)
   }, [submissions]);
 
   return (
