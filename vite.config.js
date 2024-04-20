@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [react(), glsl()],
   // root: resolve(__dirname, 'src'),
   publicDir: resolve(__dirname, 'public'),
-  // base: '/tangible-values/',
+  base: '/tangible-values/',
   build: {
     outDir: '../docs',
     rollupOptions: {
