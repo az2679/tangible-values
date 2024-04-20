@@ -2,7 +2,7 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useGLTF } from '@react-three/drei';
 
 export default function Eraser({position, onHoldChange}){
-  const { nodes } = useGLTF('/models/eraser.glb')
+  const { nodes } = useGLTF('/tangible-values//models/eraser.glb')
 
   return (
     <>
