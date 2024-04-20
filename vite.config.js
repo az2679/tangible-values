@@ -5,7 +5,6 @@ import glsl from 'vite-plugin-glsl';
 export default defineConfig({
   server: {
     port: 3333,
-    base: '/tangible-values/',
   },
   plugins: [react(), glsl()],
   publicDir: 'public',
