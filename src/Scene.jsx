@@ -18,7 +18,7 @@ import Archways from './Components/Archways';
 import Directory from './Components/Directory';
 
 function Scene() { 
-  const [proximityToThoughts, setProximityToThoughts] = useState([false, false, false, false]) //[false, false, false, false]
+  const [proximityToThoughts, setProximityToThoughts] = useState([true, true, true, true]) //[false, false, false, false]
   const [submissions, setSubmissions] = useState({dictator:false, volunteer:false, exchange:false, trust:false});
   const [complete, setComplete] = useState(false);
   
@@ -40,7 +40,7 @@ function Scene() {
   }, [submissions]);
 
   const handleProximityToThoughts = (proximity) => {
-    setProximityToThoughts([proximity[0], proximity[1], proximity[2], proximity[3]])
+    // setProximityToThoughts([proximity[0], proximity[1], proximity[2], proximity[3]])
   }
 
   return ( 

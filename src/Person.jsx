@@ -21,8 +21,8 @@ export default function Person({ position, onPositionChange, onProximity, onThou
   const [, get] = useKeyboardControls();
   const [aboutPosition, setAboutPosition] = useState([0, 0, 0]);
 
-  const thoughts = [new Vector3(0, 0, -275), new Vector3(-510, 5, -730), new Vector3(0, 0, -1010), new Vector3(510, 5, -730)];
-  const [distanceToThoughts, setDistanceToThoughts] = useState([0, 0, 0, 0]);
+  // const thoughts = [new Vector3(0, 0, -275), new Vector3(-510, 5, -730), new Vector3(0, 0, -1010), new Vector3(510, 5, -730)];
+  // const [distanceToThoughts, setDistanceToThoughts] = useState([0, 0, 0, 0]);
 
   useFrame(() => {
     const { forward, backward, left, right } = get()
@@ -45,14 +45,16 @@ export default function Person({ position, onPositionChange, onProximity, onThou
     })
 
     //distance based rendering
-    const spherePosVec = new Vector3(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
-    const newDistance = thoughts.map(thought => spherePosVec.distanceTo(new Vector3(...thought)));
-    setDistanceToThoughts(newDistance);
-    const proximityToThoughts = distanceToThoughts.map(distance => distance < 250);
-    sendProximityToThoughts(proximityToThoughts);
+  //   const spherePosVec = new Vector3(ref.current.translation().x, ref.current.translation().y, ref.current.translation().z);
+  //   const newDistance = thoughts.map(thought => spherePosVec.distanceTo(new Vector3(...thought)));
+  //   setDistanceToThoughts(newDistance);
+  //   const proximityToThoughts = distanceToThoughts.map(distance => distance < 250);
+  //   sendProximityToThoughts(proximityToThoughts);
 
-    setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
+  setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
   });
+
+  
 
   const handleThoughtPosition = (thoughtPosition) => {
     onThoughtPosition({
