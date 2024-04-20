@@ -241,7 +241,7 @@ export default function Exchange({position, sendSubmit}) {
           {/* <meshStandardMaterial color="#97989d" transparent opacity={0.7}/> */}
           <meshBasicMaterial color="#44454c"/>
           </mesh>
-        <CuboidCollider args={[7, 5, 7]} />
+        <CuboidCollider args={[5, 5, 5]} />
       </RigidBody>
 
       <RigidBody name="confedFruit" mass={800} gravityScale={800} type="dynamic" colliders={false} position={confedFruitPos} rotation={confedFruitRo} canSleep={false} visible={true} >
