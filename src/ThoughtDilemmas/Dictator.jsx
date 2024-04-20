@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { Vector3, Plane } from "three";
-import { CuboidCollider, RigidBody } from '@react-three/rapier';
-import { useGLTF, useTexture } from '@react-three/drei';
+import { CuboidCollider } from '@react-three/rapier';
 
 import DragObj from '../Interaction/DragObj';
 import Sensor from '../Interaction/Sensor';
 import Text from '../Text/Text';
 import Submit from '../Decision/Submit';
-import Path from '../Components/Path';
-import Label from '../Text/Label';
 
 function CoinMult({position, setDragState, floorPlane}){
   return(
@@ -27,11 +24,7 @@ function CoinMult({position, setDragState, floorPlane}){
   )
 }
 
-export default function Dictator(props) {
-  // const { nodes } = useGLTF('/models/rounded_arch.glb')
-  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
-
-  const { position, sendSubmit } = props;
+export default function Dictator({position, sendSubmit}) {
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
   const [dictator, setDictator] = useState(0);
@@ -71,20 +64,6 @@ export default function Dictator(props) {
       <Sensor type="number" args={[35, 20]} sensorArgs={[17.5, 5, 10]} option="reciever" number={0} sensorPosition={[position[0]+50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
 
       <CoinMult position={[position[0], position[1], position[2]+80]} setDragState = {setDragState} floorPlane = {floorPlane}/>
-      
-      {/* <RigidBody mass={1} type="fixed" colliders="hull">
-      {Object.keys(nodes).map((nodeName) => {
-        if (nodeName.startsWith("Object_")) {
-          return (
-            <mesh key={nodeName} geometry={nodes[nodeName].geometry} position={[position[0], position[1]-5 , position[2] + 445]} rotation={[-Math.PI/2, 0, 0]} scale={0.15}>
-              <meshMatcapMaterial matcap={matcap} />
-            </mesh>
-          );
-        }
-        return null;
-      })}
-    </RigidBody> */}
-
     </>
   );
 }

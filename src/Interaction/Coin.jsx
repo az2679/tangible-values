@@ -1,8 +1,8 @@
-import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { useRef, useEffect, useState } from 'react';
-import gsap from 'gsap';
 import { useGLTF } from '@react-three/drei';
-import { MeshTransmissionMaterial } from '@react-three/drei';
+import { CylinderCollider, RigidBody } from "@react-three/rapier";
+
+import gsap from 'gsap';
 
 export default function Coin({ position, onSendCoin, sendPos, delay, payoutState }) {
   const { nodes } = useGLTF('/models/coin.glb')
@@ -10,7 +10,6 @@ export default function Coin({ position, onSendCoin, sendPos, delay, payoutState
   const coinRef = useRef()
 
   useEffect(()=> {
-    // console.log(payoutState)
     if (payoutState == true){
       const tl = gsap.timeline();
       gsap.killTweensOf(coinRef.current.parent.position);
@@ -34,15 +33,8 @@ export default function Coin({ position, onSendCoin, sendPos, delay, payoutState
     <>
       <RigidBody mass={1} type="dynamic" colliders={false} position={coinPos} canSleep={false} >
         <CylinderCollider args={[0.5, 2]}  />
-        <mesh ref = {coinRef} scale={2} geometry={nodes.Object_2.geometry} 
-        // material={nodes.Object_2.material}
-        >
+        <mesh ref = {coinRef} scale={2} geometry={nodes.Object_2.geometry}>
           <meshBasicMaterial color="#44454c"/>
-          {/* <meshStandardMaterial color="#515161" transparent opacity={0.8}/> */}
-          {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
-
-          {/* <cylinderGeometry args={[2, 2, 1, 15, 1]}  />
-          <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
         </mesh>
       </RigidBody>
     </>

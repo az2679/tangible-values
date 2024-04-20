@@ -1,18 +1,11 @@
-import { Html } from '@react-three/drei';
 import { useState } from 'react';
+import { Html, useCubeTexture, Float, useTexture } from '@react-three/drei';
 import { RigidBody, CapsuleCollider } from '@react-three/rapier';
-import { useCubeTexture, Float } from '@react-three/drei';
-import { useTexture } from '@react-three/drei';
 
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 import Label from '../Text/Label';
 
 export default function About({position}){
-  const texture = useCubeTexture(
-    ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
-    {path: "./textures/sky/"}
-    )
-  // const matcap = useTexture('./matcaps/181F1F_475057_616566_525C62.png')
   const matcap = useTexture('./matcaps/3B3C3F_DAD9D5_929290_ABACA8.png')
   
   const [aboutState, setAboutState] = useState(false)
@@ -35,7 +28,6 @@ export default function About({position}){
         <Label position={[0, 20, -20]} text={`thank you for sharing your thoughts \nwanna listen to some of the ones \ni had that led to this project?`} state={true} scale={[4, 4, 5]} rotation={[-Math.PI*0.1, 0, 0]}/>
         <Label position={[83, 36.5, -27]} text={`:)`} state={true} scale={[4, 4, 5]} rotation={[-Math.PI*0.1, 0, -Math.PI*0.5]}/>
         <CapsuleCollider args={[5, 10, 5]} sensor 
-        // position={position ? position : [0,0,0]}
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
                 setAboutState(true)

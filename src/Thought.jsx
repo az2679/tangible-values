@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import Prompt from './Text/Prompt';
 import Text from './Text/Text';
 
-
 export default function Thought({position, meshPos, startDialogue, startPosition, updateDialogue, updatePosition, endDialogue, endPosition, prompt, promptPosition, onInstructionStateChange, proximityState, onProximity, children, submissions}) {
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
@@ -39,8 +38,6 @@ export default function Thought({position, meshPos, startDialogue, startPosition
         floatingRange={[-1, 1]}
         >
           <mesh position={meshPos ? meshPos : [0, 6, 0]}>
-            {/* <boxGeometry args={[10, 10, 10]} /> */}
-            {/* <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
             <octahedronGeometry args={[8]} />
             <meshBasicMaterial color={"#878787"} envMap={texture} reflectivity={1}/>
           </mesh>
@@ -54,7 +51,6 @@ export default function Thought({position, meshPos, startDialogue, startPosition
               }
             }} 
             onIntersectionExit={(payload) => {
-              //payload.other.rigidBodyObject.children[1].name = "coin"
               if(payload.other.rigidBodyObject.children[0].name == "person"){
               setInstructionState(false)
               onInstructionStateChange(false)
@@ -62,7 +58,6 @@ export default function Thought({position, meshPos, startDialogue, startPosition
               setDialogueState(false)
               }
             }} />
-            {/*instruction prox sensor*/}
             <CapsuleCollider args={[5, 30, 5]} sensor position={meshPos ? meshPos : [0,0,0]}
             onIntersectionEnter={(payload) => {
               if(payload.other.rigidBodyObject.children[0].name == "person"){
@@ -81,30 +76,12 @@ export default function Thought({position, meshPos, startDialogue, startPosition
               }
             }} 
           />
-          {/* {children} */}
-      {/* {React.Children.map((children, index) => (
-          <RigidBody key={`child-${index}`} type="fixed">
-            {children}
-          </RigidBody>
-        ))} */}
-
       </RigidBody>
-
       <mesh position={[position[0], position[1]-4.8, position[2]+40]} rotation={[-Math.PI/2, 0, 0]} >
         <ringGeometry args={[198, 202, 64, 1]} />
         <meshBasicMaterial color="#ffffff"/>
       </mesh>
-
-      {/* <mesh position={[position[0], position[1]+10, position[2]+0]} rotation={[-Math.PI/2, 0, 0]} >
-        <circleGeometry args={[30, 32]} />
-        <meshBasicMaterial color="#000000" transparent opacity={0.7} />
-      </mesh> */}
-
       {children}
-
-      {/* {React.Children.map(children, (child, index) =>
-          React.cloneElement(child, { key: `child-${index}` })
-        )} */}
     </>
 );
 }

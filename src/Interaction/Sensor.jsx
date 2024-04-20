@@ -41,9 +41,7 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
       <RigidBody name="sensor" mass={1} type="fixed" colliders={false} position={sensorPosition}>
         <mesh position={[0, 0.1, 0]} rotation={[-Math.PI/2, 0, 0]}>
           <planeGeometry args={args} />
-          {/* <meshBasicMaterial color={type === "color" ? color : "gray"}/> */}
           <meshBasicMaterial color={"#696870"} transparent opacity={opacity}/> 
-          {/* #7a7a8c */}
         </mesh>
         <CuboidCollider sensor args={sensorArgs} 
           onIntersectionEnter={(payload) => {
@@ -67,7 +65,6 @@ export default function Sensor({ type, args, sensorArgs, option, number, sensorP
           onIntersectionExit={(payload) => {
             if (payload.other.rigidBodyObject.name === "coin") {
               setCount((value) => value - 1);
-              // console.log(payload.other.rigidBodyObject.num)
             } else if (payload.other.rigidBodyObject.name === "fruit") {
               setBool(false);
             }

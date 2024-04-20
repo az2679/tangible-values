@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
-import { useGLTF, useTexture, useCubeTexture } from '@react-three/drei';
+import { useTexture, useCubeTexture } from '@react-three/drei';
 
 import Text from '../Text/Text';
 import Sensor from '../Interaction/Sensor';
@@ -13,9 +13,7 @@ import Paper from '../Interaction/Paper';
 import Path from '../Components/Path';
 
 export default function Volunteer({position, sendSubmit}) {
-  // const { nodes } = useGLTF('/models/pointed_arch.glb')
-  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
-  const matcapChrome = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
+  const matcap = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
     {path: "./textures/sky/"}
@@ -102,7 +100,6 @@ export default function Volunteer({position, sendSubmit}) {
     }
 
     setTimeout(() => {
-      //after animation plays out, refractory period is over and can submit/reset again
       setResetRefractory(false)
     }, 6000);
   }
@@ -117,12 +114,10 @@ export default function Volunteer({position, sendSubmit}) {
   };
 
   useEffect(() => {
-    // console.log(confed)
     if (confed.length > 0) {
       reconcile();
       setResetSensor(false)
 
-      //after submitting, can't reset / submit again
       setResetRefractory(true)
       setSubmitRefractory(true)
     }
@@ -148,15 +143,11 @@ export default function Volunteer({position, sendSubmit}) {
     <>
       <RigidBody name="volunteer" mass={1} type="fixed" colliders="cuboid" position={[position[0]-20, 1, position[2]-100]} >
         <mesh position={[0, 0, 0]} rotation={[-Math.PI/2, 0,0]} >
-          {/* <planeGeometry args={[8, 12]} />
-          <meshBasicMaterial color={"gray"}/> */}
         </mesh>
       </RigidBody>
 
       <RigidBody mass={1} type="fixed" colliders="cuboid">
       <mesh position={[position[0]+45, 10, position[2]+45]} rotation={[0, -5, 0]}>
-        {/* <boxGeometry args={[10, 10, 10]} />
-        <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
         <octahedronGeometry args={[8]} />
         <meshBasicMaterial color={"lightgray"} envMap={texture} reflectivity={1}/>
       </mesh>
@@ -181,16 +172,13 @@ export default function Volunteer({position, sendSubmit}) {
 
       <Text text={payoutText} state={flipState} position={payoutPosition} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={reaction} position={[position[0]-1.5, 15, position[2] + 7]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} state={false} scale={3}/> 
-      {/*flipState*/}
 
       <Eraser position={[position[0], 15, position[2]+180]} onHoldChange={handleHoldChange} />
-      {/* <DragObj name="eraser" startPosition={[position[0]-45, 1, position[2]-20]} state={setDragState} plane={floorPlane} lift={1}/> */}
 
       <Text text={`${majority}`} state={true} position={[position[0], 15, position[2]+120]} />
       <Text text={"or"} state={true} position={[position[0], 0, position[2]+120]} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={"$"} state={true} position={[position[0]-28, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
-
 
       <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0], 0, position[2]+85]}
@@ -201,6 +189,13 @@ export default function Volunteer({position, sendSubmit}) {
         }} 
       /> 
       {/* <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory = {resetRefractory} /> */}
+
+      <Path position={[position[0]+1400, position[1], position[2]+1100]} i={-1} rotation={[0,Math.PI*0.75,0]} state = {pathState}/>
+
+
+
+
+
 
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={0} sensorPosition={[position[0]-20, 0, position[2]+110]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
       <Sensor type="color" args={[7, 7]} sensorArgs={[3.5,4,3.5]} option="one" number={1} sensorPosition={[position[0]-20, 0, position[2]+117]} onSensedChange={handleSensedChange} eraserState={eraserState} resetSensor={resetSensor}/>
@@ -219,81 +214,70 @@ export default function Volunteer({position, sendSubmit}) {
 
       <mesh position={[position[0]-24, 0.5, position[2]+124]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,34, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]-16, 0.5, position[2]+124]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,34, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]-20, 0.5, position[2]+107]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,8, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]-20, 0.5, position[2]+141]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,8, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
 
       <mesh position={[position[0]+17, 0.5, position[2]+117]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,20, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+17, 0.5, position[2]+138]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,7, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+30, 0.5, position[2]+110]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,7, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+30, 0.5, position[2]+131]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,20, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+23, 0.5, position[2]+131]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,7, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+24, 0.5, position[2]+117]} rotation={[-Math.PI/2, 0, 0]}>
         <capsuleGeometry args={[0.5,7, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
 
       <mesh position={[position[0]+23.5, 0.5, position[2]+106.5]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,13, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+27, 0.5, position[2]+113.5]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,6, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+27, 0.5, position[2]+121]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,6, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+20, 0.5, position[2]+127]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,6, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+20, 0.5, position[2]+134.5]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,6, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
       <mesh position={[position[0]+23.5, 0.5, position[2]+141.5]} rotation={[-Math.PI/2, 0, -Math.PI/2]}>
         <capsuleGeometry args={[0.5,13, 4, 8]}/>
-        <meshMatcapMaterial color={"darkgray"} matcap={matcapChrome} />
+        <meshMatcapMaterial color={"darkgray"} matcap={matcap} />
       </mesh>
-
-
-
-
-      {/* <RigidBody mass={1} type="fixed" colliders="trimesh" >
-      <mesh geometry={nodes.Object_4.geometry} position={[position[0]+250, position[1]-5, position[2]+175]} rotation={[0,-Math.PI*0.2,0]} scale={15}>
-        <meshMatcapMaterial matcap={matcap} />
-      </mesh>
-      </RigidBody> */}
-
-      <Path position={[position[0]+1400, position[1], position[2]+1100]} i={-1} rotation={[0,Math.PI*0.75,0]} state = {pathState}/>
 
     </>
   );

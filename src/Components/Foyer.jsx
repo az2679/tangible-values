@@ -1,6 +1,4 @@
-import { RigidBody, CuboidCollider } from '@react-three/rapier';
-import { useState } from 'react';
-import { Html } from '@react-three/drei';
+import { RigidBody } from '@react-three/rapier';
 import { Text3D } from "@react-three/drei";
 import { useTexture } from '@react-three/drei';
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"

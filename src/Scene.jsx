@@ -14,7 +14,6 @@ import Dictator from './ThoughtDilemmas/Dictator';
 import Volunteer from './ThoughtDilemmas/Volunteer';
 import Exchange from './ThoughtDilemmas/Exchange';
 import Trust from './ThoughtDilemmas/Trust';
-import About from './Components/About';
 import Archways from './Components/Archways';
 import Directory from './Components/Directory';
 
@@ -32,7 +31,6 @@ function Scene() {
 
   useEffect(() => {
     if (submissions && Object.keys(submissions).length > 0) {
-      // if(Object.values(submissions).some((value) => value === true)){
       if(Object.values(submissions).every((value) => value === true)){
         setTimeout(() => {
           setComplete(true);
@@ -61,7 +59,6 @@ function Scene() {
 
         <ambientLight intensity={1} />
         <directionalLight color="#ffffff" position={[300, 50, 100]} intensity={1} />
-        {/* <directionalLight color="#ffffff" position={[0, -54, 77]} intensity={1} /> */}
 
         <Suspense 
         fallback={<LoadingScreen />}
@@ -73,7 +70,6 @@ function Scene() {
               <Foyer position={[20, 0, 70]} />
               <Archways dictatorPos={[0, 5, -470]} volunteerPos={[-550, 5, -800]} exchangePos={[0, 5, -1100]} trustPos={[550, 5, -800]}/>
               <Directory submitted={submissions.dictator} />
-              {/* <LoadingScreen /> */}
 
               <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} />
 
@@ -172,10 +168,6 @@ function Scene() {
                 <Trust key={"trust"} position={[550, 5, -800]} sendSubmit={countSubmissions} />
               </Thought>
             }
-
-              
-              {/* {complete && <About />} */}
-              {/* <About /> */}
 
             </CameraRig>
           </Physics>

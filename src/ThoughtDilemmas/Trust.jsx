@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { RigidBody, CuboidCollider } from "@react-three/rapier";
+import { CuboidCollider } from "@react-three/rapier";
 import { Vector3, Plane } from "three";
-import { gsap } from 'gsap';
-import { useGLTF, useTexture } from '@react-three/drei';
 
 import DragObj from '../Interaction/DragObj';
 import Text from '../Text/Text';
@@ -11,7 +9,6 @@ import Submit from '../Decision/Submit';
 import Reset from '../Decision/Reset';
 import Coin from '../Interaction/Coin';
 import Path from '../Components/Path';
-
 
 
 function SensorMult({option, position, handleSensedChange, i, resetSensor}){
@@ -59,11 +56,7 @@ function CoinMult({position, setDragState, floorPlane, sensedCoinState}){
 }
 
 
-export default function Trust(props) {
-  // const { nodes } = useGLTF('/models/circle_arch.glb')
-  // const matcap = useTexture('./matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.png')
-
-  const { position, sendSubmit } = props;
+export default function Trust({position, sendSubmit}) {
   const floorPlane = new Plane(new Vector3(0, 1, 0),0);
   const [dragState, setDragState] = useState(false);
   const [confedSensors, setConfedSensors] = useState({});
@@ -94,7 +87,6 @@ export default function Trust(props) {
   const [pathState, setPathState] = useState(false)
 
   const [submitted, setSubmitted] = useState(false)
-
 
 
   const [sensedCoinState, setSensedCoinState] = useState({
@@ -185,7 +177,6 @@ export default function Trust(props) {
       });
       setSensedCoinState(updateSensedCoinState);
 
-
     const newRenderCoins = sensed.reduce((acc, { number, position }, index) => {
       const coinIndex = index * 3;
       setInitialCoins((prevCoins) => [...prevCoins, <Coin key={`coin-${coinIndex}`} position={[position[0], 10, position[2]]} sendPos={sendPos} payoutState={payoutState} delay={coinIndex*0.2} />,
@@ -208,7 +199,6 @@ export default function Trust(props) {
     }, (confed*1000)+5000);
   };
 
-  
   useEffect(() => {
     if(multiply){
     setTimeout(() => {
@@ -232,10 +222,6 @@ export default function Trust(props) {
     }
   }, [confed]);
 
-  // useEffect(() => {
-  //   console.log(multiply, totalCoins)
-  // }, [multiply, totalCoins]);
-
   const handleReset = () => {
     setPathState(false)
 
@@ -248,7 +234,6 @@ export default function Trust(props) {
     setInitialCoins([])
     setRenderCoins([])
     setTotalCoins([])
-    // setSendCoinsCalled(false)
 
     setSensedCoinState((prevSensedCoinState) => {
       const newSensedCoinState = {};
@@ -301,12 +286,6 @@ export default function Trust(props) {
       <CoinMult position={[position[0], position[1], position[2]+125]} setDragState = {setDragState} floorPlane = {floorPlane} sensedCoinState={sensedCoinState}/>
 
       {multiply && totalCoins}
-
-      {/* <RigidBody mass={1} type="fixed" colliders="trimesh" >
-      <mesh geometry={nodes.Object_2.geometry} position={[position[0]-250, position[1]-5, position[2]+175]} rotation={[-Math.PI/2,0, -Math.PI*0.25]} scale={0.8}>
-        <meshMatcapMaterial matcap={matcap} />
-      </mesh>
-      </RigidBody> */}
 
       <Path position={[position[0]+325, position[1], position[2]+900]} i={-1} rotation={[0,Math.PI*0.4,0]} state = {pathState}/>
     </>

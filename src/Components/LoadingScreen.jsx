@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
+import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture, useCubeTexture, Text3D, ContactShadows } from "@react-three/drei";
-import { Vector3 } from "three";
 
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 

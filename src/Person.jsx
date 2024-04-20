@@ -1,14 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
-import { useKeyboardControls } from "@react-three/drei";
+import { useKeyboardControls, useCubeTexture } from "@react-three/drei";
 import { RigidBody, BallCollider } from '@react-three/rapier';
-
-import { useLoader } from '@react-three/fiber';
-import { RGBELoader } from 'three-stdlib'
-import { useCubeTexture } from '@react-three/drei';
-
-import { useState, useEffect } from 'react';
 
 import About from './Components/About';
 
@@ -29,8 +23,6 @@ export default function Person({ position, onPositionChange, onProximity, onThou
 
   // const thoughts = [new Vector3(0, 0, -275), new Vector3(-510, 5, -730), new Vector3(0, 0, -1010), new Vector3(510, 5, -730)];
   // const [distanceToThoughts, setDistanceToThoughts] = useState([0, 0, 0, 0]);
-
-
 
   useFrame(() => {
     const { forward, backward, left, right } = get()
@@ -68,24 +60,17 @@ export default function Person({ position, onPositionChange, onProximity, onThou
     })
   }
 
-
   useEffect(()=>{
-    // console.log(submissions, ref.current.translation(), aboutPosition)
     setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
   },[submissions])
 
   return (
     <>
       <RigidBody ref={ref} mass={20} gravityScale={20} type="Dynamic" position={position ? position : [0, 100, 150]} scale={5} colliders="ball" canSleep={false} name="person">
-
         <mesh name="person">
           <sphereGeometry />
-          {/* <meshStandardMaterial color={0xA9A9A9} 
-          metalness={0.7} roughness={0.3} 
-          /> */}
           <meshBasicMaterial color={"#b4b7bf"} envMap={texture} reflectivity={1}/>
         </mesh>
-
         <BallCollider args={[1.1, 1.1, 1.1]} sensor 
             onIntersectionEnter={(payload) => {
             if(payload.other.rigidBodyObject.name == "thought"){

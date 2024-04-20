@@ -1,5 +1,3 @@
-import Text from './Text'
-
 import { Text3D, Center } from "@react-three/drei";
 import { RigidBody } from '@react-three/rapier';
 import { Float } from '@react-three/drei'
@@ -9,7 +7,6 @@ import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
 export default function Label({text, state, position, rotation, scale}){
   const matcap = useTexture('./matcaps/3B3C3F_DAD9D5_929290_ABACA8.png')
-  // const matcap = useTexture('./matcaps/metal_anisotropic.jpeg') //shinier
  
   return(
     <Float

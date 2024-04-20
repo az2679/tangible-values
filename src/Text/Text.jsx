@@ -4,9 +4,8 @@ import { useTexture } from '@react-three/drei';
 
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
-export default function Text(props) {
+export default function Text({text, state, position, rotation, scale, font}) {
   const matcap = useTexture('./matcaps/C7C7D7_4C4E5A_818393_6C6C74.png')
-  const {text, state, position, rotation, scale, font} = props
 
   return (
     <>
@@ -26,7 +25,6 @@ export default function Text(props) {
         // curveSegments={64}
         >
           {text}
-          {/* <meshNormalMaterial /> */}
           <meshMatcapMaterial color={"#909199"} matcap={matcap} />
         </Text3D>
       </Center>

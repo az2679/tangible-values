@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { CylinderCollider, RigidBody } from "@react-three/rapier";
-import { useDrag } from "@use-gesture/react";
-import { animated, useSpring } from "@react-spring/three";
 import { Vector3 } from "three";
 import { useGLTF } from '@react-three/drei';
-import { MeshTransmissionMaterial } from '@react-three/drei';
+import { useDrag } from "@use-gesture/react";
+import { animated, useSpring } from "@react-spring/three";
+import { CylinderCollider, RigidBody } from "@react-three/rapier";
 
 export default function DragObj({ name, startPosition, state, plane, lift, num }) {
   const { nodes } = useGLTF('/models/coin.glb')
@@ -47,15 +46,8 @@ export default function DragObj({ name, startPosition, state, plane, lift, num }
         num={num || 0}
       >
         <CylinderCollider args={[0.5, 2]} position={position} />
-        <animated.mesh {...spring} {...bind()} scale={2} geometry={nodes.Object_2.geometry} 
-        // material={nodes.Object_2.material} 
-        >
+        <animated.mesh {...spring} {...bind()} scale={2} geometry={nodes.Object_2.geometry}>
           <meshBasicMaterial color="#44454c"/>
-          {/* <meshStandardMaterial color="#515161" transparent opacity={0.8}/> */}
-          {/* <MeshTransmissionMaterial resolution={1024} distortion={0.25} color="#a9a9a9" thickness={10} anisotropy={1} /> */}
-
-          {/* <cylinderGeometry args={[2, 2, 1, 15, 1]} />
-          <meshStandardMaterial color="#eeeeee" roughness={0.8} metalness={0.2} /> */}
         </animated.mesh>
       </RigidBody>
     </>

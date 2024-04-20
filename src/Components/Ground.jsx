@@ -9,8 +9,6 @@ export default function Ground({color}) {
       <RigidBody type="fixed" colliders={false} name="ground">
         <mesh position={[0,0,-500]} rotation={[-Math.PI/2, 0, 0]} >
           <planeGeometry args={[3000, 3000]} />
-          {/* <meshStandardMaterial color={color !== undefined ? color : 0xEEEEEE} /> */}
-
           <MeshReflectorMaterial
             blur={[400, 100]}
             resolution={1024}

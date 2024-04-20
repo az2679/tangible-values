@@ -1,4 +1,5 @@
 import { RigidBody } from '@react-three/rapier';
+
 import Button from './Button';
 
 export default function Reset({position, onReset, refractory}) {
@@ -6,7 +7,6 @@ export default function Reset({position, onReset, refractory}) {
     if(refractory == false){
       onReset()
     } else {
-      // console.log ("reset button refractory period")
     }
   }
 
@@ -17,9 +17,7 @@ export default function Reset({position, onReset, refractory}) {
       <boxGeometry args={[19, 5, 2]} />
       <meshBasicMaterial transparent opacity={0}/>
      </mesh>
-
      <Button position={[0,0,0]} text={'RESET'} />
-
     </RigidBody>
     </>
 );

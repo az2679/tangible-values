@@ -4,9 +4,8 @@ import { useTexture } from '@react-three/drei';
 
 import nunito from "../assets/fonts/Nunito_SemiBold_Regular.json"
 
-export default function Prompt(props) {
+export default function Prompt({position, prompt, state}) {
   const matcap = useTexture('./matcaps/3B3C3F_DAD9D5_929290_ABACA8.png')
-  const {position, prompt, state} = props
 
   return (
     <>
@@ -25,7 +24,6 @@ export default function Prompt(props) {
         // bevelThickness={0.25}
         >
           {prompt}
-          {/* <meshBasicMaterial color={"gray"} /> */}
           <meshMatcapMaterial color={"#707070"} matcap={matcap} />
         </Text3D>
         </Center>
