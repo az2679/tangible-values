@@ -8,14 +8,14 @@ export default defineConfig({
     port: 3333,
   },
   plugins: [react(), glsl()],
-  // root: resolve(__dirname, 'src'),
-  publicDir: resolve(__dirname, 'public'),
+  root: resolve(__dirname),
+  publicDir: 'public',
   base: '/tangible-values/',
   build: {
-    outDir: '../docs',
+    outDir: 'docs',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(__dirname, 'src/main.jsx'),
       },
     },
   },
