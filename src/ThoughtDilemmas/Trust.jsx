@@ -264,12 +264,12 @@ export default function Trust({position, sendSubmit}) {
       <Text text={confedText} state={true} position={[position[0]-6, 0, position[2]+60]} rotation={[-Math.PI*0.5, 0, -Math.PI]}/>
       <Text text={userText} state={true} position={[position[0]+3, 0, position[2]+145]} rotation={[-Math.PI*0.5, 0, 0]}/>
 
-      <Text text={`giving ${confedCounter}`} state={!confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
+      <Text text={`giving ${confedCounter}`} state={!confedState} position={[position[0], 22, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]} scale ={[3, 3, 2]}/>
       <Text text={`returning ${confed}`} state={confedState} position={[position[0], 10, position[2]+100]} rotation={[-Math.PI*0.1, 0, 0]}/>
       <Text text={reaction} position={[position[0]-1.5, 12, position[2] + 8]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} state={false} scale={3}/> 
       {/*reactionState*/}
 
-      <Submit position={[position[0]+0, 0, position[2]+160]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
+      <Submit position={[position[0], 0, position[2]+100]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]+0, 0, position[2]+160]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (confedCounter + userCounter === 10)){

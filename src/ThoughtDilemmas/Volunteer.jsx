@@ -173,14 +173,14 @@ export default function Volunteer({position, sendSubmit}) {
       <Text text={payoutText} state={flipState} position={payoutPosition} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={reaction} position={[position[0]-1.5, 15, position[2] + 7]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} state={false} scale={3}/> 
 
-      <Eraser position={[position[0], 15, position[2]+180]} onHoldChange={handleHoldChange} />
+      <Eraser position={[position[0], 15, position[2]+85]} onHoldChange={handleHoldChange} />
 
       <Text text={`${majority}`} state={true} position={[position[0], 15, position[2]+120]} />
       <Text text={"or"} state={true} position={[position[0], 0, position[2]+120]} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={"$"} state={true} position={[position[0]-28, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
-      <Submit position={[position[0], 0, position[2]+85]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
+      <Submit position={[position[0], 0, position[2]+180]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0], 0, position[2]+85]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (majority !== "tie")){

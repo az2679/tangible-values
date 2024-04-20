@@ -18,7 +18,7 @@ import Archways from './Components/Archways';
 import Directory from './Components/Directory';
 
 function Scene() { 
-  const [proximityToThoughts, setProximityToThoughts] = useState([true, true, true, true]) //[false, false, false, false]
+  const [proximityToThoughts, setProximityToThoughts] = useState([false, false, false, false]) //[false, false, false, false]
   const [submissions, setSubmissions] = useState({dictator:false, volunteer:false, exchange:false, trust:false});
   const [complete, setComplete] = useState(false);
   
@@ -40,7 +40,7 @@ function Scene() {
   }, [submissions]);
 
   const handleProximityToThoughts = (proximity) => {
-    // setProximityToThoughts([proximity[0], proximity[1], proximity[2], proximity[3]])
+    setProximityToThoughts([proximity[0], proximity[1], proximity[2], proximity[3]])
   }
 
   return ( 
@@ -139,7 +139,7 @@ function Scene() {
 
                   knowing there’s a chance of obtaining both, one, or no fruit, 
                   do you keep your fruit, decieving the other person, or exchange it?
-                  `} 
+                  `} promptPosition={[0, 40, -20]}
                   submissions={submissions} >
                   <Exchange key={"exchange"} position={[0, 5, -1100]} sendSubmit={countSubmissions} />
               </Thought>
