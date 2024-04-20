@@ -5,7 +5,7 @@ import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import gsap from 'gsap';
 
 export default function Coin({ position, onSendCoin, sendPos, delay, payoutState }) {
-  const { nodes } = useGLTF('/models/coin.glb')
+  const { nodes } = useGLTF('/tangible-values/models/coin.glb')
   const [coinPos, setCoinPos] = useState([position[0], position[1], position[2]])
   const coinRef = useRef()
 
