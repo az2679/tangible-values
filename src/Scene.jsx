@@ -20,24 +20,13 @@ import Directory from './Components/Directory';
 function Scene() { 
   const [proximityToThoughts, setProximityToThoughts] = useState([true, true, true, true]) //[false, false, false, false]
   const [submissions, setSubmissions] = useState({dictator:false, volunteer:false, exchange:false, trust:false});
-  const [complete, setComplete] = useState(false);
   
-  const countSubmissions = (key, submitState) => {
+  const storeSubmissions = (key, submitState) => {
     setSubmissions((prevSubmitState) => ({
       ...prevSubmitState,
       [key]: submitState,
     }));
   };
-
-  useEffect(() => {
-    if (submissions && Object.keys(submissions).length > 0) {
-      if(Object.values(submissions).every((value) => value === true)){
-        setTimeout(() => {
-          setComplete(true);
-        }, 3000);
-      }
-    }
-  }, [submissions]);
 
   const handleProximityToThoughts = (proximity) => {
     // setProximityToThoughts([proximity[0], proximity[1], proximity[2], proximity[3]])
@@ -71,7 +60,7 @@ function Scene() {
               <Archways dictatorPos={[0, 5, -470]} volunteerPos={[-550, 5, -800]} exchangePos={[0, 5, -1100]} trustPos={[550, 5, -800]}/>
               <Directory submitted={submissions.dictator} />
 
-              <Person submissions={complete} sendProximityToThoughts={handleProximityToThoughts} />
+              <Person submissions={submissions} sendProximityToThoughts={handleProximityToThoughts} />
 
             {proximityToThoughts[0] && 
               <Thought key={"dictatorGame"} 
@@ -92,7 +81,7 @@ function Scene() {
                 `} 
                 promptPosition={[0, 40, 130]}
                 submissions={submissions} >
-                <Dictator key={"dictator"} position={[0, 5, -470]} sendSubmit={countSubmissions}/>
+                <Dictator key={"dictator"} position={[0, 5, -470]} sendSubmit={storeSubmissions}/>
               </Thought>
              }
 
@@ -114,7 +103,7 @@ function Scene() {
                   how much are you claiming?
                 `} 
                 submissions={submissions} >
-                <Volunteer key={"volunteer"} position={[-550, 5, -800]} sendSubmit={countSubmissions}/>
+                <Volunteer key={"volunteer"} position={[-550, 5, -800]} sendSubmit={storeSubmissions}/>
               </Thought>
             }
 
@@ -141,7 +130,7 @@ function Scene() {
                   do you keep your fruit, decieving the other person, or exchange it?
                   `} promptPosition={[0, 40, -20]}
                   submissions={submissions} >
-                  <Exchange key={"exchange"} position={[0, 5, -1100]} sendSubmit={countSubmissions} />
+                  <Exchange key={"exchange"} position={[0, 5, -1100]} sendSubmit={storeSubmissions} />
               </Thought>
             }
 
@@ -165,7 +154,7 @@ function Scene() {
                   how much are you sending?
                   `} 
                   submissions={submissions} > 
-                <Trust key={"trust"} position={[550, 5, -800]} sendSubmit={countSubmissions} />
+                <Trust key={"trust"} position={[550, 5, -800]} sendSubmit={storeSubmissions} />
               </Thought>
             }
 

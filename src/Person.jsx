@@ -50,8 +50,6 @@ export default function Person({ position, onPositionChange, onProximity, onThou
   //   setDistanceToThoughts(newDistance);
   //   const proximityToThoughts = distanceToThoughts.map(distance => distance < 250);
   //   sendProximityToThoughts(proximityToThoughts);
-
-  setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
   });
 
   
@@ -67,6 +65,20 @@ export default function Person({ position, onPositionChange, onProximity, onThou
   // useEffect(()=>{
   //   setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
   // },[submissions])
+
+  const [complete, setComplete] = useState(false);
+
+  useEffect(() => {
+    setAboutPosition([ref.current.translation().x, 0, ref.current.translation().z-50])
+    if (submissions && Object.keys(submissions).length > 0) {
+      if(Object.values(submissions).some((value) => value === true)){
+        setTimeout(() => {
+          setComplete(true);
+        }, 3000);
+      }
+    }
+    // console.log(submissions, complete, aboutPosition)
+  }, [submissions]);
 
   return (
     <>
@@ -88,7 +100,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
         />
       </RigidBody>
 
-      {submissions && <About position={aboutPosition}/>}
+      {complete && <About position={aboutPosition}/>}
     </>
   );
 }
