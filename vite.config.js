@@ -15,7 +15,7 @@ export default defineConfig({
     outDir: 'docs',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'src/main.jsx'),
+        main: resolve(__dirname, 'index.html'),
       },
     },
   },
