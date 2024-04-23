@@ -37,7 +37,6 @@ export default function Exchange({position, sendSubmit}) {
   const [submitRefractory, setSubmitRefractory] = useState(false)
   const [pathState, setPathState] = useState(false)
 
-  const [submitted, setSubmitted] = useState(false)
 
   const handleSensedChange = (option, bool) => {
     if(option == "deceive"){
@@ -207,11 +206,6 @@ export default function Exchange({position, sendSubmit}) {
 
   }
 
-  // useEffect(()=> {
-  //   sendSubmit('exchange', submitted)
-  //   // console.log(`exchange: ${submitted}`)
-  // },[submitted])
-
   return (
     <>
       <Text text={`you`} state={true} position={[position[0]-60, 0, position[2]+70]} rotation={[-Math.PI/2, 0,0]}/>
@@ -223,14 +217,6 @@ export default function Exchange({position, sendSubmit}) {
       <Text text={reaction} position={[position[0]-2, 15, position[2] + 7]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} scale={3} state={false} /> 
 
       <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]-53, 1, position[2]+100]} sendSubmit={sendSubmit}/>
-      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]-30, 0, position[2]+80]}
-        onIntersectionExit={(payload) => {
-          if(payload.other.rigidBodyObject.children[0].name == "person" && (deceive || exchange)){
-            // setSubmitted(true)
-            // sendSubmit('exchange', true)
-          }
-        }} 
-      /> 
       {/* <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory} /> */}
 
       <Sensor type="boolean" args={[38, 20]} sensorArgs={[20, 5,9]} option="deceive" sensorPosition={[position[0]-60, 0.5, position[2]+192]} onSensedChange={handleSensedChange} /> 

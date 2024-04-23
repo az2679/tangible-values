@@ -30,8 +30,6 @@ export default function Dictator({position, sendSubmit}) {
   const [dictator, setDictator] = useState(0);
   const [reciever, setReciever] = useState(0);
 
-  const [submitted, setSubmitted] = useState(false)
-
   const handleSensedChange = (option, number, count) => {
     if(option == "dictator"){
       setDictator(count)
@@ -39,11 +37,6 @@ export default function Dictator({position, sendSubmit}) {
       setReciever(count)
     }
   };
-
-  // useEffect(()=> {
-  //   sendSubmit('dictator', submitted)
-  //   // console.log(`dictator: ${submitted}`)
-  // },[submitted])
 
   return (
     <>
@@ -53,14 +46,6 @@ export default function Dictator({position, sendSubmit}) {
       <Text text={`reciever`} state={true} position={[position[0]+50, 0, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
 
       <Submit position={[0, 0, -370]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0]-20, 1, position[2]+40]} refractory={false} sendSubmit={sendSubmit}/>
-      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[0, 0, -370]}
-        onIntersectionExit={(payload) => {
-          if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
-            // setSubmitted(true)
-            // sendSubmit('dictator', true)
-          }
-        }} 
-      /> 
 
       <Sensor type="number" args={[35, 20]} sensorArgs={[17.5, 5, 10]} option="dictator" number={0} sensorPosition={[position[0]-50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />
       <Sensor type="number" args={[35, 20]} sensorArgs={[17.5, 5, 10]} option="reciever" number={0} sensorPosition={[position[0]+50, 0.5, position[2]+100]} onSensedChange={handleSensedChange} />

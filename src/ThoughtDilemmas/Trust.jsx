@@ -86,8 +86,6 @@ export default function Trust({position, sendSubmit}) {
   const [submitRefractory , setSubmitRefractory] = useState(false)
   const [pathState, setPathState] = useState(false)
 
-  const [submitted, setSubmitted] = useState(false)
-
 
   const [sensedCoinState, setSensedCoinState] = useState({
     1: true,
@@ -255,10 +253,6 @@ export default function Trust({position, sendSubmit}) {
     setSubmitRefractory(false)
   }
     
-  // useEffect(()=> {
-  //   sendSubmit('trust', submitted)
-  //   // console.log(`trust: ${submitted}`)
-  // },[submitted])
 
   return (
     <>
@@ -271,15 +265,6 @@ export default function Trust({position, sendSubmit}) {
       {/*reactionState*/}
 
       <Submit position={[position[0]+100, 0, position[2]+120]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]} sendSubmit={sendSubmit}/>
-      <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]+100, 0, position[2]+120]}
-        onIntersectionExit={(payload) => {
-          if(payload.other.rigidBodyObject.children[0].name == "person" && (confedCounter + userCounter === 10)){
-            // setSubmitted(true)
-            // sendSubmit('trust', submitted)
-            // console.log("test")
-          }
-        }} 
-      /> 
       {/* <Reset position={[position[0], 0, position[2]-100]} onReset={handleReset} refractory={resetRefractory}/> */}
 
       <SensorMult option="confed" position={[position[0], position[1]+0.5, position[2]+80]} handleSensedChange={handleSensedChange} i={1} resetSensor={resetSensor}/>
