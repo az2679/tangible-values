@@ -255,10 +255,10 @@ export default function Trust({position, sendSubmit}) {
     setSubmitRefractory(false)
   }
     
-  useEffect(()=> {
-    sendSubmit('trust', submitted)
-    // console.log(`trust: ${submitted}`)
-  },[submitted])
+  // useEffect(()=> {
+  //   sendSubmit('trust', submitted)
+  //   // console.log(`trust: ${submitted}`)
+  // },[submitted])
 
   return (
     <>
@@ -270,11 +270,13 @@ export default function Trust({position, sendSubmit}) {
       <Text text={reaction} position={[position[0]-1.5, 12, position[2] + 8]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} state={false} scale={3}/> 
       {/*reactionState*/}
 
-      <Submit position={[position[0]+100, 0, position[2]+120]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
+      <Submit position={[position[0]+100, 0, position[2]+120]} valid={confedCounter + userCounter === 10} decisionType={"trust"} decisionValue={confedCounter} refractory={submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]+30, 1, position[2]-5]} sendSubmit={sendSubmit}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]+100, 0, position[2]+120]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (confedCounter + userCounter === 10)){
-            setSubmitted(true)
+            // setSubmitted(true)
+            // sendSubmit('trust', submitted)
+            // console.log("test")
           }
         }} 
       /> 

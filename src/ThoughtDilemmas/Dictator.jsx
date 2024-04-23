@@ -52,12 +52,12 @@ export default function Dictator({position, sendSubmit}) {
       <Text text={`dictator`} state={true} position={[position[0]-50, 0, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
       <Text text={`reciever`} state={true} position={[position[0]+50, 0, position[2]+120]} rotation={[-Math.PI/2, 0,0]}/>
 
-      <Submit position={[0, 0, -370]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0]-20, 1, position[2]+40]} refractory={false}/>
+      <Submit position={[0, 0, -370]} valid={dictator + reciever === 10} decisionType={"dictator"} decisionValue={reciever} errorPosition={[position[0]-20, 1, position[2]+40]} refractory={false} sendSubmit={sendSubmit}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[0, 0, -370]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
-            setSubmitted(true)
-            sendSubmit('dictator', true)
+            // setSubmitted(true)
+            // sendSubmit('dictator', true)
           }
         }} 
       /> 

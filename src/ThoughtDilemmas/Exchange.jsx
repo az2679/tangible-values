@@ -222,12 +222,12 @@ export default function Exchange({position, sendSubmit}) {
       <Text text={`${confedText}`} state={confedState} position={confedTextPosition} />
       <Text text={reaction} position={[position[0]-2, 15, position[2] + 7]} rotation={[-Math.PI*0.2, 0, -Math.PI/2]} scale={3} state={false} /> 
 
-      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]-53, 1, position[2]+100]}/>
+      <Submit position={[position[0]-30, 0, position[2]+80]} valid={deceive || exchange} decisionType={"exchange"} decisionValue={exchange} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed(randomAssignment);}} errorPosition={[position[0]-53, 1, position[2]+100]} sendSubmit={sendSubmit}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0]-30, 0, position[2]+80]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (deceive || exchange)){
-            setSubmitted(true)
-            sendSubmit('exchange', true)
+            // setSubmitted(true)
+            // sendSubmit('exchange', true)
           }
         }} 
       /> 

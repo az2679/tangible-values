@@ -134,10 +134,10 @@ export default function Volunteer({position, sendSubmit}) {
     setSubmitRefractory(false)
   }
 
-  useEffect(()=> {
-    sendSubmit('volunteer', submitted)
-    // console.log(`volunteer: ${submitted}`)
-  },[submitted])
+  // useEffect(()=> {
+  //   sendSubmit('volunteer', submitted)
+  //   // console.log(`volunteer: ${submitted}`)
+  // },[submitted])
 
   
   return (
@@ -181,11 +181,12 @@ export default function Volunteer({position, sendSubmit}) {
       <Text text={"$"} state={true} position={[position[0]-28, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
       <Text text={"$"} state={true} position={[position[0]+12, 0, position[2]+110]} rotation={[-Math.PI * 0.5, 0,0]}/>
 
-      <Submit position={[position[0], 0, position[2]+180]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]}/>
+      <Submit position={[position[0], 0, position[2]+180]} valid={majority !== "tie"} decisionType={"volunteer"} decisionValue={majority} refractory = {submitRefractory} onSubmit={(randomAssignment) => {setConfed([randomAssignment[0], randomAssignment[1], randomAssignment[2]])}} errorPosition={[position[0]+30, 1, position[2]-5]} sendSubmit={sendSubmit}/>
       <CuboidCollider sensor args={[7.5, 2, 3.5]} position={[position[0], 0, position[2]+180]}
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (majority !== "tie")){
-            setSubmitted(true)
+            // setSubmitted(true)
+            // sendSubmit('volunteer', submitted)
           }
         }} 
       /> 

@@ -6,7 +6,7 @@ import AnalyzeDecision from './AnalyzeDecision';
 import Text from '../Text/Text';
 import Button from './Button';
 
-export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition, refractory}) {
+export default function Submit({position, valid, decisionType, decisionValue, onSubmit, errorPosition, refractory, sendSubmit}) {
   let intersectionTimeout;
   const [errorState, setErrorState] = useState(false)
   const [errorText, setErrorText] = useState('null')
@@ -57,15 +57,19 @@ export default function Submit({position, valid, decisionType, decisionValue, on
       switch (decisionType) {
         case 'dictator':
           submitDictator(decisionValue);
+          sendSubmit('dictator', true)
           break;
         case 'volunteer':
           submitVolunteer(decisionValue);
+          sendSubmit('volunteer', true)
           break;
         case 'exchange':
           submitExchange(decisionValue);
+          sendSubmit('exchange', true)
           break;
         case 'trust':
           submitTrust(decisionValue);
+          sendSubmit('trust', true)
           break;
         default:
           console.log(`Unknown submission type: ${decisionType}`);
