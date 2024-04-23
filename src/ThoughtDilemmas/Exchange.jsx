@@ -207,10 +207,10 @@ export default function Exchange({position, sendSubmit}) {
 
   }
 
-  useEffect(()=> {
-    sendSubmit('exchange', submitted)
-    // console.log(`exchange: ${submitted}`)
-  },[submitted])
+  // useEffect(()=> {
+  //   sendSubmit('exchange', submitted)
+  //   // console.log(`exchange: ${submitted}`)
+  // },[submitted])
 
   return (
     <>
@@ -227,6 +227,7 @@ export default function Exchange({position, sendSubmit}) {
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (deceive || exchange)){
             setSubmitted(true)
+            sendSubmit('exchange', submitted)
           }
         }} 
       /> 
