@@ -74,7 +74,7 @@ export default function Person({ position, onPositionChange, onProximity, onThou
       if(Object.values(submissions).every((value) => value === true)){
         setTimeout(() => {
           setComplete(true);
-        }, 7000);
+        }, 10000);
       }
     }
     console.log(submissions, complete)

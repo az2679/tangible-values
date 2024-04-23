@@ -113,7 +113,7 @@ function Scene() {
                 position={[0, 5, -1100]} 
                 startDialogue={"WANNA  MAKE  A  TRADE ?"} 
                 startPosition={[0, 20, 0]} 
-                updateDialogue={`PUSH THE BOX ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} 
+                updateDialogue={`PUSH THE APPLE ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} 
                 updatePosition={[-35, 20, 0]} 
                 endDialogue={`ONCE BITTEN, TWICE SHY.`}
                 endPosition={[0, 20, 0]}
