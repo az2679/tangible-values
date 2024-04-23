@@ -57,7 +57,7 @@ export default function Dictator({position, sendSubmit}) {
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
             setSubmitted(true)
-            sendSubmit('dictator', submitted)
+            sendSubmit('dictator', true)
           }
         }} 
       /> 

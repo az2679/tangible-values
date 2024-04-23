@@ -227,7 +227,7 @@ export default function Exchange({position, sendSubmit}) {
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (deceive || exchange)){
             setSubmitted(true)
-            sendSubmit('exchange', submitted)
+            sendSubmit('exchange', true)
           }
         }} 
       /> 
