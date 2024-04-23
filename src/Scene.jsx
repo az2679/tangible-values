@@ -70,7 +70,7 @@ function Scene() {
                 startDialogue={"HELLO THERE ! COME CLOSER"} 
                 startPosition={[0, 20, 150]} 
                 updateDialogue={` DRAG THE COINS TO THE MARKED AREA \nACCORDING TO YOUR PROPOSED DIVISION.`} updatePosition={[-10, 20, 150]} 
-                endDialogue={`TAKE YOUR TIME`}
+                endDialogue={`TAKE YOUR TIME.`}
                 endPosition={[15, 20, 150]} 
                 prompt={`
                   you have been given 10$ and have to decide
@@ -92,7 +92,7 @@ function Scene() {
                 startDialogue={"FEELING  RISKY  TODAY ?"} 
                 startPosition={[0, 20, 0]} 
                 updateDialogue={`  COLOR THE OPTION BY WALKING OVER IT.\nIF YOU CHANGE YOUR MIND, USE THE ERASER.`}  updatePosition={[-20, 20, 0]} 
-                endDialogue={`MAY LUCK BE ON YOUR SIDE`}
+                endDialogue={`MAY LUCK BE ON YOUR SIDE.`}
                 endPosition={[0, 20, 0]}
                 prompt={`
                   you are playing a parlor game with a few people. 
@@ -113,7 +113,7 @@ function Scene() {
                 position={[0, 5, -1100]} 
                 startDialogue={"WANNA  MAKE  A  TRADE ?"} 
                 startPosition={[0, 20, 0]} 
-                updateDialogue={`PUSH THE APPLE ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP`} 
+                updateDialogue={`PUSH THE APPLE ONTO THE LEFT AREA TO EXCHANGE \n    OR HIDE IT BEHIND THE LEFT WALL TO KEEP.`} 
                 updatePosition={[-35, 20, 0]} 
                 endDialogue={`ONCE BITTEN, TWICE SHY.`}
                 endPosition={[0, 20, 0]}
@@ -128,7 +128,7 @@ function Scene() {
                   and prefer either fruit to none at all. 
 
                   knowing there’s a chance of obtaining both, one, or no fruit, 
-                  do you keep your fruit, decieving the other person, or exchange it?
+                  do you keep your fruit, deceiving the other person, or exchange it?
                   `} promptPosition={[0, 40, -20]}
                   submissions={submissions} >
                   <Exchange key={"exchange"} position={[0, 5, -1100]} sendSubmit={storeSubmissions} />
@@ -140,7 +140,7 @@ function Scene() {
                 position={[550, 5, -800]} 
                 startDialogue={"DO  YOU  TRUST  ME ?"} 
                 startPosition={[0, 20, 0]} 
-                updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS`} 
+                updateDialogue={`DRAG THE AMOUNT OF COINS YOU WANT \n    TO SEND ONTO THE MARKED AREAS.`} 
                 updatePosition ={[-20, 20, 0]} 
                 endDialogue={`FOOL ME ONCE, SHAME ON YOU. \nFOOL ME TWICE, SHAME ON ME.`}
                 endPosition={[0, 20, 0]}
