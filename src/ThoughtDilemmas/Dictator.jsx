@@ -40,10 +40,10 @@ export default function Dictator({position, sendSubmit}) {
     }
   };
 
-  useEffect(()=> {
-    sendSubmit('dictator', submitted)
-    // console.log(`dictator: ${submitted}`)
-  },[submitted])
+  // useEffect(()=> {
+  //   sendSubmit('dictator', submitted)
+  //   // console.log(`dictator: ${submitted}`)
+  // },[submitted])
 
   return (
     <>
@@ -57,6 +57,7 @@ export default function Dictator({position, sendSubmit}) {
         onIntersectionExit={(payload) => {
           if(payload.other.rigidBodyObject.children[0].name == "person" && (dictator + reciever === 10)){
             setSubmitted(true)
+            sendSubmit('dictator', submitted)
           }
         }} 
       /> 

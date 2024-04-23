@@ -42,7 +42,7 @@ function Scene() {
         { name: "left", keys: ["ArrowLeft", "a", "A"] },
         { name: "right", keys: ["ArrowRight", "d", "D"] },
       ]}>
-      <Canvas shadows tabIndex={0} exposure={3}>
+      <Canvas shadows tabIndex={0} exposure={3} frameloop="60fps">
         <color args={["#eeeeee"]} attach="background" />
         <fogExp2 attach="fog" args={["#eeeeee", 0.003]} />
         {/* <axesHelper args={[10]} /> */}
