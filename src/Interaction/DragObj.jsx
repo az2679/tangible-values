@@ -1,3 +1,6 @@
+// useDrag reference: musing-night-wso9v by joshononon
+// https://codesandbox.io/p/sandbox/wso9v?file=%2Fsrc%2Findex.jsx
+
 import { useState } from "react";
 import { Vector3 } from "three";
 import { useGLTF } from '@react-three/drei';

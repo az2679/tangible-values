@@ -55,6 +55,7 @@ function Scene() {
         >
           <Physics gravity={[0, -9.8,0]} colliders={false}>
             <Ground color={0xF7F7F7}/>
+            {/* <LoadingScreen /> */}
 
             <CameraRig >
               <Foyer position={[20, 0, 70]} />

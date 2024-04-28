@@ -14,3 +14,10 @@ This project is a series of digital experiences aimed to make values more tangib
 - "[Stone Arch](https://skfb.ly/ouTp8)" by Hvenix is licensed under Creative Commons Attribution
 - "[Classical palace Doorway](https://skfb.ly/oPHQr)" by Samuel Francis Johnson (Oneironauticus) is licensed under Creative Commons Attribution
 - "[stone arch](https://skfb.ly/oyYHr)" by Zakhar Tsaregorodtsev is licensed under Creative Commons Attribution
+
+**Texture Credits**
+
+- "[Farm Field (Pure Sky)](https://polyhaven.com/a/farm_field_puresky)" by Dimitrios Savva and Jarod Guest
+- "[7A7A7A_D9D9D9_BCBCBC_B4B4B4](https://github.com/nidorx/matcaps/blob/master/PAGE-17.md)" by Nidorx
+- "[Titanium](https://pixologic.com/zbrush/downloadcenter/library/#prettyPhoto) / [C7C7D7_4C4E5A_818393_6C6C74](https://github.com/nidorx/matcaps/blob/master/PAGE-28.md)" by Arran Lewis
+- "[Black Cow](https://pixologic.com/zbrush/downloadcenter/library/#prettyPhoto['6']/23/) / [3B3C3F_DAD9D5_929290_ABACA8](https://github.com/nidorx/matcaps/blob/master/PAGE-5.md)" by Brian Schlosser

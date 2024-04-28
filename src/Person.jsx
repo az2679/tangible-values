@@ -1,3 +1,6 @@
+// key control reference: Minecraft by drcmda
+// https://codesandbox.io/p/sandbox/minecraft-vkgi6?file=%2Fsrc%2FPlayer.js%3A24%2C5-24%2C60
+
 import { useRef, useState, useEffect } from "react";
 import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";

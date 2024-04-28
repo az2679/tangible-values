@@ -34,7 +34,7 @@ export default function Foyer({position}) {
 
     <RigidBody mass={1} type="fixed" colliders='hull'>
         <Text3D font={nunito} position={[position[0]-145, 15, position[2]+105]} rotation={[-Math.PI * 0.5, 0,0]} scale={4} letterSpacing={0.1} >
-            {`a gallery space for direct 
+            {`a digital gallery space for direct 
 interaction with thought experiments, 
 providing a dynamic environment for 
 exploration and contemplation`}
