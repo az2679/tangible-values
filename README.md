@@ -2,7 +2,11 @@
 
 **Keywords:** Values, Experimental Games, Digital/3D, Psychology, Reflection
 
-This project is a series of digital experiences aimed to make values more tangible, facilitating reflection about one’s own values. Specifically, this project looks at values of generosity, altruism, cooperation, and trust, and how certain social perceptions can influence those values. Social perceptions include external influences of gratitude and communication and internal influences of deservingness, closeness, power, and similarity to self. The project will involve successive rounds of decision making to questions that are structured after experimental games, such as the Dictator Game, Volunteer Dilemma, Prisoner’s Dilemma, and Trust Game. At the end, the decisions made within the project are analyzed, making comparisons of decisions to observations in research, as well as noting any changes in response to situation factors.
+This project is an interactive website with 3D elements that showcase 4 thought experiments and allow for people to act upon the decision presented in each thought experiment prompt.
+
+Traveling past the introductory foyer, you will come across an onboarding experience demonstrated through the Dictator Game. Upon completion, I invite you to freely navigate to areas presenting the Volunteer Dilemma, Exchange Game, and Trust Game. In each area, a floating diamond will be your point of contact, revealing the area’s respective thought experiment prompt and relaying instructions on completing the corresponding interactive component.
+
+The goal of this project is to make the experience of thought experiments more engaging by improving the tangibility of values upheld whilst thinking through the various scenarios. The implementations I have made are centered around adding interactivity to conventionally written text, using technology to showcase this experience visually in a digital realm and representing decisions made with actions taken. In making values more tangible, I hope to inspire reflection on what people care about and possible reasons behind their actions.
 
 **Model Credits**
 
