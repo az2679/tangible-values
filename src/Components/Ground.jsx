@@ -20,7 +20,8 @@ export default function Ground({color}) {
             metalness={0.6}
             roughness={1}>
               {/* <GradientTexture stops={[0, 0.5, 1]} colors={['#495057', '#adb5bd', '#e9ecef']} size={10000} /> */}
-            </MeshReflectorMaterial>
+             </MeshReflectorMaterial>
+            {/* <meshBasicMaterial /> */}
         </mesh>
         <CuboidCollider args={[5000, 1, 5000]} position={[0, 0, 0]} />
       </RigidBody>

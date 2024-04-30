@@ -49,7 +49,7 @@ export default function DragObj({ name, startPosition, state, plane, lift, num }
         num={num || 0}
       >
         <CylinderCollider args={[0.5, 2]} position={position} />
-        <animated.mesh {...spring} {...bind()} scale={2} geometry={nodes.Object_2.geometry}>
+        <animated.mesh {...spring} {...bind()} scale={2} geometry={nodes.Object_2001.geometry}>
           <meshBasicMaterial color="#44454c"/>
         </animated.mesh>
       </RigidBody>

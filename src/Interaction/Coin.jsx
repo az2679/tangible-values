@@ -33,7 +33,7 @@ export default function Coin({ position, onSendCoin, sendPos, delay, payoutState
     <>
       <RigidBody mass={1} type="dynamic" colliders={false} position={coinPos} canSleep={false} >
         <CylinderCollider args={[0.5, 2]}  />
-        <mesh ref = {coinRef} scale={2} geometry={nodes.Object_2.geometry}>
+        <mesh ref = {coinRef} scale={2} geometry={nodes.Object_2001.geometry}>
           <meshBasicMaterial color="#44454c"/>
         </mesh>
       </RigidBody>
