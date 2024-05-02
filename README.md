@@ -25,3 +25,9 @@ The goal of this project is to make the experience of thought experiments more e
 - "[7A7A7A_D9D9D9_BCBCBC_B4B4B4](https://github.com/nidorx/matcaps/blob/master/PAGE-17.md)" by Nidorx
 - "[Titanium](https://pixologic.com/zbrush/downloadcenter/library/#prettyPhoto) / [C7C7D7_4C4E5A_818393_6C6C74](https://github.com/nidorx/matcaps/blob/master/PAGE-28.md)" by Arran Lewis
 - "[Black Cow](https://pixologic.com/zbrush/downloadcenter/library/#prettyPhoto['6']/23/) / [3B3C3F_DAD9D5_929290_ABACA8](https://github.com/nidorx/matcaps/blob/master/PAGE-5.md)" by Brian Schlosser
+
+**Disclaimer**
+This project is still going through some performance optimizing adjustments.
+For current usage:
+If you get past the loading screen but end up on a gray blank screen, refresh your page. Repeat if needed. It's likely that the sphere was created before the ground and feel through the ground.
+If you find that there's excessive jittering and it reads above 120 fps on the top left corner of the screen, try a different browser like Safari. I found that the fps gets lowerd to 60.
